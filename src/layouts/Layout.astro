@@ -128,6 +128,21 @@ const skipToContentLabel = isChineseSite
       }}
     ></style>
     
+    <script>
+      document.addEventListener("astro:page-load", () => {
+        const root = document.documentElement;
+        root.classList.add("dark");
+        root.setAttribute("data-theme", "dark");
+        root.setAttribute("data-color-scheme", "dark");
+        root.setAttribute("data-shiki-theme", "github-dark");
+        root.setAttribute("data-theme-material", "silk");
+        const carrier = document.getElementById("config-carrier");
+        const defaultHue = carrier?.dataset.hue ?? "0";
+        const hue = localStorage.getItem("hue") ?? defaultHue;
+        root.style.setProperty("--hue", hue);
+      });
+    </script>
+
     <slot name="head" />
 
     <link
