@@ -179,10 +179,8 @@
       });
 
       if (playlist.length > 0) {
-        const randomIndex = Math.floor(Math.random() * playlist.length);
-        currentIndex = randomIndex;
         willAutoPlay = true;
-        loadSong(playlist[randomIndex]);
+        loadSong(playlist[0]);
         return true;
       } else {
         setPlayerFallback(i18n(Key.musicPlayerErrorEmpty));
