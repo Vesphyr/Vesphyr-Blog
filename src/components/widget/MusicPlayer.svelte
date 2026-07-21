@@ -46,11 +46,13 @@
   });
   let playlist: Song[] = [];
   let currentIndex = 0;
+  let brokenSongs: Set<number> = new Set();
 
   let audio: HTMLAudioElement;
   let progressBar: HTMLElement;
   let playerRoot: HTMLDivElement;
   let playlistPanel: HTMLDivElement;
+  let playlistCloseButton: HTMLButtonElement;
   let songTitleViewport: HTMLDivElement;
   let songTitleText: HTMLSpanElement;
   let shouldScrollSongTitle = false;
@@ -136,6 +138,7 @@
     isLoading = false;
     isPlaying = false;
     failedPlaybackAttempts += 1;
+    brokenSongs = new Set([...brokenSongs, currentSong.id]);
 
     const canSkip =
       shouldSkip &&
@@ -241,6 +244,11 @@
     }
 
     showPlaylist = !showPlaylist;
+    if (showPlaylist) {
+      tick().then(() => {
+        playlistCloseButton?.focus();
+      });
+    }
   }
 
   function toggleHidden() {
@@ -494,6 +502,7 @@
         <button
           on:click={hideError}
           class="text-white/80 hover:text-white transition-colors"
+          aria-label="Close"
         >
           <Icon icon="material-symbols:close" class="text-lg" />
         </button>
@@ -746,8 +755,9 @@
               {i18n(Key.musicPlayerPlaylist)}
             </h3>
             <button
+              bind:this={playlistCloseButton}
               class="btn-plain w-8 h-8 rounded-lg"
-              aria-label={i18n(Key.musicPlayerPlaylist)}
+              aria-label="Close playlist"
               on:click={togglePlaylist}
             >
               <Icon icon="material-symbols:close" class="text-lg" />
@@ -757,22 +767,31 @@
           <div class="playlist-content overflow-y-auto max-h-80 hide-scrollbar">
             {#each playlist as song, index}
               <div
-                class="playlist-item flex items-center gap-3 p-3 hover:bg-(--btn-plain-bg-hover) cursor-pointer transition-colors"
+                class="playlist-item flex items-center gap-3 p-3 transition-colors"
+                class:hover:bg-(--btn-plain-bg-hover)={!brokenSongs.has(song.id)}
+                class:cursor-pointer={!brokenSongs.has(song.id)}
+                class:opacity-40={brokenSongs.has(song.id)}
                 class:bg-[var(--btn-plain-bg)]={index === currentIndex}
                 class:text-[var(--primary)]={index === currentIndex}
-                on:click={() => playSong(index)}
+                on:click={() => !brokenSongs.has(song.id) && playSong(index)}
                 on:keydown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
+                  if (!brokenSongs.has(song.id) && (e.key === "Enter" || e.key === " ")) {
                     e.preventDefault();
                     playSong(index);
                   }
                 }}
                 role="button"
-                tabindex="0"
-                aria-label={`Play ${song.title} - ${song.artist}`}
+                tabindex={brokenSongs.has(song.id) ? -1 : 0}
+                aria-label={brokenSongs.has(song.id) ? `${song.title} - unplayable` : `Play ${song.title} - ${song.artist}`}
+                aria-disabled={brokenSongs.has(song.id)}
               >
                 <div class="w-6 h-6 flex items-center justify-center">
-                  {#if index === currentIndex && isPlaying}
+                  {#if brokenSongs.has(song.id)}
+                    <Icon
+                      icon="material-symbols:block"
+                      class="text-(--content-meta) text-base"
+                    />
+                  {:else if index === currentIndex && isPlaying}
                     <Icon
                       icon="material-symbols:graphic-eq"
                       class="text-(--primary) animate-pulse"

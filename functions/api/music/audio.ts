@@ -28,6 +28,7 @@ type ResolverSource = {
 const AUDIO_LOCATION_CACHE_SECONDS = 60 * 60;
 const RESOLVER_UNHEALTHY_TTL = 5 * 60;
 const KV_AUDIO_LOCATION_TTL = 60 * 60;
+const SONG_BROKEN_TTL = 24 * 60 * 60;
 
 function json(data: unknown, status = 200, headers?: HeadersInit): Response {
   return new Response(JSON.stringify(data), {
@@ -71,8 +72,16 @@ function createMetingResolverUrl(baseUrl: string, songId: string): URL {
   return resolverUrl;
 }
 
+function createNeteaseEnhanceUrl(songId: string): URL {
+  const upstreamUrl = new URL("https://music.163.com/song/enhance/player/url");
+  upstreamUrl.searchParams.set("id", songId);
+  upstreamUrl.searchParams.set("br", "320000");
+  return upstreamUrl;
+}
+
 function createResolverSources(songId: string): ResolverSource[] {
   return [
+    { name: "netease-enhance", url: createNeteaseEnhanceUrl(songId) },
     { name: "netease-outer", url: createNeteaseOuterUrl(songId) },
     { name: "injahow", url: createMetingResolverUrl("https://api.injahow.cn/meting/", songId) },
     { name: "amarea", url: createMetingResolverUrl("https://api.amarea.cn/meting/", songId) },
@@ -302,6 +311,39 @@ async function clearResolverUnhealthy(
   }
 }
 
+function getKvSongBrokenKey(songId: string): string {
+  return `song:broken:${songId}`;
+}
+
+async function readKvSongBroken(
+  env: MusicEnv | undefined,
+  songId: string,
+): Promise<boolean> {
+  try {
+    const kv = getKv(env);
+    if (!kv) return false;
+    const marker = await kv.get(getKvSongBrokenKey(songId));
+    return marker !== null;
+  } catch {
+    return false;
+  }
+}
+
+async function markSongBroken(
+  env: MusicEnv | undefined,
+  songId: string,
+): Promise<void> {
+  try {
+    const kv = getKv(env);
+    if (!kv) return;
+    await kv.put(getKvSongBrokenKey(songId), "1", {
+      expirationTtl: SONG_BROKEN_TTL,
+    });
+  } catch {
+    // Broken tracking failures should never block playback.
+  }
+}
+
 function isAudioResponse(response: Response): boolean {
   const contentType = response.headers.get("content-type") ?? "";
   return (
@@ -382,6 +424,43 @@ async function resolveAudioResponse(
   return null;
 }
 
+async function resolveNeteaseEnhance(
+  resolverUrl: URL,
+  request: Request,
+  upstreamHeaders: Headers,
+  onResolvedLocation?: (location: string) => void,
+): Promise<Response | null> {
+  const response = await fetch(resolverUrl, {
+    method: "GET",
+    headers: upstreamHeaders,
+  });
+  if (!response.ok) return null;
+
+  try {
+    const payload = (await response.json()) as {
+      code?: number;
+      data?: Array<{ url?: string | null; br?: number; size?: number }>;
+    };
+    const songData = payload.data?.[0];
+    if (!songData?.url) return null;
+
+    const location = songData.url;
+    if (!isUsableAudioLocation(location)) return null;
+
+    const audioResponse = await fetchAudioLocation(
+      location,
+      request,
+      upstreamHeaders,
+    );
+    if (audioResponse) {
+      onResolvedLocation?.(location);
+    }
+    return audioResponse;
+  } catch {
+    return null;
+  }
+}
+
 async function selectHealthySources(
   env: MusicEnv | undefined,
   sources: ResolverSource[],
@@ -452,19 +531,27 @@ async function handleAudioRequest(context: RequestContext): Promise<Response> {
       }
     }
 
+    const isBroken = await readKvSongBroken(env, songId);
+    if (isBroken) {
+      return errorResponse(
+        502,
+        "UPSTREAM_ERROR",
+        "This song is marked as unplayable. Please try again later.",
+      );
+    }
+
     const allSources = createResolverSources(songId);
     const sourcesToTry = await selectHealthySources(env, allSources);
 
     for (const source of sourcesToTry) {
-      const resolvedResponse = await resolveAudioResponse(
-        source.url,
-        request,
-        upstreamHeaders,
-        (location) => {
-          scheduleCacheWrites(location);
-          waitUntil?.(clearResolverUnhealthy(env, source.name));
-        },
-      );
+      const onResolved = (location: string) => {
+        scheduleCacheWrites(location);
+        waitUntil?.(clearResolverUnhealthy(env, source.name));
+      };
+
+      const resolvedResponse = source.name === "netease-enhance"
+        ? await resolveNeteaseEnhance(source.url, request, upstreamHeaders, onResolved)
+        : await resolveAudioResponse(source.url, request, upstreamHeaders, onResolved);
 
       if (resolvedResponse) {
         return resolvedResponse;
@@ -472,6 +559,8 @@ async function handleAudioRequest(context: RequestContext): Promise<Response> {
 
       waitUntil?.(markResolverUnhealthy(env, source.name));
     }
+
+    waitUntil?.(markSongBroken(env, songId));
 
     return errorResponse(
       502,
