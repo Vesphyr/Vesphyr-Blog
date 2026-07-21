@@ -33,12 +33,18 @@ function handleResize() {
 }
 window.addEventListener("resize", handleResize);
 handleResize();
-runOnDocumentReady(async () => {
+function reinitPageFeatures() {
   scheduleIdleTask(() => {
     void initFancybox();
   });
   scheduleIdleTask(initCustomScrollbar);
   checkKatex();
   syncDesktopLayoutState();
+}
+
+runOnDocumentReady(async () => {
+  reinitPageFeatures();
   await initializePanelManager();
 });
+
+document.addEventListener("astro:page-load", reinitPageFeatures);

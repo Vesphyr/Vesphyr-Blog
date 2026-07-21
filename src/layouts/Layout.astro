@@ -3,6 +3,7 @@ import ConfigCarrier from "@components/ConfigCarrier.astro";
 import BackToTop from "@components/control/BackToTop.astro";
 import JsonLd from "@components/seo/JsonLd.astro";
 import MusicPlayer from "@components/widget/MusicPlayer.svelte";
+import { ClientRouter } from "astro:transitions";
 import { musicPlayerConfig, profileConfig, siteConfig } from "@/config";
 import { DARK_MODE, DEFAULT_THEME, LIGHT_MODE, PAGE_WIDTH, } from "../constants/constants";
 import { defaultFavicons } from "../constants/icon";
@@ -53,6 +54,7 @@ const skipToContentLabel = isChineseSite
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/CrimsonPro-Regular.woff2" />
     <link rel="canonical" href={canonicalUrl} />
+    <ClientRouter />
     <meta name="description" content={pageDescription} />
     <meta name="google" content="notranslate" />
     <meta name="googlebot" content="notranslate" />
@@ -213,7 +215,7 @@ const skipToContentLabel = isChineseSite
     </script>
 
     
-    {musicPlayerConfig.enable && <MusicPlayer client:idle />}
+    {musicPlayerConfig.enable && <MusicPlayer client:idle transition:persist />}
 
     
     <div id="page-height-extend" class="hidden h-[300vh]"></div>

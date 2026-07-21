@@ -109,11 +109,18 @@ function handleDomReady(): void {
 
   runAll();
 }
+
+function handlePageLoad(): void {
+  runAll();
+}
+
 function setupPageLifecycle(): void {
   if (lifecycleState.isSetup) {
     return;
   }
   lifecycleState.isSetup = true;
+
+  document.addEventListener("astro:page-load", handlePageLoad);
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", handleDomReady, {
