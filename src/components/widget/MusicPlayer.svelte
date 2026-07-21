@@ -222,7 +222,8 @@
         console.warn("Audio playback was blocked or failed.", error);
         if (error.name === "NotAllowedError") {
           autoplayFailed = true;
-          showErrorMessage(i18n(Key.musicPlayerRetryLater));
+          isLoading = false;
+          clearAudioLoadTimeout();
         } else {
           handlePlaybackFailure(i18n(Key.musicPlayerRetryLater), false);
         }
@@ -363,7 +364,8 @@
           console.warn("Autoplay was blocked until user interaction.", error);
           if (error.name === "NotAllowedError") {
             autoplayFailed = true;
-            showErrorMessage(i18n(Key.musicPlayerRetryLater));
+            isLoading = false;
+            clearAudioLoadTimeout();
           } else {
             handlePlaybackFailure(i18n(Key.musicPlayerRetryLater), false);
           }
