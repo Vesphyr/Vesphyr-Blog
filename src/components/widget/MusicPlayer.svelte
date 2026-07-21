@@ -179,7 +179,10 @@
       });
 
       if (playlist.length > 0) {
-        loadSong(playlist[0]);
+        const randomIndex = Math.floor(Math.random() * playlist.length);
+        currentIndex = randomIndex;
+        willAutoPlay = true;
+        loadSong(playlist[randomIndex]);
         return true;
       } else {
         setPlayerFallback(i18n(Key.musicPlayerErrorEmpty));
@@ -217,8 +220,12 @@
     if (playPromise !== undefined) {
       playPromise.catch((error) => {
         console.warn("Audio playback was blocked or failed.", error);
-        autoplayFailed = true;
-        handlePlaybackFailure(i18n(Key.musicPlayerRetryLater), false);
+        if (error.name === "NotAllowedError") {
+          autoplayFailed = true;
+          showErrorMessage(i18n(Key.musicPlayerRetryLater));
+        } else {
+          handlePlaybackFailure(i18n(Key.musicPlayerRetryLater), false);
+        }
       });
     }
   }
@@ -354,8 +361,12 @@
       if (playPromise !== undefined) {
         playPromise.catch((error) => {
           console.warn("Autoplay was blocked until user interaction.", error);
-          autoplayFailed = true;
-          handlePlaybackFailure(i18n(Key.musicPlayerRetryLater), false);
+          if (error.name === "NotAllowedError") {
+            autoplayFailed = true;
+            showErrorMessage(i18n(Key.musicPlayerRetryLater));
+          } else {
+            handlePlaybackFailure(i18n(Key.musicPlayerRetryLater), false);
+          }
         });
       }
     }
