@@ -106,7 +106,7 @@ const referrerPolicy = !isLocal && isBilibiliImage ? "no-referrer" : undefined;
 					widths ||
 					(img.width > 800
 						? [400, 640, 768, 1024, img.width]
-						: undefined)
+						: [400, 640, 800])
 				}
 				sizes={sizes}
 				fetchpriority={fetchpriority}

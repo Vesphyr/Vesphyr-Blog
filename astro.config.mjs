@@ -87,7 +87,18 @@ export default defineConfig({
         svelte({
             preprocess: vitePreprocess(),
         }),
-        sitemap(),
+        sitemap({
+            serialize: (item) => {
+                if (item.url.includes("/posts/")) {
+                    item.changefreq = "monthly";
+                    item.priority = 0.8;
+                } else if (item.url.replace(/\/$/, "") === siteConfig.siteURL.replace(/\/$/, "")) {
+                    item.changefreq = "weekly";
+                    item.priority = 1.0;
+                }
+                return item;
+            },
+        }),
     ],
     markdown: {
         remarkPlugins: [

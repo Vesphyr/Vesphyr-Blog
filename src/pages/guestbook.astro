@@ -73,6 +73,7 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
     <div id="guestbook-list" class="guestbook-list" aria-live="polite">
       <div class="guestbook-empty">正在加载留言...</div>
     </div>
+    <button id="load-more-btn" class="btn-plain w-full py-2 mt-2 rounded-lg text-sm" style="display:none">加载更多</button>
   </section>
 </MainGridLayout>
 
@@ -123,7 +124,7 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
     const name = document.createElement(entry.website ? "a" : "span");
     name.className = "guestbook-item-name";
     name.textContent = entry.name;
-    if (entry.website && name instanceof HTMLAnchorElement) {
+    if (entry.website && /^https?:\/\//i.test(entry.website) && name instanceof HTMLAnchorElement) {
       name.href = entry.website;
       name.target = "_blank";
       name.rel = "noopener noreferrer";
@@ -143,6 +144,8 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
     return article;
   }
 
+  let currentOffset = 0;
+
   function renderMessages(entries: GuestbookEntry[]) {
     if (!list) return;
     list.replaceChildren();
@@ -157,22 +160,43 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
     entries.forEach((entry) => list.append(createMessageCard(entry)));
   }
 
-  async function loadMessages() {
+  function appendMessages(entries: GuestbookEntry[]) {
+    if (!list || !entries.length) return;
+    const empty = list.querySelector(".guestbook-empty");
+    if (empty) empty.remove();
+    entries.forEach((entry) => list.append(createMessageCard(entry)));
+  }
+
+  function updateLoadMoreButton(hasMore: boolean) {
+    const btn = document.getElementById("load-more-btn");
+    if (btn) btn.style.display = hasMore ? "" : "none";
+  }
+
+  async function loadMessages(reset = true) {
     setStatus("");
+    if (reset) currentOffset = 0;
     try {
-      const response = await fetch("/api/guestbook", {
+      const response = await fetch(`/api/guestbook?limit=20&offset=${currentOffset}`, {
         headers: { accept: "application/json" },
       });
       const data = await response.json();
       if (!response.ok || !data.ok) {
         throw new Error(data.message || "留言加载失败。");
       }
-      renderMessages(data.entries ?? []);
+      if (reset) {
+        renderMessages(data.entries ?? []);
+      } else {
+        appendMessages(data.entries ?? []);
+      }
+      currentOffset += (data.entries ?? []).length;
+      updateLoadMoreButton(data.hasMore ?? false);
     } catch (error) {
-      renderMessages([]);
+      if (reset) renderMessages([]);
       setStatus(error instanceof Error ? error.message : "留言加载失败。", "error");
     }
   }
+
+  document.getElementById("load-more-btn")?.addEventListener("click", () => loadMessages(false));
 
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();

@@ -193,19 +193,38 @@ export const onRequestGet = async (context: PagesContext): Promise<Response> => 
   }
 
   try {
+    const url = new URL(context.request.url);
+    const limit = Math.min(
+      Math.max(parseInt(url.searchParams.get("limit") ?? "20", 10) || 20, 1),
+      50,
+    );
+    const offset = Math.max(
+      parseInt(url.searchParams.get("offset") ?? "0", 10) || 0,
+      0,
+    );
+
     await ensureSchema(db);
     const result = await db
       .prepare(
         `SELECT id, name, website, message, created_at
          FROM guestbook_entries
          ORDER BY created_at DESC, id DESC
-         LIMIT 50`,
+         LIMIT ? OFFSET ?`,
       )
+      .bind(limit, offset)
       .all<GuestbookRow>();
+
+    const countResult = await db
+      .prepare(`SELECT COUNT(*) as total FROM guestbook_entries`)
+      .first<{ total: number }>();
+    const total = countResult?.total ?? 0;
+    const entries = (result.results ?? []).map(toEntry);
 
     return json({
       ok: true,
-      entries: (result.results ?? []).map(toEntry),
+      entries,
+      hasMore: offset + entries.length < total,
+      total,
     });
   } catch (error) {
     console.error("guestbook:get", error);

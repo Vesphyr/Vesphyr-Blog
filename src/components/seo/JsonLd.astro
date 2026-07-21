@@ -44,7 +44,7 @@ const personSchema = {
 const articleSchema = article
     ? {
         "@context": "https://schema.org",
-        "@type": "Article",
+        "@type": "BlogPosting",
         headline: article.title,
         description: article.description,
         image: article.image ? url(article.image) : undefined,
@@ -74,11 +74,19 @@ const schemas = [];
 if (type === "website" || type === "article") {
     schemas.push(websiteSchema);
 }
-if (type === "person") {
+if (type === "person" || type === "article") {
     schemas.push(personSchema);
 }
-if (type === "article" && articleSchema) {
+if (type === "article" && articleSchema && article) {
     schemas.push(articleSchema);
+    schemas.push({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+            { "@type": "ListItem", position: 1, name: siteConfig.title, item: siteConfig.siteURL },
+            { "@type": "ListItem", position: 2, name: article.title, item: Astro.url.href },
+        ],
+    });
 }
 ---
 

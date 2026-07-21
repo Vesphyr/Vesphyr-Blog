@@ -40,6 +40,29 @@ const { entry, headings = [], jsonLd, canonicalUrl, remarkPluginFrontmatter, } =
 		import("../../scripts/right-sidebar-layout.ts");
 	</script>
 	<div
+		id="reading-progress"
+		class="fixed top-0 left-0 z-[100] h-0.5 bg-(--primary) transition-all duration-150 pointer-events-none"
+		style="width: 0%"
+		aria-hidden="true"
+	></div>
+	<script is:inline>
+		(function () {
+			const progress = document.getElementById("reading-progress");
+			if (!progress) return;
+			const updateProgress = () => {
+				const scrollTop = window.scrollY;
+				const scrollHeight =
+					document.documentElement.scrollHeight - window.innerHeight;
+				const percent =
+					scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+				progress.style.width = `${percent}%`;
+			};
+			window.addEventListener("scroll", updateProgress, { passive: true });
+			window.addEventListener("resize", updateProgress);
+			updateProgress();
+		})();
+	</script>
+	<div
 		class="post-article-shell content-panel-shell flex w-full rounded-(--radius-large) overflow-hidden relative mb-4"
 	>
 		<div
