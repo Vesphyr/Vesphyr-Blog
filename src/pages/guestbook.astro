@@ -1,0 +1,463 @@
+---
+import MainGridLayout from "../layouts/MainGridLayout.astro";
+---
+
+<MainGridLayout title="留言" description="Vesphyr 留言板">
+  <section class="guestbook-shell card-base">
+    <header class="guestbook-header">
+      <p class="guestbook-eyebrow">Guestbook</p>
+      <h1>留言板</h1>
+      <p class="guestbook-intro">
+        可以在这里留下想说的话。
+      </p>
+    </header>
+
+    <form id="guestbook-form" class="guestbook-form" autocomplete="on">
+      <div class="guestbook-field-grid">
+        <label>
+          <span>昵称</span>
+          <input
+            id="guestbook-name"
+            name="name"
+            type="text"
+            maxlength="32"
+            required
+            placeholder="你的名字"
+          />
+        </label>
+
+        <label>
+          <span>链接</span>
+          <input
+            id="guestbook-website"
+            name="website"
+            type="url"
+            maxlength="160"
+            placeholder="https://example.com"
+          />
+        </label>
+      </div>
+
+      <label class="guestbook-message-field">
+        <span>内容</span>
+        <textarea
+          id="guestbook-message"
+          name="message"
+          maxlength="500"
+          required
+          rows="5"
+          placeholder="写点什么..."
+        ></textarea>
+      </label>
+
+      <label class="guestbook-honeypot" aria-hidden="true">
+        <span>请留空</span>
+        <input id="guestbook-company" name="company" type="text" tabindex="-1" />
+      </label>
+
+      <div class="guestbook-actions">
+        <p id="guestbook-status" class="guestbook-status" role="status"></p>
+        <button id="guestbook-submit" class="btn-regular" type="submit">
+          发布留言
+        </button>
+      </div>
+    </form>
+
+    <div class="guestbook-list-header">
+      <h2>最近留言</h2>
+      <button id="guestbook-refresh" class="btn-plain" type="button">
+        刷新
+      </button>
+    </div>
+
+    <div id="guestbook-list" class="guestbook-list" aria-live="polite">
+      <div class="guestbook-empty">正在加载留言...</div>
+    </div>
+  </section>
+</MainGridLayout>
+
+<script>
+  type GuestbookEntry = {
+    id: number;
+    name: string;
+    website: string;
+    message: string;
+    createdAt: string;
+  };
+
+  const form = document.querySelector<HTMLFormElement>("#guestbook-form");
+  const list = document.querySelector<HTMLDivElement>("#guestbook-list");
+  const status = document.querySelector<HTMLParagraphElement>("#guestbook-status");
+  const submitButton =
+    document.querySelector<HTMLButtonElement>("#guestbook-submit");
+  const refreshButton =
+    document.querySelector<HTMLButtonElement>("#guestbook-refresh");
+
+  function setStatus(message: string, type = "info") {
+    if (!status) return;
+    status.textContent = message;
+    status.dataset.type = type;
+  }
+
+  function formatDate(value: string) {
+    try {
+      return new Intl.DateTimeFormat("zh-CN", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      }).format(new Date(value));
+    } catch {
+      return "";
+    }
+  }
+
+  function createMessageCard(entry: GuestbookEntry) {
+    const article = document.createElement("article");
+    article.className = "guestbook-item";
+
+    const header = document.createElement("div");
+    header.className = "guestbook-item-header";
+
+    const name = document.createElement(entry.website ? "a" : "span");
+    name.className = "guestbook-item-name";
+    name.textContent = entry.name;
+    if (entry.website && name instanceof HTMLAnchorElement) {
+      name.href = entry.website;
+      name.target = "_blank";
+      name.rel = "noopener noreferrer";
+    }
+
+    const time = document.createElement("time");
+    time.className = "guestbook-item-time";
+    time.dateTime = entry.createdAt;
+    time.textContent = formatDate(entry.createdAt);
+
+    const message = document.createElement("p");
+    message.className = "guestbook-item-message";
+    message.textContent = entry.message;
+
+    header.append(name, time);
+    article.append(header, message);
+    return article;
+  }
+
+  function renderMessages(entries: GuestbookEntry[]) {
+    if (!list) return;
+    list.replaceChildren();
+    if (!entries.length) {
+      const empty = document.createElement("div");
+      empty.className = "guestbook-empty";
+      empty.textContent = "还没有留言。";
+      list.append(empty);
+      return;
+    }
+
+    entries.forEach((entry) => list.append(createMessageCard(entry)));
+  }
+
+  async function loadMessages() {
+    setStatus("");
+    try {
+      const response = await fetch("/api/guestbook", {
+        headers: { accept: "application/json" },
+      });
+      const data = await response.json();
+      if (!response.ok || !data.ok) {
+        throw new Error(data.message || "留言加载失败。");
+      }
+      renderMessages(data.entries ?? []);
+    } catch (error) {
+      renderMessages([]);
+      setStatus(error instanceof Error ? error.message : "留言加载失败。", "error");
+    }
+  }
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!(form instanceof HTMLFormElement)) return;
+
+    const formData = new FormData(form);
+    const payload = {
+      name: String(formData.get("name") || ""),
+      website: String(formData.get("website") || ""),
+      message: String(formData.get("message") || ""),
+      company: String(formData.get("company") || ""),
+    };
+
+    submitButton?.setAttribute("disabled", "true");
+    setStatus("正在发布...", "info");
+
+    try {
+      const response = await fetch("/api/guestbook", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      if (!response.ok || !data.ok) {
+        throw new Error(data.message || "留言发布失败。");
+      }
+      form.reset();
+      setStatus("留言已发布。", "success");
+      await loadMessages();
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : "留言发布失败。", "error");
+    } finally {
+      submitButton?.removeAttribute("disabled");
+    }
+  });
+
+  refreshButton?.addEventListener("click", () => {
+    loadMessages();
+  });
+
+  loadMessages();
+</script>
+
+<style>
+  .guestbook-shell {
+    padding: 2rem;
+    border-radius: var(--radius-large);
+  }
+
+  .guestbook-header {
+    margin-bottom: 1.75rem;
+  }
+
+  .guestbook-eyebrow {
+    margin: 0 0 0.4rem;
+    color: var(--primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .guestbook-header h1 {
+    margin: 0 0 0.75rem;
+    color: var(--text-primary);
+    font-size: 2rem;
+    font-weight: 800;
+  }
+
+  .guestbook-intro {
+    max-width: 40rem;
+    margin: 0;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  .guestbook-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-bottom: 1.75rem;
+    margin-bottom: 1.75rem;
+    border-bottom: 1px solid var(--line-divider);
+  }
+
+  .guestbook-field-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .guestbook-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .guestbook-form input,
+  .guestbook-form textarea {
+    width: 100%;
+    border: 1px solid var(--line-divider);
+    border-radius: 0.5rem;
+    background: var(--btn-regular-bg);
+    color: var(--text-primary);
+    padding: 0.75rem 0.9rem;
+    font: inherit;
+    outline: none;
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease;
+  }
+
+  .guestbook-form textarea {
+    resize: vertical;
+    min-height: 8rem;
+    line-height: 1.7;
+  }
+
+  .guestbook-form input:focus,
+  .guestbook-form textarea:focus {
+    border-color: var(--primary);
+    background: var(--card-bg);
+  }
+
+  .guestbook-honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  .guestbook-actions,
+  .guestbook-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .guestbook-actions,
+  .guestbook-list-header {
+    gap: 1rem;
+  }
+
+  :global(.guestbook-item-header) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .guestbook-status {
+    margin: 0;
+    min-height: 1.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+
+  .guestbook-status[data-type="error"] {
+    color: #ef4444;
+  }
+
+  .guestbook-status[data-type="success"] {
+    color: var(--primary);
+  }
+
+  .guestbook-actions button,
+  .guestbook-list-header button {
+    min-height: 2.5rem;
+    padding: 0 1rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+  }
+
+  .guestbook-actions button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .guestbook-list-header {
+    margin-bottom: 1rem;
+  }
+
+  .guestbook-list-header h2 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: 800;
+  }
+
+  .guestbook-list {
+    display: flex;
+    flex-direction: column;
+    --guestbook-entry-font-size: 15.75px;
+    --guestbook-entry-font-weight: 500;
+    --guestbook-entry-line-height: 25.5938px;
+    gap: calc(var(--guestbook-entry-line-height) / 2);
+  }
+
+  :global(.guestbook-item) {
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    padding: 0;
+  }
+
+  :global(.guestbook-empty) {
+    border: 1px solid var(--line-divider);
+    border-radius: 0.75rem;
+    background: var(--btn-regular-bg);
+    padding: 1rem;
+  }
+
+  :global(.guestbook-item-name) {
+    display: inline-flex;
+    align-items: center;
+    max-width: min(100%, 22rem);
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: var(--guestbook-entry-font-size);
+    font-weight: var(--guestbook-entry-font-weight);
+    line-height: var(--guestbook-entry-line-height);
+    padding: 0;
+    text-decoration-line: underline;
+    text-decoration-color: var(--primary);
+    text-decoration-thickness: 0.12em;
+    text-underline-offset: 0.22em;
+    box-shadow: none;
+    overflow-wrap: anywhere;
+  }
+
+  :global(a.guestbook-item-name:hover) {
+    color: var(--primary);
+  }
+
+  :global(.guestbook-item-time) {
+    color: var(--text-secondary);
+    font-size: var(--guestbook-entry-font-size);
+    font-weight: var(--guestbook-entry-font-weight);
+    line-height: var(--guestbook-entry-line-height);
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  :global(.guestbook-item-message) {
+    margin: 0.65rem 0 0;
+    color: var(--text-secondary);
+    font-size: var(--guestbook-entry-font-size);
+    font-weight: var(--guestbook-entry-font-weight);
+    line-height: var(--guestbook-entry-line-height);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  :global(.guestbook-empty) {
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 768px) {
+    .guestbook-shell {
+      padding: 1.25rem;
+    }
+
+    .guestbook-field-grid,
+    .guestbook-actions,
+    .guestbook-list-header {
+      grid-template-columns: 1fr;
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    :global(.guestbook-item-header) {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .guestbook-actions button,
+    .guestbook-list-header button {
+      width: 100%;
+    }
+  }
+</style>

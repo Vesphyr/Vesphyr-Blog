@@ -1,0 +1,81 @@
+---
+import { Icon } from "astro-icon/components";
+import { profileConfig } from "../../config";
+import { url } from "../../utils/url-utils";
+import ImageWrapper from "../misc/ImageWrapper.astro";
+---
+
+<div class="card-base content-panel-card p-3">
+  <a
+    aria-label="Go to About Page"
+    href={url("/about/")}
+    class="group block relative mx-auto mt-1 mb-3
+       w-[200px] h-[200px] overflow-hidden rounded-xl active:scale-95"
+  >
+    <div
+      class="absolute transition pointer-events-none group-hover:bg-black/30 group-active:bg-black/50
+        w-full h-full z-50 flex items-center justify-center rounded-xl"
+    >
+      <Icon
+        name="fa7-regular:address-card"
+        class="transition opacity-0 scale-90 group-hover:scale-100 group-hover:opacity-100 text-white text-5xl"
+      />
+    </div>
+    <ImageWrapper
+      src={profileConfig.avatar || ""}
+      alt="Profile Image of the Author"
+      class="w-full h-full object-cover"
+      width={300}
+      height={300}
+      aspectRatio="1/1"
+    />
+  </a>
+  <div class="px-2">
+    <div
+      class="font-bold text-xl text-center mb-1 transition"
+      style="color: var(--text-main);"
+    >
+      {profileConfig.name}
+    </div>
+    <div class="h-1 w-5 bg-(--primary) mx-auto rounded-full mb-3 transition">
+    </div>
+
+    <div
+      class="text-[1.05rem] leading-relaxed text-center font-medium mb-1 transition whitespace-pre-line"
+      style="color: var(--text-main);"
+    >
+      <span class="block">{profileConfig.bio}</span>
+    </div>
+
+    <div class="flex flex-wrap gap-2 justify-center mb-1">
+      {
+        profileConfig.links.length > 1 &&
+          profileConfig.links.map((item) => (
+            <a
+              rel="me"
+              aria-label={item.name}
+              href={item.url}
+              target="_blank"
+              class="btn-regular rounded-lg h-10 w-10 active:scale-90"
+            >
+              <Icon name={item.icon} class="text-[1.5rem]" />
+            </a>
+          ))
+      }
+      {
+        profileConfig.links.length == 1 && (
+          <a
+            rel="me"
+            aria-label={profileConfig.links[0].name}
+            href={profileConfig.links[0].url}
+            target="_blank"
+            class="btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95"
+          >
+            <Icon name={profileConfig.links[0].icon} class="text-[1.5rem]" />
+            {profileConfig.links[0].name}
+          </a>
+        )
+      }
+    </div>
+  </div>
+</div>

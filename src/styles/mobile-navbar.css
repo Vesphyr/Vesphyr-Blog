@@ -1,0 +1,121 @@
+@media (max-width: 768px) {
+  #navbar > div {
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 0;
+    backdrop-filter: none !important;
+    padding-left: 0.5rem;
+    padding-right: 0.25rem;
+  }
+
+  .navbar-brand-text {
+    font-size: clamp(1.45rem, 5.4vw, 1.9rem) !important;
+    letter-spacing: 0.035em !important;
+  }
+
+  .navbar-brand .h-7 {
+    width: 1.7rem !important;
+    height: 1.7rem !important;
+  }
+
+  .navbar-brand .h-7 + span,
+  .navbar-brand img.h-7 {
+    margin-right: 0.375rem !important;
+  }
+
+  .navbar-shell {
+    display: grid !important;
+    grid-template-columns: max-content minmax(0, 1fr) max-content !important;
+    column-gap: 0.55rem !important;
+    min-height: 3.75rem !important;
+  }
+
+  .navbar-links {
+    display: none !important;
+  }
+
+  .navbar-brand {
+    height: 2.45rem !important;
+    padding-left: 0.125rem !important;
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .navbar-actions {
+    margin-left: auto !important;
+    gap: 0.25rem !important;
+    width: max-content !important;
+    justify-content: flex-end !important;
+    justify-items: end !important;
+    justify-self: end !important;
+    padding-right: 0 !important;
+  }
+
+  .mobile-navbar-links {
+    display: flex !important;
+    align-items: center !important;
+    width: max-content !important;
+    height: auto !important;
+    gap: 0.25rem !important;
+    margin-right: 0.15rem;
+    flex-shrink: 0;
+  }
+
+  .mobile-nav-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.32rem !important;
+    height: 2.35rem !important;
+    min-width: max-content !important;
+    padding-inline: 0.52rem !important;
+    flex: 0 0 auto;
+    white-space: nowrap !important;
+  }
+
+  .mobile-display-settings,
+  .theme-switch-wrap {
+    width: 2.35rem !important;
+    height: 2.35rem !important;
+    flex: 0 0 2.35rem;
+  }
+
+  .mobile-nav-link-icon,
+  .navbar-actions .theme-switch-glyph {
+    font-size: 1.12rem !important;
+  }
+
+  .mobile-nav-label {
+    font-size: 0.82rem !important;
+    line-height: 1 !important;
+    font-weight: 650 !important;
+  }
+
+  .theme-switch-btn {
+    min-width: 2.35rem;
+    min-height: 2.35rem;
+  }
+
+  #main-grid {
+    gap: 0 !important;
+  }
+
+  #post-list-container {
+    border-radius: 0 !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    gap: 0 !important;
+  }
+
+  .post-card-shell {
+    padding-top: 0 !important;
+    border-radius: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  .post-card-cover {
+    margin-top: 0 !important;
+  }
+}

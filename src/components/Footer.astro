@@ -1,0 +1,37 @@
+---
+import { profileConfig } from "../config";
+import { url } from "../utils/url-utils";
+const currentYear = new Date().getFullYear();
+---
+
+
+<div
+	class="transition my-10 mx-32"
+>
+</div>
+
+<div
+	class="transition rounded-2xl mb-12 flex flex-col items-center justify-center px-6"
+>
+	<div class="transition text-50 text-[13px] leading-6 text-center">
+		<div class="mb-2">
+			&copy; <span id="copyright-year">{currentYear}</span>
+			{profileConfig.name}. All Rights Reserved. /
+			<a
+				class="transition link text-(--primary) font-medium"
+				href={url("rss.xml")}
+				>RSS</a
+			> /
+			<a
+				class="transition link text-(--primary) font-medium"
+				href={url("atom.xml")}
+				>Atom</a
+			> /
+			<a
+				class="transition link text-(--primary) font-medium"
+				target="_blank"
+				href={url("sitemap-index.xml")}>Sitemap</a
+			>
+		</div>
+	</div>
+</div>

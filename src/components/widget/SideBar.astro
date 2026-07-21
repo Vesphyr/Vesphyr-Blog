@@ -1,0 +1,212 @@
+---
+import type { MarkdownHeading } from "astro";
+import WidgetGroup from "@components/layout/WidgetGroup.astro";
+import { widgetManager } from "../../utils/widget-manager";
+
+interface Props {
+  class?: string;
+  headings?: MarkdownHeading[];
+  isPostPage?: boolean;
+}
+
+const { class: className, headings, isPostPage = false } = Astro.props;
+
+function getVisibleComponents(
+  position: "top" | "sticky",
+  sidebar: "left" | "drawer",
+  deviceType: "mobile" | "tablet" | "desktop",
+) {
+  return widgetManager.getVisibleComponentsForPage(
+    widgetManager.getComponentsByPosition(position, sidebar, deviceType),
+    isPostPage,
+  );
+}
+
+const visibleMobileTopComponents = getVisibleComponents(
+  "top",
+  "drawer",
+  "mobile",
+);
+const visibleMobileStickyComponents = getVisibleComponents(
+  "sticky",
+  "drawer",
+  "mobile",
+);
+const visibleTabletTopComponents = getVisibleComponents(
+  "top",
+  "left",
+  "tablet",
+);
+const visibleTabletStickyComponents = getVisibleComponents(
+  "sticky",
+  "left",
+  "tablet",
+);
+const visibleDesktopTopComponents = getVisibleComponents(
+  "top",
+  "left",
+  "desktop",
+);
+const visibleDesktopStickyComponents = getVisibleComponents(
+  "sticky",
+  "left",
+  "desktop",
+);
+
+type RenderGroup = {
+  components: typeof visibleMobileTopComponents;
+  wrapperClass: string;
+};
+
+function sameComponents(
+  left: typeof visibleMobileTopComponents,
+  right: typeof visibleMobileTopComponents,
+) {
+  return JSON.stringify(left) === JSON.stringify(right);
+}
+
+function buildResponsiveGroups(
+  mobileComponents: typeof visibleMobileTopComponents,
+  tabletComponents: typeof visibleMobileTopComponents,
+  desktopComponents: typeof visibleMobileTopComponents,
+): RenderGroup[] {
+  if (
+    mobileComponents.length > 0 &&
+    sameComponents(mobileComponents, tabletComponents) &&
+    sameComponents(tabletComponents, desktopComponents)
+  ) {
+    return [
+      {
+        components: mobileComponents,
+        wrapperClass: "flex flex-col w-full gap-3",
+      },
+    ];
+  }
+
+  const groups: RenderGroup[] = [];
+
+  if (mobileComponents.length > 0) {
+    groups.push({
+      components: mobileComponents,
+      wrapperClass: "flex flex-col w-full gap-3 lg:hidden",
+    });
+  }
+
+  if (
+    tabletComponents.length > 0 &&
+    sameComponents(tabletComponents, desktopComponents)
+  ) {
+    groups.push({
+      components: tabletComponents,
+      wrapperClass: "hidden lg:flex flex-col w-full gap-3",
+    });
+    return groups;
+  }
+
+  if (tabletComponents.length > 0) {
+    groups.push({
+      components: tabletComponents,
+      wrapperClass:
+        "sidebar-content hidden lg:flex xl:hidden flex-col w-full gap-3",
+    });
+  }
+
+  if (desktopComponents.length > 0) {
+    groups.push({
+      components: desktopComponents,
+      wrapperClass: "sidebar-content hidden xl:flex flex-col w-full gap-3",
+    });
+  }
+
+  return groups;
+}
+
+const topGroups = buildResponsiveGroups(
+  visibleMobileTopComponents,
+  visibleTabletTopComponents,
+  visibleDesktopTopComponents,
+);
+
+const stickyGroups = buildResponsiveGroups(
+  visibleMobileStickyComponents,
+  visibleTabletStickyComponents,
+  visibleDesktopStickyComponents,
+);
+---
+
+<div
+  id="sidebar"
+  class:list={[className, "sidebar-root flex flex-col w-full pt-0"]}
+  data-breakpoint-mobile={String(widgetManager.getBreakpoints().mobile)}
+  data-breakpoint-tablet={String(widgetManager.getBreakpoints().tablet)}
+  data-show-mobile={widgetManager.shouldShowSidebar("mobile")
+    ? "true"
+    : "false"}
+  data-show-tablet={widgetManager.shouldShowSidebar("tablet")
+    ? "true"
+    : "false"}
+  data-show-desktop={widgetManager.shouldShowSidebar("desktop")
+    ? "true"
+    : "false"}
+  data-has-mobile={visibleMobileTopComponents.length > 0 ||
+  visibleMobileStickyComponents.length > 0
+    ? "true"
+    : "false"}
+  data-has-tablet={visibleTabletTopComponents.length > 0 ||
+  visibleTabletStickyComponents.length > 0
+    ? "true"
+    : "false"}
+  data-has-desktop={visibleDesktopTopComponents.length > 0 ||
+  visibleDesktopStickyComponents.length > 0
+    ? "true"
+    : "false"}
+>
+  <div
+    id="sidebar-sticky"
+    class="transition-all duration-700 flex flex-col w-full mt-0 gap-3"
+  >
+    {
+      topGroups.map((group) => (
+        <WidgetGroup
+          components={group.components}
+          headings={headings}
+          wrapperClass={group.wrapperClass}
+        />
+      ))
+    }
+
+    {
+      stickyGroups.map((group) => (
+        <WidgetGroup
+          components={group.components}
+          headings={headings}
+          wrapperClass={group.wrapperClass}
+        />
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  @media (max-width: 1023px) {
+    #sidebar {
+      display: var(--sidebar-mobile-display, block);
+    }
+  }
+
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    #sidebar {
+      display: var(--sidebar-tablet-display, block);
+    }
+  }
+
+  @media (min-width: 1280px) {
+    #sidebar {
+      display: var(--sidebar-desktop-display, block);
+    }
+  }
+</style>
+
+<script>
+  import "../../scripts/sidebar-runtime.ts";
+</script>

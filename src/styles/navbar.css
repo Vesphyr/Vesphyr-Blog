@@ -1,0 +1,243 @@
+#navbar .navbar-shell {
+  position: relative;
+  column-gap: 1rem;
+}
+
+#navbar .navbar-links {
+  justify-self: center;
+  min-width: 0;
+}
+
+#navbar .navbar-brand {
+  min-width: fit-content;
+}
+
+#navbar .navbar-actions {
+  margin-left: 0.75rem;
+  justify-self: end;
+  flex-shrink: 0;
+}
+
+#navbar :is(
+  .navbar-action-icon,
+  .navbar-link-icon,
+  .theme-switch-glyph,
+  .navbar-arrow,
+  .theme-icon
+) {
+  color: inherit !important;
+}
+
+#navbar :is(
+  .dropdown-container > a,
+  .dropdown-container > button,
+  .navbar-actions .btn-plain
+) :is(
+  span,
+  .navbar-action-icon,
+  .navbar-link-icon,
+  .theme-switch-glyph,
+  .navbar-action-icon *,
+  .navbar-link-icon *,
+  .theme-switch-glyph *
+) {
+  color: inherit !important;
+  transition: none !important;
+  animation: none !important;
+}
+
+#navbar :is(
+  .navbar-action-icon,
+  .navbar-link-icon,
+  .theme-switch-glyph,
+  .navbar-action-icon svg,
+  .navbar-link-icon svg,
+  .theme-switch-glyph svg,
+  .navbar-arrow svg,
+  .theme-icon svg,
+  .navbar-action-icon use,
+  .navbar-link-icon use,
+  .theme-switch-glyph use,
+  .navbar-arrow use,
+  .theme-icon use,
+  .navbar-action-icon path,
+  .navbar-link-icon path,
+  .theme-switch-glyph path,
+  .navbar-arrow path,
+  .theme-icon path,
+  .navbar-action-icon circle,
+  .navbar-link-icon circle,
+  .theme-switch-glyph circle,
+  .navbar-arrow circle,
+  .theme-icon circle,
+  .navbar-action-icon rect,
+  .navbar-link-icon rect,
+  .theme-switch-glyph rect,
+  .navbar-arrow rect,
+  .theme-icon rect,
+  .navbar-action-icon ellipse,
+  .navbar-link-icon ellipse,
+  .theme-switch-glyph ellipse,
+  .navbar-arrow ellipse,
+  .theme-icon ellipse,
+  .navbar-action-icon line,
+  .navbar-link-icon line,
+  .theme-switch-glyph line,
+  .navbar-arrow line,
+  .theme-icon line,
+  .navbar-action-icon polyline,
+  .navbar-link-icon polyline,
+  .theme-switch-glyph polyline,
+  .navbar-arrow polyline,
+  .theme-icon polyline,
+  .navbar-action-icon polygon,
+  .navbar-link-icon polygon,
+  .theme-switch-glyph polygon,
+  .navbar-arrow polygon,
+  .theme-icon polygon,
+  .navbar-action-icon g,
+  .navbar-link-icon g,
+  .theme-switch-glyph g,
+  .navbar-arrow g,
+  .theme-icon g,
+  .navbar-action-icon *,
+  .navbar-link-icon *,
+  .theme-switch-glyph *,
+  .navbar-arrow *,
+  .theme-icon *
+) {
+  color: inherit !important;
+  transition: none !important;
+  animation: none !important;
+}
+
+#navbar :is(
+  .dropdown-container > a,
+  .dropdown-container > button,
+  .navbar-actions .btn-plain
+) {
+  transition:
+    background-color 300ms ease-in-out,
+    color 300ms ease-in-out;
+}
+
+#navbar .navbar-actions .btn-plain {
+  cursor: pointer;
+}
+
+#navbar .navbar-actions .btn-plain:hover {
+  background-color: color-mix(in oklch, var(--primary) 6%, transparent);
+  color: var(--primary);
+}
+
+#navbar .navbar-arrow {
+  transition:
+    transform 300ms ease-in-out,
+    opacity 300ms ease-in-out !important;
+}
+
+#navbar .theme-icon {
+  transition:
+    transform 300ms ease-in-out,
+    opacity 300ms ease-in-out !important;
+}
+
+#navbar .dropdown-item,
+#navbar .dropdown-container > a,
+#navbar .dropdown-container > button {
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+#navbar .dropdown-item {
+  text-transform: none;
+  letter-spacing: 0.01em;
+  font-size: 1rem;
+}
+
+#navbar .navbar-brand-text {
+  font-family: var(--font-content);
+  font-style: italic;
+  font-size: clamp(2.2rem, 2.35vw, 2.9rem);
+  line-height: 1;
+  letter-spacing: 0.08em;
+  background: linear-gradient(
+    135deg,
+    #6d1f4f 0%,
+    #a11f2f 24%,
+    #d7a437 48%,
+    #f0c84e 63%,
+    #f2b22d 78%,
+    #a02a2d 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-transform: none;
+  text-shadow:
+    0 1px 0 rgba(255, 236, 178, 0.22),
+    0 2px 8px rgba(83, 17, 33, 0.35),
+    0 0 18px rgba(166, 41, 45, 0.2);
+}
+
+#navbar.group.scrolled .navbar-brand-text {
+  background: linear-gradient(
+    135deg,
+    #5e1a45 0%,
+    #92202c 24%,
+    #c9952f 48%,
+    #e7bd47 63%,
+    #e1a42a 78%,
+    #8e2429 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+:root:not(.dark) #navbar .navbar-brand-text,
+:root:not(.dark) #navbar.group.scrolled .navbar-brand-text {
+  background: linear-gradient(
+    135deg,
+    #4f153b 0%,
+    #861720 24%,
+    #a66b12 48%,
+    #bd8717 63%,
+    #a6650d 78%,
+    #76181d 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 0.22px rgba(78, 18, 30, 0.32);
+  font-weight: 800;
+  text-shadow: 0 1px 0 rgba(255, 246, 225, 0.18);
+}
+
+:root:not(.dark) #navbar .navbar-brand:hover .navbar-brand-text {
+  background: linear-gradient(
+    135deg,
+    #3f102f 0%,
+    #74131b 24%,
+    #935d0e 48%,
+    #aa7511 63%,
+    #93570a 78%,
+    #641318 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@media (max-width: 1279px) {
+  #navbar .navbar-shell {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  #navbar .navbar-brand {
+    padding-inline: 0.5rem;
+  }
+}

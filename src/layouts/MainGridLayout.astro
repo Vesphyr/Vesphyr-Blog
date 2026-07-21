@@ -1,0 +1,157 @@
+---
+import Footer from "@components/Footer.astro";
+import Navbar from "@components/Navbar.astro";
+import SideBar from "@components/widget/SideBar.astro";
+import type { MarkdownHeading } from "astro";
+import { widgetManager } from "../utils/widget-manager";
+import Layout from "./Layout.astro";
+
+function hasVisibleComponents(
+  topComponents: ReturnType<typeof widgetManager.getComponentsByPosition>,
+  stickyComponents: ReturnType<typeof widgetManager.getComponentsByPosition>,
+  isPostPage: boolean,
+) {
+  return (
+    widgetManager.getVisibleComponentsForPage(topComponents, isPostPage)
+      .length > 0 ||
+    widgetManager.getVisibleComponentsForPage(stickyComponents, isPostPage)
+      .length > 0
+  );
+}
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: string;
+  setOGTypeArticle?: boolean;
+  postSlug?: string;
+  canonicalUrl?: string;
+  headings?: MarkdownHeading[];
+  isPostPage?: boolean;
+}
+const {
+  title,
+  description,
+  lang,
+  setOGTypeArticle,
+  postSlug,
+  canonicalUrl,
+  headings = [],
+  isPostPage = false,
+} = Astro.props;
+const hasLeftSidebarComponents = hasVisibleComponents(
+  widgetManager.getComponentsByPosition("top", "left", "desktop"),
+  widgetManager.getComponentsByPosition("sticky", "left", "desktop"),
+  isPostPage,
+);
+const hasMobileDrawerComponents = hasVisibleComponents(
+  widgetManager.getComponentsByPosition("top", "drawer", "mobile"),
+  widgetManager.getComponentsByPosition("sticky", "drawer", "mobile"),
+  isPostPage,
+);
+const hasTabletLeftSidebarComponents = hasVisibleComponents(
+  widgetManager.getComponentsByPosition("top", "left", "tablet"),
+  widgetManager.getComponentsByPosition("sticky", "left", "tablet"),
+  isPostPage,
+);
+const mobileShowSidebar = hasMobileDrawerComponents;
+const tabletShowSidebar = hasTabletLeftSidebarComponents;
+const desktopShowLeftSidebar = hasLeftSidebarComponents;
+const desktopGridCols = desktopShowLeftSidebar
+  ? "lg:grid-cols-[21rem_1fr]"
+  : "lg:grid-cols-1";
+const gridCols = `
+  grid-cols-1
+  ${desktopGridCols}
+`
+  .trim()
+  .replace(/\s+/g, " ");
+const sidebarClass = `
+  ${mobileShowSidebar && hasMobileDrawerComponents ? "block" : "hidden"}
+  ${desktopShowLeftSidebar ? "lg:block lg:mb-4 lg:row-start-1 lg:row-end-2 lg:max-w-80 lg:col-start-1 lg:col-end-2 lg:min-w-0" : "lg:hidden"}
+`
+  .trim()
+  .replace(/\s+/g, " ");
+const desktopMainPos = desktopShowLeftSidebar
+  ? "lg:col-start-2 lg:col-end-3"
+  : "lg:col-span-1";
+const mainContentClass = `
+  overflow-hidden w-full min-w-0
+  col-span-1 row-start-1 row-end-2
+  ${desktopShowLeftSidebar ? desktopMainPos : "lg:col-span-1"}
+`
+  .trim()
+  .replace(/\s+/g, " ");
+---
+
+<Layout
+  title={title}
+  description={description}
+  lang={lang}
+  setOGTypeArticle={setOGTypeArticle}
+  postSlug={postSlug}
+  canonicalUrl={canonicalUrl}
+>
+  <slot slot="head" name="head" />
+
+  <div
+    id="top-row"
+    class="z-50 pointer-events-none relative transition-all duration-700 max-w-(--page-width) px-0 md:px-4 mx-auto"
+    class:list={[""]}
+  >
+    <div
+      id="navbar-wrapper"
+      class="pointer-events-auto sticky top-0 transition-all"
+    >
+      <Navbar />
+    </div>
+  </div>
+
+  <div id="main-content-shell" class="relative w-full z-30 pointer-events-none">
+    <div class="relative max-w-(--page-width) mx-auto pointer-events-auto">
+      <div
+        id="main-grid"
+        class={`w-full left-0 right-0 grid ${gridCols} grid-rows-none md:grid-rows-[auto] md:items-start mx-auto gap-8 px-1 md:px-4 ${!mobileShowSidebar || !hasMobileDrawerComponents ? "mobile-no-sidebar" : ""}`}
+        data-layout-mode="list"
+      >
+        {
+          (mobileShowSidebar ||
+            tabletShowSidebar ||
+            desktopShowLeftSidebar) && (
+            <div id="left-sidebar-wrapper" class="contents">
+              <div
+                id="left-sidebar-column"
+                class={`${sidebarClass} flex flex-col w-full pt-0 self-start lg:sticky lg:top-0`}
+              >
+                <SideBar
+                  class="w-full"
+                  headings={headings}
+                  isPostPage={isPostPage}
+                />
+                <slot name="left-sidebar" />
+              </div>
+            </div>
+          )
+        }
+
+        <main
+          id="main-content"
+          data-is-post-page={isPostPage ? "true" : "false"}
+          tabindex="-1"
+          class={`${mainContentClass} scroll-mt-24 focus:outline-none`}
+        >
+          <div id="content-wrapper" class="onload-animation">
+            <slot />
+            <div class="footer col-span-full onload-animation hidden lg:block">
+              <Footer />
+            </div>
+          </div>
+        </main>
+
+        <div class="footer col-span-full onload-animation block lg:hidden">
+          <Footer />
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,13 @@
+export const PAGE_SIZE = 8;
+export const LIGHT_MODE: "light" = "light";
+export const DARK_MODE: "dark" = "dark";
+export const DEFAULT_THEME: "light" | "dark" = DARK_MODE;
+export const PAGE_WIDTH: number = 90;
+export const BP_PHONE_XS: number = 479;
+export const BP_TABLET: number = 768;
+export const BP_MOBILE: number = 1279;
+export const BP_DESKTOP: number = 1280;
+export const SCROLL_THROTTLE_MS: number = 16;
+export const IDLE_FALLBACK_MS: number = 100;
+export const TOC_CLEAR_DELAY_MS: number = 200;
+export const NAVBAR_SCROLL_THRESHOLD: number = 20;

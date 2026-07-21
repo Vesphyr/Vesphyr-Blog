@@ -1,0 +1,47 @@
+import { registerPageScript } from "../page-lifecycle.ts";
+
+type NavbarPanelId = "display-setting";
+
+async function togglePanel(panelId: NavbarPanelId) {
+  const { panelManager } = await import("../../utils/panel-manager");
+  await panelManager.togglePanel(panelId);
+}
+
+function wirePanelButton(
+  buttonId: string,
+  panelId: NavbarPanelId,
+  cleanups: Array<() => void>,
+) {
+  const button = document.getElementById(buttonId);
+  if (!(button instanceof HTMLElement)) return;
+
+  const handleClick = async (event: MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    try {
+      await togglePanel(panelId);
+    } catch (error) {
+      console.error("Failed to load panel manager:", error);
+      document.getElementById(panelId)?.classList.toggle("float-panel-closed");
+    }
+  };
+
+  button.addEventListener("click", handleClick);
+  cleanups.push(() => button.removeEventListener("click", handleClick));
+}
+
+registerPageScript("navbar-interactions", {
+  shouldRun() {
+    return document.getElementById("navbar") !== null;
+  },
+  init() {
+    const cleanups: Array<() => void> = [];
+
+    wirePanelButton("display-settings-switch", "display-setting", cleanups);
+
+    return () => {
+      cleanups.forEach((cleanup) => cleanup());
+    };
+  },
+});
