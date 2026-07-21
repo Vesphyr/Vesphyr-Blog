@@ -20,10 +20,6 @@
     }
   }
 
-  function resetHue() {
-    applyHue(defaultHueUI);
-  }
-
   onMount(() => {
     isMounted = true;
     defaultHueUI = getDefaultHue();
@@ -58,17 +54,6 @@
           before:absolute before:-left-3 before:top-[0.33rem]"
       >
         {i18n(I18nKey.themeColor)}
-        <button
-          aria-label="Reset to Default"
-          class="btn-regular w-7 h-7 rounded-md active:scale-90"
-          class:opacity-0={hueUI === defaultHueUI}
-          class:pointer-events-none={hueUI === defaultHueUI}
-          on:click={resetHue}
-        >
-          <div class="text-(--btn-content)">
-            <span class="text-[0.875rem]">↺</span>
-          </div>
-        </button>
       </div>
     </div>
     <div class="color-bar-container">

@@ -499,7 +499,7 @@
   on:canplay={markAudioReady}
   on:waiting={handleAudioWaiting}
   on:stalled={handleAudioWaiting}
-  preload="none"
+  preload="auto"
 ></audio>
 
 {#if musicPlayerConfig.enable}
