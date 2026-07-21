@@ -7,7 +7,6 @@ import { i18n } from "../i18n/translation";
 import { LinkPreset, type NavBarLink } from "../types/config";
 import { url } from "../utils/url-utils";
 import ImageWrapper from "./misc/ImageWrapper.astro";
-import LightDarkSwitch from "./LightDarkSwitch.svelte";
 import DisplaySettings from "./widget/DisplaySettings.svelte";
 import DropdownMenu from "./widget/DropdownMenu.astro";
 
@@ -148,12 +147,6 @@ const themeColorLabel = i18n(I18nKey.themeColor);
           </button>
         )
       }
-
-      <div
-        class="theme-switch-wrap w-8 h-8 md:w-9 md:h-9 flex items-center justify-center shrink-0"
-      >
-        <LightDarkSwitch client:idle />
-      </div>
     </div>
     <DisplaySettings client:idle />
   </div>

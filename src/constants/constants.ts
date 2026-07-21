@@ -1,7 +1,6 @@
 export const PAGE_SIZE = 8;
-export const LIGHT_MODE: "light" = "light";
 export const DARK_MODE: "dark" = "dark";
-export const DEFAULT_THEME: "light" | "dark" = DARK_MODE;
+export const DEFAULT_THEME: "dark" = DARK_MODE;
 export const PAGE_WIDTH: number = 90;
 export const BP_PHONE_XS: number = 479;
 export const BP_TABLET: number = 768;

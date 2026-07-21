@@ -5,7 +5,7 @@ import JsonLd from "@components/seo/JsonLd.astro";
 import MusicPlayer from "@components/widget/MusicPlayer.svelte";
 import { ClientRouter } from "astro:transitions";
 import { musicPlayerConfig, profileConfig, siteConfig } from "@/config";
-import { DARK_MODE, DEFAULT_THEME, LIGHT_MODE, PAGE_WIDTH, } from "../constants/constants";
+import { PAGE_WIDTH, } from "../constants/constants";
 import { defaultFavicons } from "../constants/icon";
 import type { Favicon } from "../types/config";
 import { pathsEqual, url } from "../utils/url-utils";
@@ -101,42 +101,18 @@ const skipToContentLabel = isChineseSite
     <script
       is:inline
       define:vars={{
-        DEFAULT_THEME,
-        LIGHT_MODE,
-        DARK_MODE,
         PAGE_WIDTH,
         configHue,
       }}
     >
-      const storedTheme = localStorage.getItem("theme");
-      const initialColorScheme = DEFAULT_THEME === LIGHT_MODE || DEFAULT_THEME === DARK_MODE
-          ? DEFAULT_THEME
-          : "";
-      function getPreferredTheme() {
-          if (storedTheme === LIGHT_MODE || storedTheme === DARK_MODE) {
-              return storedTheme;
-          }
-          if (initialColorScheme) {
-              return initialColorScheme;
-          }
-          return window.matchMedia("(prefers-color-scheme: dark)").matches
-              ? DARK_MODE
-              : LIGHT_MODE;
-      }
-      const themeValue = getPreferredTheme();
-      const isDark = themeValue === DARK_MODE;
-      document.documentElement.setAttribute("data-theme", isDark ? DARK_MODE : LIGHT_MODE);
-      document.documentElement.setAttribute("data-color-scheme", isDark ? "dark" : "light");
-      document.documentElement.setAttribute("data-shiki-theme", isDark ? "github-dark" : "github-light");
-      window.theme = {
-          themeValue,
-          setTheme: (value) => {
-              window.theme.themeValue = value;
-          },
-      };
+      document.documentElement.classList.add("dark");
+      document.documentElement.setAttribute("data-theme", "dark");
+      document.documentElement.setAttribute("data-color-scheme", "dark");
+      document.documentElement.setAttribute("data-shiki-theme", "github-dark");
+      document.documentElement.setAttribute("data-theme-material", "silk");
+      window.theme = { themeValue: "dark" };
       const hue = localStorage.getItem("hue") || configHue;
       document.documentElement.style.setProperty("--hue", hue);
-      document.documentElement.setAttribute("data-theme-material", "silk");
       (function () {
           function updateViewportHeightVar() {
               document.documentElement.style.setProperty("--vh", `${window.innerHeight * 0.01}px`);
