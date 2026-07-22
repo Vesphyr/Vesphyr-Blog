@@ -48,6 +48,7 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
           rows="5"
           placeholder="写点什么..."
         ></textarea>
+        <span id="guestbook-counter" class="guestbook-counter" aria-live="polite">0/500</span>
       </label>
 
       <label class="guestbook-honeypot" aria-hidden="true">
@@ -64,7 +65,7 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
     </form>
 
     <div class="guestbook-list-header">
-      <h2>最近留言</h2>
+      <h2>最近留言<span id="guestbook-count" class="guestbook-count" aria-live="polite"></span></h2>
       <button id="guestbook-refresh" class="btn-plain" type="button">
         刷新
       </button>
@@ -93,12 +94,40 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
     document.querySelector<HTMLButtonElement>("#guestbook-submit");
   const refreshButton =
     document.querySelector<HTMLButtonElement>("#guestbook-refresh");
+  const messageInput =
+    document.querySelector<HTMLTextAreaElement>("#guestbook-message");
+  const counter =
+    document.querySelector<HTMLSpanElement>("#guestbook-counter");
+  const countLabel =
+    document.querySelector<HTMLSpanElement>("#guestbook-count");
 
   function setStatus(message: string, type = "info") {
     if (!status) return;
     status.textContent = message;
     status.dataset.type = type;
   }
+
+  function updateCount(total?: number) {
+    if (!countLabel) return;
+    countLabel.textContent =
+      typeof total === "number" && total > 0 ? ` · ${total}` : "";
+  }
+
+  function updateCounter() {
+    if (!counter || !messageInput) return;
+    const len = messageInput.value.length;
+    counter.textContent = `${len}/500`;
+    counter.dataset.state = len >= 450 ? "near" : "ok";
+  }
+
+  messageInput?.addEventListener("input", updateCounter);
+
+  messageInput?.addEventListener("keydown", (event) => {
+    if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+      event.preventDefault();
+      form?.requestSubmit();
+    }
+  });
 
   function formatDate(value: string) {
     try {
@@ -112,6 +141,17 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
     } catch {
       return "";
     }
+  }
+
+  function formatRelative(value: string) {
+    const then = new Date(value).getTime();
+    if (!Number.isFinite(then)) return formatDate(value);
+    const diff = Date.now() - then;
+    if (diff < 60_000) return "刚刚";
+    if (diff < 3_600_000) return `${Math.floor(diff / 60_000)} 分钟前`;
+    if (diff < 86_400_000) return `${Math.floor(diff / 3_600_000)} 小时前`;
+    if (diff < 604_800_000) return `${Math.floor(diff / 86_400_000)} 天前`;
+    return formatDate(value);
   }
 
   function createMessageCard(entry: GuestbookEntry) {
@@ -133,7 +173,8 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
     const time = document.createElement("time");
     time.className = "guestbook-item-time";
     time.dateTime = entry.createdAt;
-    time.textContent = formatDate(entry.createdAt);
+    time.textContent = formatRelative(entry.createdAt);
+    time.title = formatDate(entry.createdAt);
 
     const message = document.createElement("p");
     message.className = "guestbook-item-message";
@@ -172,7 +213,7 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
     if (btn) btn.style.display = hasMore ? "" : "none";
   }
 
-  async function loadMessages(reset = true) {
+  async function loadMessages(reset = true, scrollToTop = false) {
     setStatus("");
     if (reset) currentOffset = 0;
     try {
@@ -190,6 +231,13 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
       }
       currentOffset += (data.entries ?? []).length;
       updateLoadMoreButton(data.hasMore ?? false);
+      updateCount(data.total);
+      if (scrollToTop && list?.firstElementChild instanceof Element) {
+        list.firstElementChild.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
     } catch (error) {
       if (reset) renderMessages([]);
       setStatus(error instanceof Error ? error.message : "留言加载失败。", "error");
@@ -227,8 +275,9 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
         throw new Error(data.message || "留言发布失败。");
       }
       form.reset();
+      updateCounter();
       setStatus("留言已发布。", "success");
-      await loadMessages();
+      await loadMessages(true, true);
     } catch (error) {
       setStatus(error instanceof Error ? error.message : "留言发布失败。", "error");
     } finally {
@@ -317,6 +366,26 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
     resize: vertical;
     min-height: 8rem;
     line-height: 1.7;
+  }
+
+  .guestbook-counter {
+    align-self: flex-end;
+    margin-top: -0.25rem;
+    color: var(--text-tertiary);
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.2s ease;
+  }
+
+  .guestbook-counter[data-state="near"] {
+    color: #f59e0b;
+  }
+
+  .guestbook-count {
+    color: var(--text-tertiary);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: 0.25rem;
   }
 
   .guestbook-form input:focus,
