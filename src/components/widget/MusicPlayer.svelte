@@ -138,7 +138,9 @@
     isLoading = false;
     isPlaying = false;
     failedPlaybackAttempts += 1;
-    brokenSongs = new Set([...brokenSongs, currentSong.id]);
+    if (shouldSkip) {
+      brokenSongs = new Set([...brokenSongs, currentSong.id]);
+    }
 
     const canSkip =
       shouldSkip &&
@@ -189,8 +191,9 @@
     } catch (_error) {
       setPlayerFallback(i18n(Key.musicPlayerUnavailable));
       showErrorMessage(i18n(Key.musicPlayerErrorPlaylist));
-    } finally {
       isLoading = false;
+    } finally {
+      if (playlist.length === 0) isLoading = false;
     }
 
     return false;
@@ -214,9 +217,11 @@
 
     isLoading = true;
     startAudioLoadTimeout();
+    const expectedSongId = currentSong.id;
     const playPromise = audio.play();
     if (playPromise !== undefined) {
       playPromise.catch((error) => {
+        if (currentSong.id !== expectedSongId) return;
         console.warn("Audio playback was blocked or failed.", error);
         if (error.name === "NotAllowedError") {
           autoplayFailed = true;
@@ -294,16 +299,20 @@
   function nextSong(autoPlay = true) {
     if (playlist.length <= 1) return;
 
-    let newIndex: number;
-    if (isShuffled) {
-      do {
-        newIndex = Math.floor(Math.random() * playlist.length);
-      } while (newIndex === currentIndex && playlist.length > 1);
-    } else {
-      newIndex = currentIndex < playlist.length - 1 ? currentIndex + 1 : 0;
+    let newIndex = currentIndex;
+    for (let i = 0; i < playlist.length; i++) {
+      if (isShuffled) {
+        do {
+          newIndex = Math.floor(Math.random() * playlist.length);
+        } while (newIndex === currentIndex && playlist.length > 1);
+      } else {
+        newIndex = newIndex < playlist.length - 1 ? newIndex + 1 : 0;
+      }
+      if (!brokenSongs.has(playlist[newIndex]?.id)) {
+        playSong(newIndex, autoPlay);
+        return;
+      }
     }
-
-    playSong(newIndex, autoPlay);
   }
 
   function playSong(index: number, autoPlay = true) {
@@ -353,22 +362,6 @@
         playlist[currentIndex].duration = duration;
       }
       currentSong.duration = duration;
-    }
-
-    if (willAutoPlay || isPlaying) {
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((error) => {
-          console.warn("Autoplay was blocked until user interaction.", error);
-          if (error.name === "NotAllowedError") {
-            autoplayFailed = true;
-            isLoading = false;
-            clearAudioLoadTimeout();
-          } else {
-            handlePlaybackFailure(i18n(Key.musicPlayerRetryLater), false);
-          }
-        });
-      }
     }
   }
 
@@ -457,7 +450,6 @@
           autoplayFailed = false;
         },
         onRecoveryFailed: () => {
-          autoplayFailed = false;
           showErrorMessage(i18n(Key.musicPlayerRetryLater));
         },
       }),
