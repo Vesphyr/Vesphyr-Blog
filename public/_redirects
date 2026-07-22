@@ -1,4 +1,6 @@
 https://www.vesphyr.com/* https://vesphyr.com/:splat 301
+/posts/late-night-reflection /posts/elaina 301
+/posts/late-night-reflection/ /posts/elaina/ 301
 /admin    /404  410
 /admin/   /404  410
 /admin/*  /404  410
