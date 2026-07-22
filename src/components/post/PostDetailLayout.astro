@@ -49,6 +49,10 @@ const { entry, headings = [], jsonLd, canonicalUrl, remarkPluginFrontmatter, } =
 		(function () {
 			const progress = document.getElementById("reading-progress");
 			if (!progress) return;
+			// 清除上一页遗留的监听器（View Transitions 下 is:inline 每次导航都重新执行）
+			if (window.__readingProgressCleanup) {
+				window.__readingProgressCleanup();
+			}
 			const updateProgress = () => {
 				const scrollTop = window.scrollY;
 				const scrollHeight =
@@ -60,6 +64,10 @@ const { entry, headings = [], jsonLd, canonicalUrl, remarkPluginFrontmatter, } =
 			window.addEventListener("scroll", updateProgress, { passive: true });
 			window.addEventListener("resize", updateProgress);
 			updateProgress();
+			window.__readingProgressCleanup = () => {
+				window.removeEventListener("scroll", updateProgress);
+				window.removeEventListener("resize", updateProgress);
+			};
 		})();
 	</script>
 	<div

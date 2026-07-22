@@ -277,6 +277,8 @@ const skipToContentLabel = isChineseSite
 
 <script is:inline>
   (function () {
+      if (window.__cncOrientationBound) return;
+      window.__cncOrientationBound = true;
       const updateViewportHeight = window.__cncUpdateViewportHeight;
       if (typeof updateViewportHeight === "function") {
           window.addEventListener("orientationchange", updateViewportHeight);

@@ -166,5 +166,9 @@ const stats = [
   }
 
   updateDynamicStats();
-  setInterval(updateDynamicStats, 60 * 60 * 1000);
+  // 清除上一页遗留的 interval（View Transitions 下 is:inline 每次导航都重新执行）
+  if (window.__siteStatsInterval) {
+    clearInterval(window.__siteStatsInterval);
+  }
+  window.__siteStatsInterval = setInterval(updateDynamicStats, 60 * 60 * 1000);
 </script>
