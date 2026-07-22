@@ -6,5 +6,5 @@ body::before {
   z-index: 0;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='55' viewBox='0 0 70 55'%3E%3Cpath d='M18,28 Q12,20 22,17 Q28,12 35,17 Q42,12 47,20 Q55,17 52,28 Q55,35 45,37 Q37,42 30,37 Q20,38 18,28 Z' fill='none' stroke='%234A2E50' stroke-width='0.6' opacity='0.5'/%3E%3Cpath d='M55,42 Q50,35 57,33 Q62,29 68,33 Q72,31 70,39 Q72,45 64,47 Q58,48 55,42 Z' fill='none' stroke='%23422A48' stroke-width='0.45' opacity='0.35'/%3E%3C/svg%3E");
   background-repeat: repeat;
-  opacity: 0.35;
+  opacity: 0.5;
 }

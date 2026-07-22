@@ -27,23 +27,23 @@
   --page-bg-weave-primary: repeating-linear-gradient(
     0deg,
     transparent 0 2px,
-    color-mix(in oklch, var(--page-bg-paper-grain) 6%, transparent) 2px 3px,
+    color-mix(in oklch, var(--page-bg-paper-grain) 10%, transparent) 2px 3px,
     transparent 3px 6px
   );
   --page-bg-weave-secondary: repeating-linear-gradient(
     90deg,
     transparent 0 3px,
-    color-mix(in oklch, var(--page-bg-paper-grain) 5%, transparent) 3px 4px,
+    color-mix(in oklch, var(--page-bg-paper-grain) 10%, transparent) 3px 4px,
     transparent 4px 9px
   );
   --page-bg-satin: linear-gradient(
     135deg,
     transparent 0%,
-    color-mix(in oklch, var(--page-bg-paper-grain) 18%, transparent) 15%,
+    color-mix(in oklch, var(--page-bg-paper-grain) 25%, transparent) 15%,
     transparent 30%,
-    color-mix(in oklch, var(--page-bg-paper-grain) 12%, transparent) 50%,
+    color-mix(in oklch, var(--page-bg-paper-grain) 16%, transparent) 50%,
     transparent 65%,
-    color-mix(in oklch, var(--page-bg-paper-grain) 15%, transparent) 85%,
+    color-mix(in oklch, var(--page-bg-paper-grain) 22%, transparent) 85%,
     transparent 100%
   );
   --card-bg: oklch(0.4 0.055 var(--hue));
