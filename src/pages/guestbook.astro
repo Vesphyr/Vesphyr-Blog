@@ -308,6 +308,25 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
     return fragment;
   }
 
+  function hashString(str: string): number {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      hash |= 0;
+    }
+    return Math.abs(hash);
+  }
+
+  function createAvatar(name: string): HTMLElement {
+    const avatar = document.createElement("span");
+    avatar.className = "guestbook-avatar";
+    const trimmed = name.trim();
+    avatar.textContent = trimmed ? trimmed.charAt(0).toUpperCase() : "?";
+    const hue = hashString(name) % 360;
+    avatar.style.backgroundColor = `oklch(0.62 0.14 ${hue})`;
+    return avatar;
+  }
+
   function createMessageCard(entry: GuestbookEntry, isAdmin = false) {
     const article = document.createElement("article");
     article.className = "guestbook-item";
@@ -315,6 +334,10 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
 
     const header = document.createElement("div");
     header.className = "guestbook-item-header";
+
+    const left = document.createElement("div");
+    left.className = "guestbook-item-left";
+    left.append(createAvatar(entry.name));
 
     const name = document.createElement(entry.website ? "a" : "span");
     name.className = "guestbook-item-name";
@@ -324,6 +347,7 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
       name.target = "_blank";
       name.rel = "noopener noreferrer";
     }
+    left.append(name);
 
     const time = document.createElement("time");
     time.className = "guestbook-item-time";
@@ -335,7 +359,7 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
     message.className = "guestbook-item-message";
     message.appendChild(createMessageContent(entry.message));
 
-    header.append(name, time);
+    header.append(left, time);
 
     if (isAdmin) {
       const delBtn = document.createElement("button");
@@ -608,6 +632,29 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
 
   .guestbook-counter[data-state="near"] {
     color: #f59e0b;
+  }
+
+  :global(.guestbook-item-left) {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    min-width: 0;
+  }
+
+  :global(.guestbook-avatar) {
+    flex-shrink: 0;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    user-select: none;
+    line-height: 1;
   }
 
   :global(.guestbook-inline-link) {
