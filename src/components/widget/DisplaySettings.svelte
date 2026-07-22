@@ -109,12 +109,15 @@
 
   .color-segment
     flex 1 1 0
+    height 100%
     border none
+    padding 0
     cursor pointer
     position relative
     display flex
     align-items center
     justify-content center
+    box-sizing border-box
 
     .color-name
       font-size 0.875rem
