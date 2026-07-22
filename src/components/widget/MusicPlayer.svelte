@@ -547,18 +547,18 @@
           class="hidden-player-icon text-(--primary) text-3xl"
         />
       {:else if isPlaying}
-        <div class="flex space-x-0.5 items-end">
+        <div class="flex space-x-1 items-center">
           <div
-            class="hidden-player-bar w-0.5 h-4 rounded-full"
-            style="animation-delay: 0s; animation-duration: 0.7s;"
+            class="hidden-player-bar w-1 h-5 rounded-full"
+            style="animation-delay: 0s; animation-duration: 1.4s;"
           ></div>
           <div
-            class="hidden-player-bar w-0.5 h-5 rounded-full"
-            style="animation-delay: 0.2s; animation-duration: 0.9s;"
+            class="hidden-player-bar w-1 h-6 rounded-full"
+            style="animation-delay: 0.3s; animation-duration: 1.8s;"
           ></div>
           <div
-            class="hidden-player-bar w-0.5 h-3 rounded-full"
-            style="animation-delay: 0.4s; animation-duration: 0.6s;"
+            class="hidden-player-bar w-1 h-4 rounded-full"
+            style="animation-delay: 0.6s; animation-duration: 1.2s;"
           ></div>
         </div>
       {:else}

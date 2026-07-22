@@ -49,13 +49,13 @@
 
 .hidden-player-bar {
   background: var(--primary);
-  transform-origin: bottom;
-  animation: eq-bar 0.9s ease-in-out infinite;
+  transform-origin: center;
+  animation: eq-bar 1.6s ease-in-out infinite;
 }
 
 @keyframes eq-bar {
-  0%, 100% { transform: scaleY(0.35); opacity: 1; }
-  50% { transform: scaleY(1); opacity: 0.45; }
+  0%, 100% { transform: scaleY(0.3); opacity: 1; }
+  50% { transform: scaleY(1); opacity: 0.4; }
 }
 
 .music-player {
