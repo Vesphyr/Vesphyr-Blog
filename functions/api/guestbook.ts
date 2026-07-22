@@ -25,6 +25,7 @@ type PagesContext = {
   env: {
     COMMENTS_DB?: D1Database;
     MUSIC_KV?: KvLike;
+    GUESTBOOK_ADMIN_TOKEN?: string;
   };
 };
 
@@ -50,7 +51,8 @@ type GuestbookErrorCode =
   | "METHOD_NOT_ALLOWED"
   | "DATABASE_UNAVAILABLE"
   | "DATABASE_ERROR"
-  | "RATE_LIMITED";
+  | "RATE_LIMITED"
+  | "UNAUTHORIZED";
 
 const MAX_NAME_LENGTH = 32;
 const MAX_WEBSITE_LENGTH = 160;
@@ -58,13 +60,17 @@ const MAX_MESSAGE_LENGTH = 500;
 const RATE_LIMIT_WINDOW_SECONDS = 60;
 const RATE_LIMIT_MAX_REQUESTS = 5;
 
-function json(data: unknown, status = 200, headers?: HeadersInit): Response {
+function json(
+  data: unknown,
+  status = 200,
+  options?: { headers?: HeadersInit; cacheControl?: string },
+): Response {
   return new Response(JSON.stringify(data), {
     status,
     headers: {
       "content-type": "application/json; charset=utf-8",
-      "cache-control": "no-store",
-      ...headers,
+      "cache-control": options?.cacheControl ?? "no-store",
+      ...options?.headers,
     },
   });
 }
@@ -106,6 +112,24 @@ async function ensureSchema(db: D1Database): Promise<void> {
       ON guestbook_entries(created_at DESC)`,
     )
     .run();
+  // 软删除列：旧表不存在时补加（SQLite 无 IF NOT EXISTS 列语法，用 PRAGMA 探测）
+  try {
+    const cols = await db
+      .prepare(`PRAGMA table_info(guestbook_entries)`)
+      .all<{ name: string }>();
+    const hasDeletedAt = (cols.results ?? []).some(
+      (c) => c.name === "deleted_at",
+    );
+    if (!hasDeletedAt) {
+      await db
+        .prepare(
+          `ALTER TABLE guestbook_entries ADD COLUMN deleted_at TEXT`,
+        )
+        .run();
+    }
+  } catch {
+    // 忽略探测失败（如并发首次建表），下次请求会重试
+  }
 }
 
 function getClientIp(request: Request): string {
@@ -208,6 +232,7 @@ export const onRequestGet = async (context: PagesContext): Promise<Response> => 
       .prepare(
         `SELECT id, name, website, message, created_at
          FROM guestbook_entries
+         WHERE deleted_at IS NULL
          ORDER BY created_at DESC, id DESC
          LIMIT ? OFFSET ?`,
       )
@@ -215,17 +240,23 @@ export const onRequestGet = async (context: PagesContext): Promise<Response> => 
       .all<GuestbookRow>();
 
     const countResult = await db
-      .prepare(`SELECT COUNT(*) as total FROM guestbook_entries`)
+      .prepare(
+        `SELECT COUNT(*) as total FROM guestbook_entries WHERE deleted_at IS NULL`,
+      )
       .first<{ total: number }>();
     const total = countResult?.total ?? 0;
     const entries = (result.results ?? []).map(toEntry);
 
-    return json({
-      ok: true,
-      entries,
-      hasMore: offset + entries.length < total,
-      total,
-    });
+    return json(
+      {
+        ok: true,
+        entries,
+        hasMore: offset + entries.length < total,
+        total,
+      },
+      200,
+      { cacheControl: "public, max-age=20, s-maxage=60" },
+    );
   } catch (error) {
     console.error("guestbook:get", error);
     return errorResponse(500, "DATABASE_ERROR", "留言加载失败。");
@@ -298,5 +329,49 @@ export const onRequestPost = async (
   } catch (error) {
     console.error("guestbook:post", error);
     return errorResponse(500, "DATABASE_ERROR", "留言发布失败。");
+  }
+};
+
+export const onRequestDelete = async (
+  context: PagesContext,
+): Promise<Response> => {
+  const db = getDatabase(context);
+  if (!db) {
+    return errorResponse(503, "DATABASE_UNAVAILABLE", "留言数据库暂不可用。");
+  }
+
+  const adminToken = context.env.GUESTBOOK_ADMIN_TOKEN;
+  if (!adminToken) {
+    return errorResponse(
+      503,
+      "DATABASE_UNAVAILABLE",
+      "管理员删除功能未配置。",
+    );
+  }
+
+  const provided = context.request.headers.get("x-admin-token");
+  if (!provided || provided !== adminToken) {
+    return errorResponse(401, "UNAUTHORIZED", "无权操作。");
+  }
+
+  try {
+    const url = new URL(context.request.url);
+    const id = parseInt(url.searchParams.get("id") ?? "0", 10);
+    if (!Number.isFinite(id) || id <= 0) {
+      return errorResponse(400, "BAD_REQUEST", "缺少有效的留言 ID。");
+    }
+
+    await ensureSchema(db);
+    await db
+      .prepare(
+        `UPDATE guestbook_entries SET deleted_at = ? WHERE id = ? AND deleted_at IS NULL`,
+      )
+      .bind(new Date().toISOString(), id)
+      .run();
+
+    return json({ ok: true, id });
+  } catch (error) {
+    console.error("guestbook:delete", error);
+    return errorResponse(500, "DATABASE_ERROR", "留言删除失败。");
   }
 };
