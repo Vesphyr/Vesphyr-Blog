@@ -122,10 +122,11 @@
       bottom 0.3rem
       left 50%
       transform translateX(-50%)
-      width 0.3rem
-      height 0.3rem
-      border-radius 50%
-      background rgba(255, 255, 255, 0.85)
+      width 0
+      height 0
+      border-left 0.4rem solid transparent
+      border-right 0.4rem solid transparent
+      border-bottom 0.5rem solid rgba(255, 255, 255, 0.85)
       opacity 0
       transition opacity 0.2s ease
 
