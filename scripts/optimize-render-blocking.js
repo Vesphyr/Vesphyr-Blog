@@ -23,7 +23,6 @@ const HOMEPAGE_UNUSED_CSS = new Set([
   "expressive-code",
   "PostDetailLayout",
   "post-detail-layout",
-  "site-comments",
   "floating-toc",
   "post-navigation",
   "generated-zhuque-font",

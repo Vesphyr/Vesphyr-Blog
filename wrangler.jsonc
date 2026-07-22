@@ -3,15 +3,6 @@
   "name": "vesphyr-blog",
   "compatibility_date": "2026-04-07",
   "pages_build_output_dir": "./dist",
-  "d1_databases": [
-    {
-      "binding": "COMMENTS_DB",
-      "database_name": "vesphyr-blog-comments",
-      "database_id": "e12eac21-c6cf-4fa8-980a-acf5a6a30497",
-      "preview_database_id": "e12eac21-c6cf-4fa8-980a-acf5a6a30497",
-      "migrations_dir": "cloudflare/d1"
-    }
-  ],
   "kv_namespaces": [
     {
       "binding": "MUSIC_KV",

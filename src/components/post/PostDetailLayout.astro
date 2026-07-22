@@ -10,7 +10,6 @@ import PostMetadata from "../../components/PostMeta.astro";
 import { siteConfig } from "../../config";
 import { getFileDirFromPath } from "../../utils/url-utils";
 import PostNavigation from "./PostNavigation.astro";
-import Comments from "./Comments.svelte";
 interface Props {
     entry: CollectionEntry<"posts">;
     headings?: MarkdownHeading[];
@@ -171,13 +170,6 @@ const { entry, headings = [], jsonLd, canonicalUrl, remarkPluginFrontmatter, } =
 		nextTitle={entry.data.nextTitle}
 		prevSlug={entry.data.prevSlug}
 		prevTitle={entry.data.prevTitle}
-	/>
-
-	<Comments
-		client:idle
-		postSlug={entry.id}
-		postTitle={entry.data.title}
-		postUrl={canonicalUrl ?? ""}
 	/>
 </MainGridLayout>
 
