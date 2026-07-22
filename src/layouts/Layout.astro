@@ -141,7 +141,7 @@ const skipToContentLabel = isChineseSite
         root.setAttribute("data-shiki-theme", "github-dark");
         root.setAttribute("data-theme-material", "silk");
         const carrier = document.getElementById("config-carrier");
-        const defaultHue = carrier?.dataset.hue ?? String(configHue);
+        const defaultHue = carrier?.dataset.hue ?? (root.style.getPropertyValue("--hue") || "325");
         let storedHue: string | null = null;
         try { storedHue = localStorage.getItem("hue"); } catch (_e) {}
         const hue = storedHue ?? defaultHue;
