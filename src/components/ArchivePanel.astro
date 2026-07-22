@@ -94,12 +94,12 @@ function normalizeCategory(category: string | null | undefined) {
               <a
                 href={getPostHref(post)}
                 aria-label={post.data.title}
-                class="group btn-plain block! h-10 w-full rounded-lg"
+                class="group btn-plain block! min-h-10 md:h-10 w-full rounded-lg"
                 data-archive-post
                 data-category={category}
                 data-uncategorized={isUncategorized ? "true" : "false"}
               >
-                <div class="flex flex-row justify-start items-center h-full">
+                <div class="flex flex-row justify-start items-center min-h-10 md:h-full">
                   <div class="w-[15%] md:w-[10%] transition text-sm text-right text-50">
                     {formatDate(post.data.published)}
                   </div>
@@ -111,7 +111,7 @@ function normalizeCategory(category: string | null | undefined) {
                   </div>
 
                   <div
-                    class="w-[70%] md:w-[80%] text-left font-bold group-hover:translate-x-1 transition-all group-hover:text-(--primary) text-75 pr-8 whitespace-nowrap text-ellipsis overflow-hidden"
+                    class="w-[70%] md:w-[80%] text-left font-bold group-hover:translate-x-1 transition-all group-hover:text-(--primary) text-75 pr-8 line-clamp-2 md:line-clamp-1"
                   >
                     {post.data.title}
                   </div>
