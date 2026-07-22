@@ -547,17 +547,18 @@
           class="hidden-player-icon text-(--primary) text-3xl"
         />
       {:else if isPlaying}
-        <div class="flex space-x-0.5">
+        <div class="flex space-x-0.5 items-end">
           <div
-            class="hidden-player-bar w-0.5 h-3 rounded-full animate-pulse"
+            class="hidden-player-bar w-0.5 h-4 rounded-full"
+            style="animation-delay: 0s; animation-duration: 0.7s;"
           ></div>
           <div
-            class="hidden-player-bar w-0.5 h-4 rounded-full animate-pulse"
-            style="animation-delay: 150ms;"
+            class="hidden-player-bar w-0.5 h-5 rounded-full"
+            style="animation-delay: 0.2s; animation-duration: 0.9s;"
           ></div>
           <div
-            class="hidden-player-bar w-0.5 h-2 rounded-full animate-pulse"
-            style="animation-delay: 300ms;"
+            class="hidden-player-bar w-0.5 h-3 rounded-full"
+            style="animation-delay: 0.4s; animation-duration: 0.6s;"
           ></div>
         </div>
       {:else}
@@ -804,7 +805,7 @@
                   {:else if index === currentIndex && isPlaying}
                     <Icon
                       icon="material-symbols:graphic-eq"
-                      class="text-(--primary) animate-pulse"
+                      class="text-(--primary)"
                     />
                   {:else if index === currentIndex}
                     <Icon
