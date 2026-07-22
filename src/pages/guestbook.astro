@@ -90,6 +90,13 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
 </MainGridLayout>
 
 <script>
+  // 所有逻辑包裹在 astro:page-load 中，确保 View Transitions 导航后重新初始化。
+  // 模块脚本只执行一次，但 listener 每次 page-load 都会触发；
+  // 旧 DOM 元素被 View Transitions 替换后，旧监听器随脱离的节点被 GC，不会累积。
+  document.addEventListener("astro:page-load", () => {
+    const form = document.querySelector<HTMLFormElement>("#guestbook-form");
+    if (!form) return; // 不在留言板页面时不执行
+
   type GuestbookEntry = {
     id: number;
     name: string;
@@ -98,7 +105,6 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
     createdAt: string;
   };
 
-  const form = document.querySelector<HTMLFormElement>("#guestbook-form");
   const list = document.querySelector<HTMLDivElement>("#guestbook-list");
   const status = document.querySelector<HTMLParagraphElement>("#guestbook-status");
   const submitButton =
@@ -121,6 +127,7 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
   const DRAFT_KEY = "guestbook:draft";
   const ADMIN_TOKEN_KEY = "guestbook:admin-token";
   let isAdminMode = false;
+  let currentOffset = 0;
 
   function getAdminToken(): string | null {
     try {
@@ -203,7 +210,8 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
           isAdminMode = false;
           if (adminPanel) adminPanel.hidden = true;
           await loadMessages();
-          throw new Error("管理员 Token 已失效，已退出管理模式。");
+          setStatus("管理员 Token 已失效，已退出管理模式。", "error");
+          return;
         }
         throw new Error(data.message || "删除失败。");
       }
@@ -217,7 +225,7 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
         updateCount(n);
       }
     } catch (error) {
-      alert(error instanceof Error ? error.message : "删除失败。");
+      setStatus(error instanceof Error ? error.message : "删除失败。", "error");
       btn.disabled = false;
     }
   }
@@ -314,7 +322,8 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
       hash = ((hash << 5) - hash) + str.charCodeAt(i);
       hash |= 0;
     }
-    return Math.abs(hash);
+    // 使用无符号右移确保非负，避免 Math.abs(INT_MIN) 返回负值的边界 bug
+    return hash >>> 0;
   }
 
   function createAvatar(name: string): HTMLElement {
@@ -375,8 +384,6 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
     return article;
   }
 
-  let currentOffset = 0;
-
   function renderMessages(entries: GuestbookEntry[]) {
     if (!list) return;
     list.replaceChildren();
@@ -423,9 +430,12 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
       updateLoadMoreButton(data.hasMore ?? false);
       updateCount(data.total);
       if (scrollToTop && list?.firstElementChild instanceof Element) {
-        list.firstElementChild.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
+        // 等待浏览器完成布局后再滚动，避免定位到错误位置
+        requestAnimationFrame(() => {
+          list?.firstElementChild?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
         });
       }
     } catch (error) {
@@ -543,6 +553,7 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
 
   initAdminMode();
   loadMessages();
+  }); // end astro:page-load
 </script>
 
 <style>

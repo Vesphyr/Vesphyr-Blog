@@ -191,7 +191,12 @@ function toEntry(row: GuestbookRow): GuestbookEntry {
 function isSameOriginRequest(request: Request): boolean {
   const origin = request.headers.get("origin");
   if (!origin) return true;
-  return origin === new URL(request.url).origin;
+  const url = new URL(request.url);
+  // 比较 origin，同时兼容 CDN 内部 http 转发 vs 浏览器 https 的场景
+  if (origin === url.origin) return true;
+  const normalizedOrigin = origin.replace(/^http:/, "https:");
+  const normalizedUrlOrigin = url.origin.replace(/^http:/, "https:");
+  return normalizedOrigin === normalizedUrlOrigin;
 }
 
 async function readJson(request: Request): Promise<Record<string, unknown>> {
@@ -362,14 +367,16 @@ export const onRequestDelete = async (
     }
 
     await ensureSchema(db);
-    await db
+    const result = await db
       .prepare(
         `UPDATE guestbook_entries SET deleted_at = ? WHERE id = ? AND deleted_at IS NULL`,
       )
       .bind(new Date().toISOString(), id)
       .run();
 
-    return json({ ok: true, id });
+    const affected =
+      (result as { meta?: { changes?: number } }).meta?.changes ?? 0;
+    return json({ ok: true, id, affected });
   } catch (error) {
     console.error("guestbook:delete", error);
     return errorResponse(500, "DATABASE_ERROR", "留言删除失败。");

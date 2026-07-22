@@ -111,7 +111,9 @@ const skipToContentLabel = isChineseSite
       document.documentElement.setAttribute("data-shiki-theme", "github-dark");
       document.documentElement.setAttribute("data-theme-material", "silk");
       window.theme = { themeValue: "dark" };
-      const hue = localStorage.getItem("hue") || configHue;
+      let storedHue = null;
+      try { storedHue = localStorage.getItem("hue"); } catch (_e) {}
+      const hue = storedHue || configHue;
       document.documentElement.style.setProperty("--hue", hue);
       (function () {
           function updateViewportHeightVar() {
@@ -137,8 +139,10 @@ const skipToContentLabel = isChineseSite
         root.setAttribute("data-shiki-theme", "github-dark");
         root.setAttribute("data-theme-material", "silk");
         const carrier = document.getElementById("config-carrier");
-        const defaultHue = carrier?.dataset.hue ?? "0";
-        const hue = localStorage.getItem("hue") ?? defaultHue;
+        const defaultHue = carrier?.dataset.hue ?? String(configHue);
+        let storedHue: string | null = null;
+        try { storedHue = localStorage.getItem("hue"); } catch (_e) {}
+        const hue = storedHue ?? defaultHue;
         root.style.setProperty("--hue", hue);
       });
     </script>

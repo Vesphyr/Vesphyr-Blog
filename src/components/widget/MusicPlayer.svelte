@@ -238,6 +238,8 @@
     if (!playlistLoaded) {
       const loaded = await lazyLoadPlaylist();
       if (!loaded) return;
+      // loadSong 已在 50ms 超时中调度 playCurrentAudio，此处不再重复调用
+      return;
     }
     if (!audio || !currentSong.url) return;
 
@@ -320,6 +322,7 @@
 
     willAutoPlay = autoPlay;
     currentIndex = index;
+    failedPlaybackAttempts = 0;
     loadSong(playlist[currentIndex]);
   }
 
@@ -402,10 +405,13 @@
     isPlaying = false;
   }
 
+  let errorTimer: ReturnType<typeof setTimeout> | undefined;
+
   function showErrorMessage(message: string) {
+    clearTimeout(errorTimer);
     errorMessage = message;
     showError = true;
-    setTimeout(() => {
+    errorTimer = setTimeout(() => {
       showError = false;
     }, 6000);
   }
@@ -473,6 +479,7 @@
     return () => {
       clearAudioLoadTimeout();
       clearLoadSongTimeout();
+      clearTimeout(errorTimer);
       cleanups.forEach((cleanup) => cleanup());
     };
   });

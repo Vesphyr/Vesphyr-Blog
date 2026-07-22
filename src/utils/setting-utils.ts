@@ -27,14 +27,23 @@ export function getDefaultHue(): number {
 }
 
 export function getHueUI(): number {
-  const stored = localStorage.getItem(HUE_STORAGE_KEY);
+  let stored: string | null = null;
+  try {
+    stored = localStorage.getItem(HUE_STORAGE_KEY);
+  } catch {
+    // localStorage 不可用时（无痕模式、被禁用）静默降级
+  }
   const actualHue = parseHue(stored, getDefaultHue());
   return hueToUi(actualHue);
 }
 
 export function setHueUI(uiValue: number): void {
   const actualHue = uiToHue(uiValue);
-  localStorage.setItem(HUE_STORAGE_KEY, String(actualHue));
+  try {
+    localStorage.setItem(HUE_STORAGE_KEY, String(actualHue));
+  } catch {
+    // localStorage 不可用时静默降级，不影响视觉反馈
+  }
   document.documentElement.style.setProperty("--hue", String(actualHue));
 
   document.documentElement.setAttribute("data-theme-material", "silk");
