@@ -4,14 +4,8 @@ type KvLike = {
   delete: (key: string) => Promise<void>;
 };
 
-type R2BucketLike = {
-  get: (key: string) => Promise<{ body: ReadableStream; httpEtag?: string } | null>;
-  head: (key: string) => Promise<{ size?: number; httpEtag?: string } | null>;
-};
-
 type MusicEnv = {
   MUSIC_KV?: KvLike;
-  MUSIC_R2?: R2BucketLike;
 };
 
 type RequestContext = {
@@ -480,26 +474,30 @@ async function handleAudioRequest(context: RequestContext): Promise<Response> {
   };
 
   try {
-    if (env?.MUSIC_R2) {
-      const r2Key = `music/${songId}.mp3`;
-      const r2Object = await env.MUSIC_R2.get(r2Key);
-      if (r2Object) {
-        const headers = new Headers();
-        headers.set("content-type", "audio/mpeg");
-        headers.set("cache-control", "public, max-age=86400, s-maxage=86400");
-        headers.set("accept-ranges", "bytes");
-        if (r2Object.httpEtag) {
-          headers.set("etag", r2Object.httpEtag);
-        }
-        if (range) {
-          headers.set("content-range", range);
-        }
-        return new Response(
-          request.method === "HEAD" ? null : r2Object.body,
-          { status: 200, headers },
-        );
-      }
+    const staticUrl = new URL(`/music/${songId}.mp3`, request.url);
+    const staticResponse = await fetch(staticUrl, {
+      method: request.method === "HEAD" ? "HEAD" : "GET",
+      headers: range ? { range } : {},
+    });
+    if (staticResponse.ok || staticResponse.status === 206) {
+      const headers = new Headers();
+      headers.set("content-type", "audio/mpeg");
+      headers.set("cache-control", "public, max-age=86400, s-maxage=86400");
+      headers.set("accept-ranges", "bytes");
+      const ct = staticResponse.headers.get("content-type");
+      if (ct) headers.set("content-type", ct);
+      const cl = staticResponse.headers.get("content-length");
+      if (cl) headers.set("content-length", cl);
+      const cr = staticResponse.headers.get("content-range");
+      if (cr) headers.set("content-range", cr);
+      const etag = staticResponse.headers.get("etag");
+      if (etag) headers.set("etag", etag);
+      return new Response(
+        request.method === "HEAD" ? null : staticResponse.body,
+        { status: staticResponse.status, headers },
+      );
     }
+    staticResponse.body?.cancel();
 
     const cachedLocation = await readCachedAudioLocation(request, songId);
     if (cachedLocation) {

@@ -8,11 +8,5 @@
       "binding": "MUSIC_KV",
       "id": "db77ea445b5f4b38be0ceb3a3aaf5fc9"
     }
-  ],
-  "r2_buckets": [
-    {
-      "binding": "MUSIC_R2",
-      "bucket_name": "vesphyr-music"
-    }
   ]
 }
