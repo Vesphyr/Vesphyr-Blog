@@ -76,6 +76,7 @@ test("kv audio location cache hit short-circuits the resolver chain", async () =
       typeof input === "string" || input instanceof URL
         ? input.toString()
         : input.url;
+    if (url.includes("/music/")) return new Response("Not Found", { status: 404 });
     fetchedUrls.push(url);
     return makeAudioResponse();
   };
@@ -103,6 +104,7 @@ test("resolver success writes audio location to kv and leaves resolver healthy",
       typeof input === "string" || input instanceof URL
         ? input.toString()
         : input.url;
+    if (url.includes("/music/")) return new Response("Not Found", { status: 404 });
 
     if (url.includes("music.163.com/song/media/outer/url")) {
       return makeTextErrorResponse();
@@ -168,6 +170,7 @@ test("unhealthy resolver is skipped and remaining resolvers are tried", async ()
       typeof input === "string" || input instanceof URL
         ? input.toString()
         : input.url;
+    if (url.includes("/music/")) return new Response("Not Found", { status: 404 });
     fetchedUrls.push(url);
 
     if (url.includes("music.163.com/song/media/outer/url")) {
@@ -223,6 +226,7 @@ test("kv unavailable degrades gracefully to resolver chain", async () => {
       typeof input === "string" || input instanceof URL
         ? input.toString()
         : input.url;
+    if (url.includes("/music/")) return new Response("Not Found", { status: 404 });
     if (url.includes("music.163.com/song/media/outer/url")) {
       return makeRedirectResponse("https://m10.music.126.net/no-kv.mp3");
     }
