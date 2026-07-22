@@ -28,6 +28,7 @@ export default defineConfig({
     base: "/",
     trailingSlash: "always",
     output: "static",
+    compressHTML: true,
     prefetch: {
         prefetchAll: true,
         defaultStrategy: "viewport",

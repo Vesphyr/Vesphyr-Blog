@@ -43,7 +43,7 @@ function loadOgFonts(): {
         return fontCache;
     }
     try {
-        const fontPath = path.resolve(process.cwd(), "public/assets/fonts/ZhuqueFangsong-Regular.ttf");
+        const fontPath = path.resolve(process.cwd(), "fonts/ZhuqueFangsong-Regular.ttf");
         if (!fs.existsSync(fontPath)) {
             console.warn(`OG font not found: ${fontPath}`);
             fontCache = { regular: null, bold: null };

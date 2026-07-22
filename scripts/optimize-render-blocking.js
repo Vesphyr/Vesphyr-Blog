@@ -10,7 +10,6 @@ const CORE_CSS = new Set([
   "main",
   "MainGridLayout",
   "transition",
-  "generated-zhuque-ui-font",
 ]);
 const REMOVABLE_CSS = new Set([
   "vendor-katex",
