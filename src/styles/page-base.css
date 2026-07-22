@@ -36,12 +36,8 @@ body {
   line-height: 1.7;
   color: var(--text-main);
   background:
-    linear-gradient(
-      180deg,
-      transparent 0%,
-      transparent 42%,
-      var(--page-bg-vignette) 100%
-    ),
+    radial-gradient(ellipse 80% 50% at 50% 0%, var(--page-bg-glow), transparent),
+    radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, var(--page-bg-vignette) 100%),
     var(--page-bg-weave-primary), var(--page-bg-weave-secondary),
     var(--page-bg-weave-fine),
     linear-gradient(
@@ -50,7 +46,7 @@ body {
       var(--page-bg) 52%,
       var(--page-bg-bottom) 100%
     );
-  background-blend-mode: normal, soft-light, soft-light, soft-light, normal;
+  background-blend-mode: normal, normal, soft-light, soft-light, soft-light, normal;
   background-attachment: fixed;
   transition:
     background-color 0.2s ease,
