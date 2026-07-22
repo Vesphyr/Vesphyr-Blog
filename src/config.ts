@@ -56,6 +56,11 @@ export const navBarConfig: NavBarConfig = {
       url: "/albums/",
       icon: "material-symbols:photo-library",
     },
+    {
+      name: "\u5173\u4E8E",
+      url: "/about/",
+      icon: "material-symbols:person-outline",
+    },
   ],
 };
 
