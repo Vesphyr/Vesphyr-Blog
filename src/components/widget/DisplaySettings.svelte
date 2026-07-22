@@ -115,10 +115,22 @@
     align-items center
     justify-content center
     box-sizing border-box
-    transition box-shadow 0.2s ease
 
-    &.selected
-      box-shadow inset 0 0 0 2px rgba(255, 255, 255, 0.85)
+    &::after
+      content ''
+      position absolute
+      bottom 0.3rem
+      left 50%
+      transform translateX(-50%)
+      width 0.3rem
+      height 0.3rem
+      border-radius 50%
+      background rgba(255, 255, 255, 0.85)
+      opacity 0
+      transition opacity 0.2s ease
+
+    &.selected::after
+      opacity 1
 
     .color-name
       font-size 0.875rem
