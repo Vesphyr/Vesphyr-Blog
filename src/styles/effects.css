@@ -4,31 +4,7 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  filter: url(#silk-weave);
-  background:
-    radial-gradient(ellipse 80% 70% at 45% 40%,
-      rgba(236, 226, 208, 0.7) 0%,
-      rgba(224, 209, 186, 0.55) 70%,
-      rgba(212, 194, 166, 0.45) 100%
-    ),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500'%3E%3Cfilter id='cloud'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.004' numOctaves='2' seed='3'/%3E%3CfeGaussianBlur stdDeviation='3'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0  0.96 0 0 0 0  0.88 0 0 0 0  0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23cloud)'/%3E%3C/svg%3E"),
-    repeating-linear-gradient(0deg, transparent 0 14px, rgba(192, 170, 138, 0.06) 14px 15px, transparent 15px 34px),
-    repeating-linear-gradient(90deg, transparent 0 17px, rgba(186, 164, 132, 0.05) 17px 18px, transparent 18px 38px),
-    linear-gradient(0deg, transparent 34%, rgba(192, 170, 138, 0.05) 42%, rgba(192, 170, 138, 0.07) 50%, rgba(192, 170, 138, 0.05) 58%, transparent 66%),
-    linear-gradient(90deg, transparent 28%, rgba(188, 166, 134, 0.04) 38%, rgba(188, 166, 134, 0.06) 50%, rgba(188, 166, 134, 0.04) 62%, transparent 72%),
-    linear-gradient(0deg, transparent 0%, rgba(247, 243, 236, 0.03) 30%, rgba(247, 243, 236, 0.02) 50%, transparent 70%);
-  background-size: 100% 100%, 2000px 2000px, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='55' viewBox='0 0 70 55'%3E%3Cpath d='M18,28 Q12,20 22,17 Q28,12 35,17 Q42,12 47,20 Q55,17 52,28 Q55,35 45,37 Q37,42 30,37 Q20,38 18,28 Z' fill='none' stroke='%234A2E50' stroke-width='0.6' opacity='0.5'/%3E%3Cpath d='M55,42 Q50,35 57,33 Q62,29 68,33 Q72,31 70,39 Q72,45 64,47 Q58,48 55,42 Z' fill='none' stroke='%23422A48' stroke-width='0.45' opacity='0.35'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  opacity: 0.6;
 }
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.2;
-  background:
-    linear-gradient(0deg, transparent 0%, rgba(255, 255, 255, 0.05) 34%, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0.05) 66%, transparent 100%),
-    linear-gradient(90deg, transparent 0%, rgba(255, 253, 248, 0.04) 38%, rgba(255, 253, 248, 0.02) 52%, transparent 100%);
-}
-
