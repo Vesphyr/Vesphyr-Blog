@@ -81,3 +81,4 @@ twikoo_version.json
 # WorkBuddy agent workspace
 .workbuddy/
 generated-zhuque-ui-font.css
+tmp-music/

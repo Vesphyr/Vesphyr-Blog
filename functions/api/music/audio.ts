@@ -4,8 +4,14 @@ type KvLike = {
   delete: (key: string) => Promise<void>;
 };
 
+type R2BucketLike = {
+  get: (key: string) => Promise<{ body: ReadableStream; httpEtag?: string } | null>;
+  head: (key: string) => Promise<{ size?: number; httpEtag?: string } | null>;
+};
+
 type MusicEnv = {
   MUSIC_KV?: KvLike;
+  MUSIC_R2?: R2BucketLike;
 };
 
 type RequestContext = {
@@ -474,6 +480,27 @@ async function handleAudioRequest(context: RequestContext): Promise<Response> {
   };
 
   try {
+    if (env?.MUSIC_R2) {
+      const r2Key = `music/${songId}.mp3`;
+      const r2Object = await env.MUSIC_R2.get(r2Key);
+      if (r2Object) {
+        const headers = new Headers();
+        headers.set("content-type", "audio/mpeg");
+        headers.set("cache-control", "public, max-age=86400, s-maxage=86400");
+        headers.set("accept-ranges", "bytes");
+        if (r2Object.httpEtag) {
+          headers.set("etag", r2Object.httpEtag);
+        }
+        if (range) {
+          headers.set("content-range", range);
+        }
+        return new Response(
+          request.method === "HEAD" ? null : r2Object.body,
+          { status: 200, headers },
+        );
+      }
+    }
+
     const cachedLocation = await readCachedAudioLocation(request, songId);
     if (cachedLocation) {
       const cachedAudioResponse = await fetchAudioLocation(
