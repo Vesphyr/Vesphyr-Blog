@@ -71,9 +71,6 @@
             type="button"
           >
             <span class="color-name">{option.name}</span>
-            {#if hueUI === option.hue}
-              <span class="indicator"></span>
-            {/if}
           </button>
         {/each}
       </div>
@@ -118,6 +115,10 @@
     align-items center
     justify-content center
     box-sizing border-box
+    transition box-shadow 0.2s ease
+
+    &.selected
+      box-shadow inset 0 0 0 2px rgba(255, 255, 255, 0.85)
 
     .color-name
       font-size 0.875rem
@@ -125,15 +126,4 @@
       color rgba(255, 255, 255, 0.9)
       text-shadow 0 1px 2px rgba(0, 0, 0, 0.3)
       z-index 1
-
-    .indicator
-      position absolute
-      bottom 0.15rem
-      left 50%
-      transform translateX(-50%)
-      width 0
-      height 0
-      border-left 0.4rem solid transparent
-      border-right 0.4rem solid transparent
-      border-bottom 0.5rem solid rgba(255, 255, 255, 0.85)
 </style>
