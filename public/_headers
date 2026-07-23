@@ -2,6 +2,20 @@
 /
   Cache-Control: public, max-age=60, s-maxage=300, stale-while-revalidate=3600
 
+# All non-personalized HTML pages - edge cache (matches homepage policy)
+# Keeps content fresh (s-maxage 5min) while serving stale during revalidation.
+/about/
+  Cache-Control: public, max-age=60, s-maxage=300, stale-while-revalidate=3600
+/albums/
+/albums/*
+  Cache-Control: public, max-age=60, s-maxage=300, stale-while-revalidate=3600
+/archive/
+/archive/*
+  Cache-Control: public, max-age=60, s-maxage=300, stale-while-revalidate=3600
+/posts/
+/posts/*
+  Cache-Control: public, max-age=60, s-maxage=300, stale-while-revalidate=3600
+
 # RSS/Atom CORS headers
 /atom.xml
   Access-Control-Allow-Origin: *
