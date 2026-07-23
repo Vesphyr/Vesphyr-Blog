@@ -34,7 +34,7 @@ export const en: Translation = {
     [Key.musicPlayerErrorSong]: "Failed to load current song, trying next",
     [Key.musicPlayerErrorEmpty]: "No available songs in playlist",
     [Key.musicPlayerUnavailable]: "Music temporarily unavailable",
-    [Key.musicPlayerRetryLater]: "The upstream music service is unavailable. Please try again later.",
+    [Key.musicPlayerRetryLater]: "This track is not available offline. Please try again later.",
     [Key.musicPlayerSkipSong]: "Unplayable, skipped",
     [Key.musicPlayerSkipMultiple]: "Multiple tracks failed to play. Please try again later.",
     [Key.unknownSong]: "Unknown Song",

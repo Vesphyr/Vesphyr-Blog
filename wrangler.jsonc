@@ -2,11 +2,5 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "vesphyr-blog",
   "compatibility_date": "2026-04-07",
-  "pages_build_output_dir": "./dist",
-  "kv_namespaces": [
-    {
-      "binding": "MUSIC_KV",
-      "id": "db77ea445b5f4b38be0ceb3a3aaf5fc9"
-    }
-  ]
+  "pages_build_output_dir": "./dist"
 }

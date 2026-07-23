@@ -35,7 +35,7 @@ export const zh_CN: Translation = {
   [Key.musicPlayerErrorSong]: "当前歌曲加载失败，正在尝试下一首",
   [Key.musicPlayerErrorEmpty]: "播放列表中没有可用歌曲",
   [Key.musicPlayerUnavailable]: "音乐暂不可用",
-  [Key.musicPlayerRetryLater]: "上游音乐服务暂时不可用，请稍后重试",
+  [Key.musicPlayerRetryLater]: "该歌曲暂未提供离线版本，请稍后重试",
   [Key.musicPlayerSkipSong]: "无法播放，已跳过",
   [Key.musicPlayerSkipMultiple]: "多首歌曲无法播放，请稍后重试",
   [Key.unknownSong]: "未知歌曲",
