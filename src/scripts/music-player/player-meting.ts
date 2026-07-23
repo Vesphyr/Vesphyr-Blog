@@ -9,22 +9,12 @@ interface FetchMetingPlaylistSongsOptions {
   unknownArtistLabel: string;
 }
 
-const PLAYLIST_CACHE_TTL_MS = 6 * 60 * 60 * 1000;
-
-type CachedPlaylist = {
-  cachedAt: number;
-  songs: Song[];
-};
-
-function getPlaylistCacheKey(options: FetchMetingPlaylistSongsOptions): string {
-  return [
-    "vesphyr:music-playlist",
-    options.server,
-    options.type,
-    options.id,
-    options.apiTemplate,
-  ].join(":");
-}
+// Playlist cache is keyed by an ETag returned by the server. The server
+// derives the ETag from the playlist content, so any change (e.g. after a
+// deploy) invalidates the cached copy automatically — no fixed TTL that
+// could hide edits for hours.
+const LS_ETAG_KEY = "vesphyr:music-playlist-etag";
+const LS_SONGS_KEY = "vesphyr:music-playlist-songs";
 
 function isValidSong(song: unknown): song is Song {
   if (!song || typeof song !== "object") return false;
@@ -38,40 +28,38 @@ function isValidSong(song: unknown): song is Song {
   );
 }
 
-function readCachedPlaylist(cacheKey: string): Song[] | null {
+function readCachedSongs(): Song[] | null {
   try {
     if (typeof localStorage === "undefined") return null;
-    const rawCache = localStorage.getItem(cacheKey);
-    if (!rawCache) return null;
+    const raw = localStorage.getItem(LS_SONGS_KEY);
+    if (!raw) return null;
 
-    const cached = JSON.parse(rawCache) as CachedPlaylist;
-    if (
-      !cached ||
-      !Number.isFinite(cached.cachedAt) ||
-      Date.now() - cached.cachedAt > PLAYLIST_CACHE_TTL_MS ||
-      !Array.isArray(cached.songs) ||
-      !cached.songs.every(isValidSong)
-    ) {
-      localStorage.removeItem(cacheKey);
+    const songs = JSON.parse(raw) as Song[];
+    if (!Array.isArray(songs) || !songs.every(isValidSong)) {
+      localStorage.removeItem(LS_SONGS_KEY);
       return null;
     }
 
-    return cached.songs;
+    return songs;
   } catch {
     return null;
   }
 }
 
-function writeCachedPlaylist(cacheKey: string, songs: Song[]) {
+function readCachedEtag(): string | null {
+  try {
+    if (typeof localStorage === "undefined") return null;
+    return localStorage.getItem(LS_ETAG_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function writeCache(etag: string | null, songs: Song[]) {
   try {
     if (typeof localStorage === "undefined") return;
-    localStorage.setItem(
-      cacheKey,
-      JSON.stringify({
-        cachedAt: Date.now(),
-        songs,
-      } satisfies CachedPlaylist),
-    );
+    localStorage.setItem(LS_SONGS_KEY, JSON.stringify(songs));
+    if (etag) localStorage.setItem(LS_ETAG_KEY, etag);
   } catch {
     // Ignore quota and private browsing errors; playback should still work.
   }
@@ -88,11 +76,6 @@ export async function fetchMetingPlaylistSongs(
     unknownSongLabel,
     unknownArtistLabel,
   } = options;
-  const cacheKey = getPlaylistCacheKey(options);
-  const cachedSongs = readCachedPlaylist(cacheKey);
-  if (cachedSongs) {
-    return cachedSongs;
-  }
 
   const apiUrl = apiTemplate
     .replace(":server", server)
@@ -101,11 +84,24 @@ export async function fetchMetingPlaylistSongs(
     .replace(":auth", "")
     .replace(":r", Date.now().toString());
 
-  const response = await fetch(apiUrl);
+  const cachedSongs = readCachedSongs();
+  const cachedEtag = readCachedEtag();
+
+  const headers: Record<string, string> = {};
+  if (cachedEtag) headers["If-None-Match"] = cachedEtag;
+
+  const response = await fetch(apiUrl, { headers });
+
+  // 304 Not Modified: playlist unchanged since the cached copy was stored.
+  if (response.status === 304 && cachedSongs) {
+    return cachedSongs;
+  }
+
   if (!response.ok) {
     throw new Error("meting api error");
   }
 
+  const etag = response.headers.get("etag");
   const list = await response.json();
   const songs = list.map((song: any) => {
     let title = song.name ?? song.title ?? unknownSongLabel;
@@ -124,6 +120,6 @@ export async function fetchMetingPlaylistSongs(
     });
   });
 
-  writeCachedPlaylist(cacheKey, songs);
+  writeCache(etag, songs);
   return songs;
 }
