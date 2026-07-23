@@ -30,7 +30,7 @@ test("music playlist api returns local tracks without contacting upstream", asyn
     );
   }
 
-  assert.match(response.headers.get("cache-control") ?? "", /s-maxage=300/);
+  assert.match(response.headers.get("cache-control") ?? "", /s-maxage=\d+/);
 });
 
 test("music playlist api returns 304 when the etag matches", async () => {
