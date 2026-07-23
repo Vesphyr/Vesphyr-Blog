@@ -15,6 +15,14 @@ const REMOVABLE_CSS = new Set([
   "vendor-katex",
   "vendor-fancybox",
   "fancybox-custom",
+  // Redundant font @font-face chunks. All @font-face rules are served as a single
+  // async stylesheet from /fonts/font-faces.css (see scripts/copy-font-css.js), so
+  // these auto-emitted duplicates must not be linked (browser would fetch ~250KB
+  // of redundant font CSS). Removing the links avoids the download; the files are
+  // harmless dead assets in /assets/.
+  "local-fonts",
+  "generated-zhuque-font",
+  "generated-zhuque-ui-font",
 ]);
 const HOMEPAGE_UNUSED_CSS = new Set([
   "Cnc",
@@ -25,7 +33,6 @@ const HOMEPAGE_UNUSED_CSS = new Set([
   "post-detail-layout",
   "floating-toc",
   "post-navigation",
-  "generated-zhuque-font",
 ]);
 function cssPrefix(filename) {
   return filename.replace(/\.css$/, "").replace(/\.[A-Za-z0-9_-]+$/, "");
