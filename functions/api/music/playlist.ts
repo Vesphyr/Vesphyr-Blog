@@ -33,5 +33,23 @@ export const onRequestGet = (context: { request: Request }) => {
     return new Response(null, { status: 304, headers });
   }
 
-  return new Response(body, { status: 200, headers });
+  // Stamp every audio URL with the playlist ETag as a version query param
+  // (...&v=<etag>). The audio endpoint only reads `id` and ignores `v`, so
+  // playback is unaffected, but when the playlist changes the URL changes
+  // too — which forces the browser to bypass any cached copy of the old
+  // .mp3 (the audio endpoint sets a long max-age) and fetch the new file.
+  // Without this, swapping a track's audio left the old file served for up
+  // to 24h because the URL stayed identical.
+  const version = etag.replace(/"/g, "");
+  const versioned = (playlistData as Array<Record<string, unknown>>).map(
+    (song) => {
+      const url = song.url;
+      if (typeof url !== "string" || !url) return song;
+      const parsed = new URL(url, "https://music.local/");
+      parsed.searchParams.set("v", version);
+      return { ...song, url: parsed.pathname + parsed.search };
+    },
+  );
+
+  return new Response(JSON.stringify(versioned), { status: 200, headers });
 };
