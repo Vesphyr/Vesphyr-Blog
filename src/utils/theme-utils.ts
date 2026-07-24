@@ -1,4 +1,3 @@
-import { DARK_MODE } from "@constants/constants";
 import type { LIGHT_DARK_MODE } from "@/types/config";
 
 export const THEME_STORAGE_KEY = "theme";

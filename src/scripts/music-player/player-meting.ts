@@ -1,18 +1,9 @@
 import { createSong, type Song } from "./player-types";
 
-interface FetchMetingPlaylistSongsOptions {
-  apiTemplate: string;
-  id: string;
-  server: string;
-  type: string;
-  unknownSongLabel: string;
-  unknownArtistLabel: string;
-}
-
-// Playlist cache is keyed by an ETag returned by the server. The server
-// derives the ETag from the playlist content, so any change (e.g. after a
-// deploy) invalidates the cached copy automatically — no fixed TTL that
-// could hide edits for hours.
+// The playlist lives in a self-hosted endpoint (/api/music/playlist). Its
+// ETag is derived from the playlist content, so any deploy that changes the
+// list invalidates the cached copy automatically — no fixed TTL that could
+// hide edits for hours.
 const LS_ETAG_KEY = "vesphyr:music-playlist-etag";
 const LS_SONGS_KEY = "vesphyr:music-playlist-songs";
 
@@ -65,24 +56,16 @@ function writeCache(etag: string | null, songs: Song[]) {
   }
 }
 
-export async function fetchMetingPlaylistSongs(
-  options: FetchMetingPlaylistSongsOptions,
-): Promise<Song[]> {
-  const {
-    apiTemplate,
-    id,
-    server,
-    type,
-    unknownSongLabel,
-    unknownArtistLabel,
-  } = options;
+interface FetchLocalPlaylistSongsOptions {
+  endpoint: string;
+  unknownSongLabel: string;
+  unknownArtistLabel: string;
+}
 
-  const apiUrl = apiTemplate
-    .replace(":server", server)
-    .replace(":type", type)
-    .replace(":id", id)
-    .replace(":auth", "")
-    .replace(":r", Date.now().toString());
+export async function fetchLocalPlaylistSongs(
+  options: FetchLocalPlaylistSongsOptions,
+): Promise<Song[]> {
+  const { endpoint, unknownSongLabel, unknownArtistLabel } = options;
 
   const cachedSongs = readCachedSongs();
   const cachedEtag = readCachedEtag();
@@ -90,7 +73,7 @@ export async function fetchMetingPlaylistSongs(
   const headers: Record<string, string> = {};
   if (cachedEtag) headers["If-None-Match"] = cachedEtag;
 
-  const response = await fetch(apiUrl, { headers });
+  const response = await fetch(endpoint, { headers });
 
   // 304 Not Modified: playlist unchanged since the cached copy was stored.
   if (response.status === 304 && cachedSongs) {
@@ -98,7 +81,7 @@ export async function fetchMetingPlaylistSongs(
   }
 
   if (!response.ok) {
-    throw new Error("meting api error");
+    throw new Error("playlist request failed");
   }
 
   const etag = response.headers.get("etag");

@@ -4,7 +4,7 @@
   import { musicPlayerConfig } from "../../config";
   import Key from "../../i18n/i18nKey";
   import { i18n } from "../../i18n/translation";
-  import { fetchMetingPlaylistSongs } from "../../scripts/music-player/player-meting";
+  import { fetchLocalPlaylistSongs } from "../../scripts/music-player/player-meting";
   import {
     bindAutoplayRecovery,
     bindPlayerDocumentEvents,
@@ -16,12 +16,7 @@
     type Song,
   } from "../../scripts/music-player/player-types";
 
-  let meting_api =
-    musicPlayerConfig.meting_api ??
-    "https://www.bilibili.uno/api?server=:server&type=:type&id=:id&auth=:auth&r=:r";
-  let meting_id = musicPlayerConfig.id ?? "14164869977";
-  let meting_server = musicPlayerConfig.server ?? "netease";
-  let meting_type = musicPlayerConfig.type ?? "playlist";
+  let playlistEndpoint = musicPlayerConfig.playlistEndpoint;
   const DEFAULT_AUDIO_VOLUME = 0.8;
   const AUDIO_LOAD_TIMEOUT_MS = 12000;
   const SKIP_FAILURE_THRESHOLD = 3;
@@ -164,18 +159,15 @@
   }
 
   async function fetchMetingPlaylist(): Promise<boolean> {
-    if (!meting_api || !meting_id) {
+    if (!playlistEndpoint) {
       setPlayerFallback(i18n(Key.musicPlayerUnavailable));
       return false;
     }
 
     isLoading = true;
     try {
-      playlist = await fetchMetingPlaylistSongs({
-        apiTemplate: meting_api,
-        id: meting_id,
-        server: meting_server,
-        type: meting_type,
+      playlist = await fetchLocalPlaylistSongs({
+        endpoint: playlistEndpoint,
         unknownSongLabel: i18n(Key.unknownSong),
         unknownArtistLabel: i18n(Key.unknownArtist),
       });

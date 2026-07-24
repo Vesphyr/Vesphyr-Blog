@@ -114,10 +114,7 @@ export type ExpressiveCodeConfig = {
 
 export type MusicPlayerConfig = {
   enable: boolean;
-  meting_api: string;
-  id: string;
-  server: string;
-  type: string;
+  playlistEndpoint: string;
 };
 
 export type WidgetComponentType =

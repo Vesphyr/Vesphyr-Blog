@@ -103,11 +103,7 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 
 export const musicPlayerConfig: MusicPlayerConfig = {
   enable: true,
-  meting_api:
-    "/api/music/playlist?server=:server&type=:type&id=:id&auth=:auth&r=:r",
-  id: "13556055400",
-  server: "netease",
-  type: "playlist",
+  playlistEndpoint: "/api/music/playlist",
 };
 
 export const sidebarLayoutConfig: SidebarLayoutConfig = {
