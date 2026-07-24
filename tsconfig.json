@@ -3,8 +3,6 @@
 	"compilerOptions": {
 		"module": "ESNext",
 		"moduleResolution": "bundler",
-		"jsx": "react-jsx",
-		"jsxImportSource": "react",
 		"baseUrl": ".",
 		"ignoreDeprecations": "6.0",
 		"allowJs": false,
