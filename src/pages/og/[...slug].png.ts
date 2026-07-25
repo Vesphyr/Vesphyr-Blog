@@ -23,13 +23,27 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
     const allPosts = await getCollection("posts");
     const publishedPosts = allPosts.filter((post: CollectionEntry<"posts">) => !post.data.draft);
-    return publishedPosts.map((post: CollectionEntry<"posts">) => {
+    const postPaths = publishedPosts.map((post: CollectionEntry<"posts">) => {
         const slug = getDefaultPostSlug(post.id);
         return {
             params: { slug },
             props: { post },
         };
     });
+    // Default OG image for the homepage (no per-post slug). Reuses the same satori
+    // template with site-level branding instead of post fields.
+    const homePost = {
+        id: "home",
+        data: {
+            title: siteConfig.title,
+            description: siteConfig.subtitle ?? "",
+            published: new Date(),
+        },
+    } as unknown as CollectionEntry<"posts">;
+    return [
+        ...postPaths,
+        { params: { slug: "home" }, props: { post: homePost } },
+    ];
 };
 let fontCache: {
     regular: Buffer | null;
