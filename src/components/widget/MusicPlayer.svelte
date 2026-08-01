@@ -145,7 +145,9 @@
       failedPlaybackAttempts < playlist.length;
 
     if (canSkip) {
-      showErrorMessage(`${i18n(Key.musicPlayerSkipSong)} - ${currentSong.title}`);
+      showErrorMessage(
+        `${i18n(Key.musicPlayerSkipSong)} - ${currentSong.title}`,
+      );
       skipTimeout = setTimeout(() => {
         skipTimeout = undefined;
         nextSong(true);
@@ -249,6 +251,12 @@
     if (!audio || !currentSong.url) return;
 
     if (isPlaying) {
+      // If this is still the muted-autoplay fallback, treat the gesture
+      // as "unmute" instead of pausing.
+      if (audio.muted) {
+        audio.muted = false;
+        return;
+      }
       audio.pause();
       return;
     }
@@ -636,7 +644,21 @@
             {/if}
           </div>
 
-          <div class="flex-1 min-w-0">
+          <div
+            class="flex-1 min-w-0 cursor-pointer"
+            on:click={togglePlay}
+            on:keydown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                togglePlay();
+              }
+            }}
+            role="button"
+            tabindex="0"
+            aria-label={isPlaying
+              ? i18n(Key.musicPlayerPause)
+              : i18n(Key.musicPlayerPlay)}
+          >
             <div
               bind:this={songTitleViewport}
               class="song-title text-base font-bold text-90 mb-0.5"
@@ -712,10 +734,7 @@
             {#if isShuffled}
               <Icon icon="material-symbols:shuffle" class="text-[1.05rem]" />
             {:else if isRepeating === 1}
-              <Icon
-                icon="material-symbols:repeat-one"
-                class="text-[1.05rem]"
-              />
+              <Icon icon="material-symbols:repeat-one" class="text-[1.05rem]" />
             {:else if isRepeating === 0}
               <Icon
                 icon="material-symbols:repeat"
@@ -771,7 +790,6 @@
           >
             <Icon icon="material-symbols:queue-music" class="text-base" />
           </button>
-
         </div>
       </div>
     </div>
@@ -806,21 +824,28 @@
             {#each playlist as song, index}
               <div
                 class="playlist-item flex items-center gap-3 p-3 transition-colors"
-                class:hover:bg-(--btn-plain-bg-hover)={!brokenSongs.has(song.id)}
+                class:hover:bg-(--btn-plain-bg-hover)={!brokenSongs.has(
+                  song.id,
+                )}
                 class:cursor-pointer={!brokenSongs.has(song.id)}
                 class:opacity-40={brokenSongs.has(song.id)}
                 class:bg-[var(--btn-plain-bg)]={index === currentIndex}
                 class:text-[var(--primary)]={index === currentIndex}
                 on:click={() => !brokenSongs.has(song.id) && playSong(index)}
                 on:keydown={(e) => {
-                  if (!brokenSongs.has(song.id) && (e.key === "Enter" || e.key === " ")) {
+                  if (
+                    !brokenSongs.has(song.id) &&
+                    (e.key === "Enter" || e.key === " ")
+                  ) {
                     e.preventDefault();
                     playSong(index);
                   }
                 }}
                 role="button"
                 tabindex={brokenSongs.has(song.id) ? -1 : 0}
-                aria-label={brokenSongs.has(song.id) ? `${song.title} - unplayable` : `Play ${song.title} - ${song.artist}`}
+                aria-label={brokenSongs.has(song.id)
+                  ? `${song.title} - unplayable`
+                  : `Play ${song.title} - ${song.artist}`}
                 aria-disabled={brokenSongs.has(song.id)}
               >
                 <div class="w-6 h-6 flex items-center justify-center">

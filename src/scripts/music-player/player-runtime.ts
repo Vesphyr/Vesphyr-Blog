@@ -1,120 +1,134 @@
 type BindAutoplayRecoveryOptions = {
-	getAudio: () => HTMLAudioElement | undefined;
-	shouldRecover: () => boolean;
-	onRecovered: () => void;
-	onRecoveryFailed?: () => void;
+  getAudio: () => HTMLAudioElement | undefined;
+  shouldRecover: () => boolean;
+  onRecovered: () => void;
+  onRecoveryFailed?: () => void;
 };
 
 type BindPlayerDocumentEventsOptions = {
-	getPlayerRoot: () => HTMLElement | null;
-	getPlaylistPanel: () => HTMLElement | null;
-	isPlaylistOpen: () => boolean;
-	closePlaylist: () => void;
+  getPlayerRoot: () => HTMLElement | null;
+  getPlaylistPanel: () => HTMLElement | null;
+  isPlaylistOpen: () => boolean;
+  closePlaylist: () => void;
 };
 
 const interactionEvents = ["click", "keydown", "touchstart"] as const;
 
 export function bindAutoplayRecovery(
-	options: BindAutoplayRecoveryOptions,
+  options: BindAutoplayRecoveryOptions,
 ): () => void {
-	const { getAudio, shouldRecover, onRecovered, onRecoveryFailed } = options;
+  const { getAudio, shouldRecover, onRecovered, onRecoveryFailed } = options;
 
-	const handleUserInteraction = () => {
-		const audio = getAudio();
-		if (!audio || !shouldRecover()) return;
+  const handleUserInteraction = () => {
+    const audio = getAudio();
+    if (!audio || !shouldRecover()) return;
 
-		const playPromise = audio.play();
-		if (playPromise !== undefined) {
-			playPromise.then(onRecovered).catch((error) => {
-				const name = (error as DOMException | undefined)?.name;
-				if (name === "AbortError" || name === "NotAllowedError") {
-					// Still buffering or a gesture is still required — keep the
-					// recovery armed for the next interaction; real failures
-					// surface via the audio element's error event.
-					return;
-				}
-				onRecoveryFailed?.();
-			});
-		}
-	};
+    // Already playing (e.g. the muted-autoplay fallback) — just unmute.
+    if (!audio.paused) {
+      onRecovered();
+      return;
+    }
 
-	interactionEvents.forEach((eventName) => {
-		document.addEventListener(eventName, handleUserInteraction, {
-			capture: true,
-		});
-	});
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.then(onRecovered).catch((error) => {
+        const name = (error as DOMException | undefined)?.name;
+        if (name === "AbortError" || name === "NotAllowedError") {
+          // Still buffering (common on mobile): retry shortly — the
+          // track is usually ready within a second. Real failures
+          // surface via the audio element's error event.
+          setTimeout(() => {
+            const audioNow = getAudio();
+            if (!audioNow || !shouldRecover()) return;
+            if (!audioNow.paused) {
+              onRecovered();
+              return;
+            }
+            audioNow
+              .play()
+              .then(onRecovered)
+              .catch(() => {});
+          }, 800);
+          return;
+        }
+        onRecoveryFailed?.();
+      });
+    }
+  };
 
-	return () => {
-		interactionEvents.forEach((eventName) => {
-			document.removeEventListener(eventName, handleUserInteraction, {
-				capture: true,
-			});
-		});
-	};
+  interactionEvents.forEach((eventName) => {
+    document.addEventListener(eventName, handleUserInteraction, {
+      capture: true,
+    });
+  });
+
+  return () => {
+    interactionEvents.forEach((eventName) => {
+      document.removeEventListener(eventName, handleUserInteraction, {
+        capture: true,
+      });
+    });
+  };
 }
 
 export function bindPlayerDocumentEvents(
-	options: BindPlayerDocumentEventsOptions,
+  options: BindPlayerDocumentEventsOptions,
 ): () => void {
-	const {
-		getPlayerRoot,
-		getPlaylistPanel,
-		isPlaylistOpen,
-		closePlaylist,
-	} = options;
+  const { getPlayerRoot, getPlaylistPanel, isPlaylistOpen, closePlaylist } =
+    options;
 
-	const handleDocumentClick = (event: MouseEvent) => {
-		const target = event.target;
-		if (!isPlaylistOpen()) return;
-		if (!(target instanceof Node)) return;
+  const handleDocumentClick = (event: MouseEvent) => {
+    const target = event.target;
+    if (!isPlaylistOpen()) return;
+    if (!(target instanceof Node)) return;
 
-		const playerRoot = getPlayerRoot();
-		const playlistPanel = getPlaylistPanel();
-		if (playlistPanel?.contains(target) || playerRoot?.contains(target)) return;
-		closePlaylist();
-	};
+    const playerRoot = getPlayerRoot();
+    const playlistPanel = getPlaylistPanel();
+    if (playlistPanel?.contains(target) || playerRoot?.contains(target)) return;
+    closePlaylist();
+  };
 
-	const handleDocumentKeydown = (event: KeyboardEvent) => {
-		if (event.key === "Escape" && isPlaylistOpen()) {
-			closePlaylist();
-		}
-	};
+  const handleDocumentKeydown = (event: KeyboardEvent) => {
+    if (event.key === "Escape" && isPlaylistOpen()) {
+      closePlaylist();
+    }
+  };
 
-	document.addEventListener("click", handleDocumentClick);
-	document.addEventListener("keydown", handleDocumentKeydown);
+  document.addEventListener("click", handleDocumentClick);
+  document.addEventListener("keydown", handleDocumentKeydown);
 
-	return () => {
-		document.removeEventListener("click", handleDocumentClick);
-		document.removeEventListener("keydown", handleDocumentKeydown);
-	};
+  return () => {
+    document.removeEventListener("click", handleDocumentClick);
+    document.removeEventListener("keydown", handleDocumentKeydown);
+  };
 }
 
 type ScheduleInitialPlaylistLoadOptions = {
-	enabled: boolean;
-	isMobileViewport: boolean;
-	lazyLoadPlaylist: () => void;
+  enabled: boolean;
+  isMobileViewport: boolean;
+  lazyLoadPlaylist: () => void;
 };
 
 export function scheduleInitialPlaylistLoad(
-	options: ScheduleInitialPlaylistLoadOptions,
+  options: ScheduleInitialPlaylistLoadOptions,
 ) {
-	const { enabled, isMobileViewport, lazyLoadPlaylist } = options;
-	if (!enabled) return;
+  const { enabled, isMobileViewport, lazyLoadPlaylist } = options;
+  if (!enabled) return;
 
-	if (!isMobileViewport) {
-		lazyLoadPlaylist();
-		return;
-	}
+  if (!isMobileViewport) {
+    lazyLoadPlaylist();
+    return;
+  }
 
-	if ("requestIdleCallback" in window) {
-		requestIdleCallback(
-			() => {
-				lazyLoadPlaylist();
-			},
-			{ timeout: 5000 },
-		);
-		return;
-	}
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(
+      () => {
+        lazyLoadPlaylist();
+      },
+      { timeout: 5000 },
+    );
+    return;
+  }
 
-	setTimeout(lazyLoadPlaylist, 3000);
+  setTimeout(lazyLoadPlaylist, 3000);
 }
