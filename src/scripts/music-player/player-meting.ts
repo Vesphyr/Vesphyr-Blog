@@ -62,6 +62,24 @@ interface FetchLocalPlaylistSongsOptions {
   unknownArtistLabel: string;
 }
 
+const FETCH_TIMEOUT_MS = 15000;
+
+// The endpoint is self-hosted, but a hanging network request must not leave
+// the player stuck in a perpetual loading state. Abort after a timeout so the
+// caller can show the fallback and allow a retry.
+async function fetchWithTimeout(
+  endpoint: string,
+  headers: Record<string, string> = {},
+): Promise<Response> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  try {
+    return await fetch(endpoint, { headers, signal: controller.signal });
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
 export async function fetchLocalPlaylistSongs(
   options: FetchLocalPlaylistSongsOptions,
 ): Promise<Song[]> {
@@ -73,11 +91,18 @@ export async function fetchLocalPlaylistSongs(
   const headers: Record<string, string> = {};
   if (cachedEtag) headers["If-None-Match"] = cachedEtag;
 
-  const response = await fetch(endpoint, { headers });
+  let response = await fetchWithTimeout(endpoint, headers);
 
   // 304 Not Modified: playlist unchanged since the cached copy was stored.
   if (response.status === 304 && cachedSongs) {
     return cachedSongs;
+  }
+
+  // 304 but the cached songs are gone (e.g. localStorage was cleared while
+  // the etag survived): retry once without the conditional header so the full
+  // list is fetched instead of misreading the 304 as a failure.
+  if (response.status === 304) {
+    response = await fetchWithTimeout(endpoint);
   }
 
   if (!response.ok) {

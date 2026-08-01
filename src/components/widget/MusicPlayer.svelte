@@ -54,6 +54,7 @@
   let songTitleMeasureToken = 0;
   let audioLoadTimeout: ReturnType<typeof setTimeout> | undefined;
   let loadSongTimeout: ReturnType<typeof setTimeout> | undefined;
+  let skipTimeout: ReturnType<typeof setTimeout> | undefined;
   let failedPlaybackAttempts = 0;
 
   function queueSongTitleMeasure() {
@@ -130,12 +131,12 @@
 
   function handlePlaybackFailure(message: string, shouldSkip: boolean) {
     clearAudioLoadTimeout();
+    clearTimeout(skipTimeout);
+    skipTimeout = undefined;
     isLoading = false;
     isPlaying = false;
     failedPlaybackAttempts += 1;
-    if (shouldSkip) {
-      brokenSongs = new Set([...brokenSongs, currentSong.id]);
-    }
+    brokenSongs = new Set([...brokenSongs, currentSong.id]);
 
     const canSkip =
       shouldSkip &&
@@ -145,7 +146,10 @@
 
     if (canSkip) {
       showErrorMessage(`${i18n(Key.musicPlayerSkipSong)} - ${currentSong.title}`);
-      setTimeout(() => nextSong(true), 800);
+      skipTimeout = setTimeout(() => {
+        skipTimeout = undefined;
+        nextSong(true);
+      }, 800);
       return;
     }
 
@@ -268,15 +272,20 @@
   }
 
   function toggleRepeat() {
-    if (!isShuffled && isRepeating === 2) {
-      isRepeating = 1;
-      return;
-    }
-
-    if (!isShuffled && isRepeating === 1) {
-      isShuffled = true;
-      isRepeating = 2;
-      return;
+    if (!isShuffled) {
+      if (isRepeating === 2) {
+        isRepeating = 1;
+        return;
+      }
+      if (isRepeating === 1) {
+        isRepeating = 0;
+        return;
+      }
+      if (isRepeating === 0) {
+        isShuffled = true;
+        isRepeating = 2;
+        return;
+      }
     }
 
     isShuffled = false;
@@ -320,6 +329,9 @@
 
   function loadSong(song: Song) {
     if (!song) return;
+
+    clearTimeout(skipTimeout);
+    skipTimeout = undefined;
 
     if (audio) {
       audio.pause();
@@ -416,7 +428,10 @@
     if (!audio || !progressBar || duration <= 0) return;
 
     const rect = progressBar.getBoundingClientRect();
-    const percent = (event.clientX - rect.left) / rect.width;
+    const percent = Math.min(
+      Math.max((event.clientX - rect.left) / rect.width, 0),
+      1,
+    );
     const newTime = percent * duration;
     audio.currentTime = newTime;
     currentTime = newTime;
@@ -464,13 +479,14 @@
 
     scheduleInitialPlaylistLoad({
       enabled: musicPlayerConfig.enable,
-      isMobileViewport: false,
+      isMobileViewport: window.innerWidth < 768,
       lazyLoadPlaylist,
     });
 
     return () => {
       clearAudioLoadTimeout();
       clearLoadSongTimeout();
+      clearTimeout(skipTimeout);
       clearTimeout(errorTimer);
       cleanups.forEach((cleanup) => cleanup());
     };
@@ -685,6 +701,11 @@
               <Icon
                 icon="material-symbols:repeat-one"
                 class="text-[1.05rem]"
+              />
+            {:else if isRepeating === 0}
+              <Icon
+                icon="material-symbols:repeat"
+                class="text-[1.05rem] opacity-40"
               />
             {:else}
               <Icon icon="material-symbols:repeat" class="text-[1.05rem]" />

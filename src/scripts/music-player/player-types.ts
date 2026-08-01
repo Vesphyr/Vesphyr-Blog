@@ -16,11 +16,16 @@ function normalizeCover(cover: unknown): string {
   return "";
 }
 
+// Fallback unique ids for songs whose feed entry omits an id. The id is used
+// as the broken-song dedup key, so duplicate/missing ids must never collapse
+// onto a single value (which would break every song at once).
+let generatedId = 0;
+
 export function createSong(
   data: Partial<Song> & { title: string; artist: string },
 ): Song {
   return {
-    id: data.id ?? 0,
+    id: typeof data.id === "number" && data.id > 0 ? data.id : --generatedId,
     title: data.title,
     artist: data.artist,
     cover: normalizeCover(data.cover),

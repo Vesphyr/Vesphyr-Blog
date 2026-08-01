@@ -34,6 +34,11 @@ function errorResponse(
 
 type RequestContext = {
   request: Request;
+  env: {
+    ASSETS: {
+      fetch: (request: Request) => Promise<Response>;
+    };
+  };
 };
 
 async function handleAudioRequest(context: RequestContext): Promise<Response> {
@@ -49,10 +54,11 @@ async function handleAudioRequest(context: RequestContext): Promise<Response> {
 
   try {
     const staticUrl = new URL(`/music/${songId}.mp3`, request.url);
-    const staticResponse = await fetch(staticUrl, {
+    const staticRequest = new Request(staticUrl, {
       method: request.method === "HEAD" ? "HEAD" : "GET",
       headers: range ? { range } : {},
     });
+    const staticResponse = await context.env.ASSETS.fetch(staticRequest);
 
     if (staticResponse.ok || staticResponse.status === 206) {
       const headers = new Headers();
