@@ -17,41 +17,41 @@
   --page-bg-bottom: oklch(0.32 0.05 var(--hue));
   --page-bg-paper-grain: color-mix(
     in oklch,
-    oklch(0.44 0.065 var(--hue)) 80%,
-    oklch(0.38 0.055 var(--hue)) 20%
+    oklch(0.5 0.065 var(--hue)) 80%,
+    oklch(0.44 0.055 var(--hue)) 20%
   );
   --page-bg-vignette: color-mix(in oklch, black 14%, transparent);
   --page-bg-glow: oklch(0.46 0.07 var(--hue) / 0.40);
   --page-bg-weave-primary: repeating-linear-gradient(
     0deg,
     transparent 0 3px,
-    color-mix(in oklch, var(--page-bg-paper-grain) 8%, transparent) 3px 4px,
-    transparent 4px 7px
+    color-mix(in oklch, var(--page-bg-paper-grain) 16%, transparent) 3px 5px,
+    transparent 5px 8px
   );
   --page-bg-weave-secondary: repeating-linear-gradient(
     90deg,
     transparent 0 4px,
-    color-mix(in oklch, var(--page-bg-paper-grain) 8%, transparent) 4px 5px,
-    transparent 5px 9px
+    color-mix(in oklch, var(--page-bg-paper-grain) 16%, transparent) 4px 6px,
+    transparent 6px 9px
   );
   --page-bg-satin: linear-gradient(
     135deg,
     transparent 0%,
-    color-mix(in oklch, var(--page-bg-paper-grain) 25%, transparent) 15%,
+    color-mix(in oklch, var(--page-bg-paper-grain) 38%, transparent) 15%,
     transparent 30%,
-    color-mix(in oklch, var(--page-bg-paper-grain) 16%, transparent) 50%,
+    color-mix(in oklch, var(--page-bg-paper-grain) 24%, transparent) 50%,
     transparent 65%,
-    color-mix(in oklch, var(--page-bg-paper-grain) 22%, transparent) 85%,
+    color-mix(in oklch, var(--page-bg-paper-grain) 34%, transparent) 85%,
     transparent 100%
   );
   --page-bg-satin-secondary: linear-gradient(
     -45deg,
     transparent 0%,
-    color-mix(in oklch, var(--page-bg-paper-grain) 12%, transparent) 15%,
+    color-mix(in oklch, var(--page-bg-paper-grain) 18%, transparent) 15%,
     transparent 30%,
-    color-mix(in oklch, var(--page-bg-paper-grain) 8%, transparent) 50%,
+    color-mix(in oklch, var(--page-bg-paper-grain) 12%, transparent) 50%,
     transparent 65%,
-    color-mix(in oklch, var(--page-bg-paper-grain) 11%, transparent) 85%,
+    color-mix(in oklch, var(--page-bg-paper-grain) 16%, transparent) 85%,
     transparent 100%
   );
   --card-bg: oklch(0.4 0.055 var(--hue));
