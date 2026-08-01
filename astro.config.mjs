@@ -40,7 +40,7 @@ export default defineConfig({
     integrations: [
         icon(),
         expressiveCode({
-            themes: ["github-dark"],
+            themes: ["github-light"],
             plugins: [
                 pluginCollapsibleSections(),
                 pluginLineNumbers(),
