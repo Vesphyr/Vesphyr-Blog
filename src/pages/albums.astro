@@ -36,7 +36,7 @@ const albumsData = await scanAlbums();
 					albumsData.map((album) => (
 						<article class="album-card group bg-(--card-bg) rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-(--line-divider)">
 							<a href={`/albums/${album.id}/`} class="block">
-								<div class="aspect-4/3 overflow-hidden bg-black/5">
+								<div class="aspect-4/3 overflow-hidden bg-white/5">
 									<img
 										src={album.cover}
 										alt={album.title}

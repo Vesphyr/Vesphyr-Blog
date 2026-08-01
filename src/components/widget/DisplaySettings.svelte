@@ -5,9 +5,9 @@
   import { onMount } from "svelte";
 
   const colorOptions = [
-    { hue: 0, name: "御绯红", color: "oklch(0.85 0.06 0)" },
-    { hue: 265, name: "琉璃蓝", color: "oklch(0.85 0.06 265)" },
-    { hue: 325, name: "皇家紫", color: "oklch(0.85 0.06 325)" },
+    { hue: 0, name: "御绯红", color: "oklch(0.42 0.06 0)" },
+    { hue: 265, name: "琉璃蓝", color: "oklch(0.42 0.06 265)" },
+    { hue: 325, name: "皇家紫", color: "oklch(0.42 0.06 325)" },
   ];
 
   let hueUI = 0;
