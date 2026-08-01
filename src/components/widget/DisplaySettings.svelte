@@ -6,7 +6,6 @@
 
   const colorOptions = [
     { hue: 0, name: "御绯红", color: "oklch(0.36 0.06 0)" },
-    { hue: 150, name: "翠微绿", color: "oklch(0.36 0.06 150)" },
     { hue: 265, name: "琉璃蓝", color: "oklch(0.36 0.06 265)" },
     { hue: 325, name: "皇家紫", color: "oklch(0.36 0.06 325)" },
   ];
