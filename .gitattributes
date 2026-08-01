@@ -1,0 +1,3 @@
+# Stabilize line endings of the build-regenerated font CSS
+# (scripts/copy-font-css.js writes LF; keep the working tree clean on Windows)
+public/fonts/font-faces.css text eol=lf
