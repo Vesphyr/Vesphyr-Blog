@@ -123,6 +123,12 @@ const skipToContentLabel = isChineseSite
         configHue,
       }}
     >
+      document.documentElement.classList.add("dark");
+      document.documentElement.setAttribute("data-theme", "dark");
+      document.documentElement.setAttribute("data-color-scheme", "dark");
+      document.documentElement.setAttribute("data-shiki-theme", "github-dark");
+      document.documentElement.setAttribute("data-theme-material", "silk");
+      window.theme = { themeValue: "dark" };
       let storedHue = null;
       try { storedHue = localStorage.getItem("hue"); } catch (_e) {}
       const hue = storedHue || configHue;
@@ -145,6 +151,11 @@ const skipToContentLabel = isChineseSite
     <script>
       document.addEventListener("astro:page-load", () => {
         const root = document.documentElement;
+        root.classList.add("dark");
+        root.setAttribute("data-theme", "dark");
+        root.setAttribute("data-color-scheme", "dark");
+        root.setAttribute("data-shiki-theme", "github-dark");
+        root.setAttribute("data-theme-material", "silk");
         const carrier = document.getElementById("config-carrier");
         const defaultHue = carrier?.dataset.hue ?? (root.style.getPropertyValue("--hue") || "325");
         let storedHue: string | null = null;
@@ -182,6 +193,9 @@ const skipToContentLabel = isChineseSite
     <ConfigCarrier />
     <slot />
     <BackToTop />
+    <script>
+      import "../scripts/theme.ts";
+    </script>
 
     
     {musicPlayerConfig.enable && <MusicPlayer client:idle transition:persist />}
