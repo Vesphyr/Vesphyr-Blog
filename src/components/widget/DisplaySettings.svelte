@@ -39,7 +39,9 @@
   id="display-setting"
   class="float-panel float-panel-closed absolute transition-all w-72 right-4 px-4 py-4"
   style="
-    background: var(--page-bg);
+    background: var(--display-panel-bg);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
     border: 1px solid var(--display-panel-border);
     box-shadow: var(--display-panel-shadow);
     border-radius: var(--radius-large);
@@ -81,7 +83,7 @@
     overflow hidden
 
     .display-setting-surface
-      background transparent
+      background var(--panel-bg)
       border 1px solid var(--display-panel-border)
       border-radius inherit
       box-shadow var(--shadow-lg)
