@@ -221,9 +221,15 @@
         console.warn("Audio playback was blocked or failed.", error);
         if (error.name === "NotAllowedError" || error.name === "AbortError") {
           // Autoplay blocked, or the media was still buffering (common on
-          // mobile): wait for a user gesture and retry instead of surfacing
-          // a misleading error toast.
+          // mobile): browsers allow MUTED autoplay, so start the track muted
+          // so it visibly plays on load; the first interaction unmutes it
+          // (recovery handler). Never surface a misleading error toast.
           autoplayFailed = true;
+          audio.muted = true;
+          audio.play().catch(() => {
+            // Even muted play failed (media still buffering) — the recovery
+            // handler retries on the next user gesture.
+          });
           isLoading = false;
           clearAudioLoadTimeout();
         } else {
@@ -464,6 +470,8 @@
         shouldRecover: () => autoplayFailed,
         onRecovered: () => {
           autoplayFailed = false;
+          // Unmute now that the play() succeeded inside a user gesture.
+          if (audio) audio.muted = false;
         },
         onRecoveryFailed: () => {
           // A transient play() rejection (still buffering) is the common case
