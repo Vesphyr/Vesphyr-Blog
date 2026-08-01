@@ -12,13 +12,13 @@
 :root {
   --radius-large: 1rem;
   --primary: oklch(0.75 0.14 var(--hue));
-  --page-bg: oklch(0.36 0.06 var(--hue));
-  --page-bg-top: oklch(0.39 0.07 var(--hue));
-  --page-bg-bottom: oklch(0.32 0.05 var(--hue));
+  --page-bg: oklch(0.45 0.06 var(--hue));
+  --page-bg-top: oklch(0.48 0.07 var(--hue));
+  --page-bg-bottom: oklch(0.41 0.05 var(--hue));
   --page-bg-paper-grain: color-mix(
     in oklch,
-    oklch(0.5 0.065 var(--hue)) 80%,
-    oklch(0.44 0.055 var(--hue)) 20%
+    oklch(0.56 0.065 var(--hue)) 80%,
+    oklch(0.5 0.055 var(--hue)) 20%
   );
   --page-bg-vignette: color-mix(in oklch, black 14%, transparent);
   --page-bg-glow: oklch(0.46 0.07 var(--hue) / 0.40);
