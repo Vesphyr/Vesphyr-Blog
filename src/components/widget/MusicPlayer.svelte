@@ -219,7 +219,10 @@
       playPromise.catch((error) => {
         if (currentSong.id !== expectedSongId) return;
         console.warn("Audio playback was blocked or failed.", error);
-        if (error.name === "NotAllowedError") {
+        if (error.name === "NotAllowedError" || error.name === "AbortError") {
+          // Autoplay blocked, or the media was still buffering (common on
+          // mobile): wait for a user gesture and retry instead of surfacing
+          // a misleading error toast.
           autoplayFailed = true;
           isLoading = false;
           clearAudioLoadTimeout();
@@ -463,7 +466,10 @@
           autoplayFailed = false;
         },
         onRecoveryFailed: () => {
-          showErrorMessage(i18n(Key.musicPlayerRetryLater));
+          // A transient play() rejection (still buffering) is the common case
+          // on mobile — keep the recovery armed and stay silent; genuine media
+          // failures surface through the audio element's error event instead.
+          autoplayFailed = true;
         },
       }),
     );

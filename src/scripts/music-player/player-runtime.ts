@@ -25,7 +25,14 @@ export function bindAutoplayRecovery(
 
 		const playPromise = audio.play();
 		if (playPromise !== undefined) {
-			playPromise.then(onRecovered).catch(() => {
+			playPromise.then(onRecovered).catch((error) => {
+				const name = (error as DOMException | undefined)?.name;
+				if (name === "AbortError" || name === "NotAllowedError") {
+					// Still buffering or a gesture is still required — keep the
+					// recovery armed for the next interaction; real failures
+					// surface via the audio element's error event.
+					return;
+				}
 				onRecoveryFailed?.();
 			});
 		}
