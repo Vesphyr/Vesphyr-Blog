@@ -9,78 +9,79 @@
   --font-content: "Crimson Pro", "ZhuqueFangsong", "Zhuque Fangsong UI";
 }
 
+/* 单一固定配色：浅色纸感背景 + 深色文字，丝绢织物纹理 */
 :root {
   --radius-large: 1rem;
-  --primary: oklch(0.75 0.14 var(--hue));
-  --page-bg: oklch(0.45 0.06 var(--hue));
-  --page-bg-top: oklch(0.48 0.07 var(--hue));
-  --page-bg-bottom: oklch(0.41 0.05 var(--hue));
+  --primary: oklch(0.65 0.2 var(--hue));
+  --page-bg: oklch(0.85 0.04 var(--hue));
+  --page-bg-top: oklch(0.9 0.045 var(--hue));
+  --page-bg-bottom: oklch(0.8 0.035 var(--hue));
   --page-bg-paper-grain: color-mix(
     in oklch,
-    oklch(0.56 0.065 var(--hue)) 80%,
-    oklch(0.5 0.055 var(--hue)) 20%
+    oklch(0.78 0.04 var(--hue)) 80%,
+    oklch(0.72 0.035 var(--hue)) 20%
   );
-  --page-bg-vignette: color-mix(in oklch, black 14%, transparent);
-  --page-bg-glow: oklch(0.46 0.07 var(--hue) / 0.40);
+  --page-bg-vignette: color-mix(in oklch, black 5%, transparent);
+  --page-bg-glow: oklch(0.96 0.03 var(--hue) / 0.5);
   --page-bg-weave-primary: repeating-linear-gradient(
     0deg,
     transparent 0 3px,
-    color-mix(in oklch, var(--page-bg-paper-grain) 16%, transparent) 3px 5px,
+    color-mix(in oklch, var(--page-bg-paper-grain) 14%, transparent) 3px 5px,
     transparent 5px 8px
   );
   --page-bg-weave-secondary: repeating-linear-gradient(
     90deg,
     transparent 0 4px,
-    color-mix(in oklch, var(--page-bg-paper-grain) 16%, transparent) 4px 6px,
+    color-mix(in oklch, var(--page-bg-paper-grain) 14%, transparent) 4px 6px,
     transparent 6px 9px
   );
   --page-bg-satin: linear-gradient(
     135deg,
     transparent 0%,
-    color-mix(in oklch, var(--page-bg-paper-grain) 38%, transparent) 15%,
+    color-mix(in oklch, var(--page-bg-paper-grain) 30%, transparent) 15%,
     transparent 30%,
-    color-mix(in oklch, var(--page-bg-paper-grain) 24%, transparent) 50%,
+    color-mix(in oklch, var(--page-bg-paper-grain) 20%, transparent) 50%,
     transparent 65%,
-    color-mix(in oklch, var(--page-bg-paper-grain) 34%, transparent) 85%,
+    color-mix(in oklch, var(--page-bg-paper-grain) 28%, transparent) 85%,
     transparent 100%
   );
   --page-bg-satin-secondary: linear-gradient(
     -45deg,
     transparent 0%,
-    color-mix(in oklch, var(--page-bg-paper-grain) 18%, transparent) 15%,
+    color-mix(in oklch, var(--page-bg-paper-grain) 15%, transparent) 15%,
     transparent 30%,
-    color-mix(in oklch, var(--page-bg-paper-grain) 12%, transparent) 50%,
+    color-mix(in oklch, var(--page-bg-paper-grain) 10%, transparent) 50%,
     transparent 65%,
-    color-mix(in oklch, var(--page-bg-paper-grain) 16%, transparent) 85%,
+    color-mix(in oklch, var(--page-bg-paper-grain) 13%, transparent) 85%,
     transparent 100%
   );
-  --card-bg: oklch(0.4 0.055 var(--hue));
-  --card-bg-transparent: oklch(0.4 0.055 var(--hue) / 0.88);
-  --btn-content: oklch(0.75 0.08 var(--hue));
-  --btn-regular-bg: oklch(0.42 0.05 var(--hue));
-  --btn-regular-bg-hover: oklch(0.46 0.06 var(--hue));
-  --btn-regular-bg-active: oklch(0.5 0.07 var(--hue));
-  --btn-plain-bg-hover: oklch(0.4 0.05 var(--hue));
-  --btn-plain-bg-active: oklch(0.38 0.045 var(--hue));
-  --btn-card-bg-hover: oklch(0.38 0.045 var(--hue));
-  --btn-card-bg-active: oklch(0.44 0.055 var(--hue));
-  --deep-text: oklch(0.97 0.012 var(--hue));
-  --text-main: rgba(244, 237, 231, 0.92);
-  --text-secondary: rgba(244, 237, 231, 0.82);
-  --text-tertiary: rgba(244, 237, 231, 0.66);
-  --text-disabled: rgba(244, 237, 231, 0.46);
-  --line-divider: color-mix(in oklch, white 6%, transparent);
-  --line-color: color-mix(in oklch, white 8%, transparent);
-  --content-meta: color-mix(in oklch, white 82%, transparent);
-  --selection-bg: oklch(0.42 0.08 var(--hue));
-  --codeblock-bg: oklch(0.28 0.03 var(--hue));
-  --codeblock-topbar-bg: oklch(0.24 0.025 var(--hue));
-  --link-underline: oklch(0.42 0.08 var(--hue));
-  --link-hover: oklch(0.46 0.08 var(--hue));
-  --link-active: oklch(0.38 0.05 var(--hue));
-  --float-panel-bg: oklch(0.3 0.02 var(--hue));
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
-  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.18);
+  --card-bg: oklch(0.94 0.02 var(--hue));
+  --card-bg-transparent: oklch(0.94 0.02 var(--hue) / 0.88);
+  --btn-content: oklch(0.45 0.15 var(--hue));
+  --btn-regular-bg: oklch(0.88 0.035 var(--hue));
+  --btn-regular-bg-hover: oklch(0.83 0.05 var(--hue));
+  --btn-regular-bg-active: oklch(0.78 0.07 var(--hue));
+  --btn-plain-bg-hover: oklch(0.9 0.025 var(--hue));
+  --btn-plain-bg-active: oklch(0.87 0.02 var(--hue));
+  --btn-card-bg-hover: oklch(0.92 0.02 var(--hue));
+  --btn-card-bg-active: oklch(0.85 0.035 var(--hue));
+  --deep-text: oklch(0.22 0.02 var(--hue));
+  --text-main: rgba(36, 24, 22, 0.92);
+  --text-secondary: rgba(36, 24, 22, 0.78);
+  --text-tertiary: rgba(36, 24, 22, 0.64);
+  --text-disabled: rgba(36, 24, 22, 0.52);
+  --line-divider: color-mix(in oklch, black 6%, transparent);
+  --line-color: color-mix(in oklch, black 8%, transparent);
+  --content-meta: color-mix(in oklch, black 85%, transparent);
+  --selection-bg: oklch(0.85 0.09 var(--hue));
+  --codeblock-bg: oklch(0.9 0.015 var(--hue));
+  --codeblock-topbar-bg: oklch(0.85 0.018 var(--hue));
+  --link-underline: oklch(0.65 0.15 var(--hue));
+  --link-hover: oklch(0.6 0.18 var(--hue));
+  --link-active: oklch(0.55 0.2 var(--hue));
+  --float-panel-bg: oklch(0.92 0.015 var(--hue));
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.08);
   --radius-std: 0.75rem;
   --nav-bg: var(--card-bg);
   --nav-blur: none;
@@ -88,9 +89,9 @@
   --nav-radius: var(--radius-std);
   --panel-bg: var(--card-bg-transparent);
   --panel-blur: blur(20px);
-  --display-panel-bg: oklch(0.32 0.025 var(--hue) / 0.82);
-  --display-panel-border: color-mix(in oklch, white 10%, transparent);
-  --display-panel-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+  --display-panel-bg: oklch(0.93 0.015 var(--hue) / 0.84);
+  --display-panel-border: color-mix(in oklch, black 8%, transparent);
+  --display-panel-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
   --navbar-foreground: var(--deep-text);
-  --navbar-overlay-foreground: oklch(0.88 0.01 var(--hue));
+  --navbar-overlay-foreground: var(--deep-text);
 }
