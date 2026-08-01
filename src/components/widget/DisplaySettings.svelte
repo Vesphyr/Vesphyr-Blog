@@ -90,11 +90,6 @@
       box-shadow var(--shadow-lg)
       padding 1rem
 
-  :global(html.dark) #display-setting .display-setting-surface
-    background var(--panel-bg)
-    border 1px solid var(--display-panel-border)
-    box-shadow var(--shadow-lg)
-
   .color-bar-container
     padding 0.25rem
 

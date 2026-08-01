@@ -200,23 +200,6 @@
 }
 
 
-@media (prefers-color-scheme: light) {
-  .expressive-code.collapsible .collapse-toggle-btn,
-  .expressive-code .copy-btn {
-    box-shadow:
-      0 1px 3px 0 rgba(0, 0, 0, 0.1),
-      0 1px 2px -1px rgba(0, 0, 0, 0.1);
-  }
-}
-
-
-:root:not(.dark) .expressive-code.collapsible .collapse-toggle-btn,
-:root:not(.dark) .expressive-code .copy-btn {
-  box-shadow:
-    0 1px 3px 0 rgba(0, 0, 0, 0.1),
-    0 1px 2px -1px rgba(0, 0, 0, 0.1);
-}
-
 @media print {
   .expressive-code.collapsed .frame pre {
     max-height: none !important;

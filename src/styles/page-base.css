@@ -35,10 +35,20 @@ body {
   letter-spacing: 0.008em;
   line-height: 1.7;
   color: var(--text-main);
+  transition: color 0.15s ease;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background:
     radial-gradient(ellipse 80% 50% at 50% 0%, var(--page-bg-glow), transparent),
     radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, var(--page-bg-vignette) 100%),
     var(--page-bg-satin),
+    var(--page-bg-satin-secondary),
     var(--page-bg-weave-primary), var(--page-bg-weave-secondary),
     linear-gradient(
       180deg,
@@ -46,12 +56,10 @@ body {
       var(--page-bg) 52%,
       var(--page-bg-bottom) 100%
     );
-  background-blend-mode: normal, normal, soft-light, soft-light, soft-light, normal;
-  background-attachment: fixed;
+  background-blend-mode: normal, normal, soft-light, soft-light, soft-light, soft-light, normal;
   transition:
     background-color 0.2s ease,
-    background-image 0.2s ease,
-    color 0.15s ease;
+    background-image 0.2s ease;
 }
 
 body
@@ -106,14 +114,6 @@ body::-webkit-scrollbar {
 
 ::selection {
   background-color: var(--selection-bg);
-  color: inherit;
-}
-
-:root:not(.dark) ::selection {
-  color: #000000;
-}
-
-:root.dark ::selection {
   color: #ffffff;
 }
 
@@ -134,10 +134,6 @@ body::-webkit-scrollbar {
       color: var(--_spoiler-mask);
     }
   }
-}
-
-:root:not(.dark) .custom-md spoiler {
-  --_spoiler-mask: color-mix(in oklch, var(--primary) 55%, white 45%);
 }
 
 .custom-md img,
