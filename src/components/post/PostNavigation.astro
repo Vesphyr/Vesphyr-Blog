@@ -16,7 +16,7 @@ const { nextSlug, nextTitle, prevSlug, prevTitle } = Astro.props;
 	class="flex flex-col md:flex-row justify-between mb-4 gap-4 overflow-hidden w-full"
 >
 	<a
-		href={nextSlug ? getPostUrlBySlug(nextSlug) : "#"}
+		href={nextSlug ? getPostUrlBySlug(nextSlug) : undefined}
 		class:list={[
 			"w-full font-bold overflow-hidden active:scale-95",
 			{ "pointer-events-none": !nextSlug },
@@ -29,7 +29,7 @@ const { nextSlug, nextTitle, prevSlug, prevTitle } = Astro.props;
 						name="material-symbols:chevron-left-rounded"
 						class="text-[2rem] text-(--primary)"
 					/>
-					<div class="overflow-hidden transition text-ellipsis whitespace-nowrap max-w-[calc(100%-3rem)] text-75">
+					<div class="overflow-hidden transition text-ellipsis whitespace-nowrap max-w-[calc(100%_-_3rem)] text-75">
 						{nextTitle}
 					</div>
 				</div>
@@ -38,7 +38,7 @@ const { nextSlug, nextTitle, prevSlug, prevTitle } = Astro.props;
 	</a>
 
 	<a
-		href={prevSlug ? getPostUrlBySlug(prevSlug) : "#"}
+		href={prevSlug ? getPostUrlBySlug(prevSlug) : undefined}
 		class:list={[
 			"w-full font-bold overflow-hidden active:scale-95",
 			{ "pointer-events-none": !prevSlug },
@@ -47,7 +47,7 @@ const { nextSlug, nextTitle, prevSlug, prevTitle } = Astro.props;
 		{
 			prevSlug && (
 				<div class="btn-card rounded-2xl w-full h-15 max-w-full px-4 flex items-center justify-end! gap-4">
-					<div class="overflow-hidden transition text-ellipsis whitespace-nowrap max-w-[calc(100%-3rem)] text-75">
+					<div class="overflow-hidden transition text-ellipsis whitespace-nowrap max-w-[calc(100%_-_3rem)] text-75">
 						{prevTitle}
 					</div>
 					<Icon

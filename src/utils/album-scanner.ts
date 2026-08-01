@@ -162,7 +162,13 @@ function scanPhotos(folderPath: string, albumId: string): Photo[] {
         alt: baseName,
         title: baseName,
         tags,
-        date: stats.mtime.toISOString().split("T")[0],
+        // Album dates follow the site's +8 (Asia/Shanghai) convention instead
+        // of the UTC day, which can otherwise be a day behind local time.
+        date: new Date(
+          stats.mtime.getTime() + 8 * 60 * 60 * 1000,
+        )
+          .toISOString()
+          .split("T")[0],
       };
     });
 }
@@ -200,7 +206,9 @@ function processExternalPhotos(
 function parseFileName(fileName: string): { baseName: string; tags: string[] } {
   const parts = path.basename(fileName, path.extname(fileName)).split("_");
 
-  if (parts.length > 1) {
+  // Only treat the name as "title_tag1_tag2" when there are at least two
+  // underscores; a single underscore (IMG_2024.jpg) stays a plain filename.
+  if (parts.length >= 3) {
     return {
       baseName: parts.slice(0, -2).join("_"),
       tags: parts.slice(-2),

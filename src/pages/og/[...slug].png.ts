@@ -79,13 +79,21 @@ export async function GET({ props, }: APIContext<{
     const { post } = props;
     const { regular: fontRegular, bold: fontBold } = loadOgFonts();
     const avatarBuffer = fs.readFileSync(`./src/${profileConfig.avatar}`);
+    // Satori rejects correctly-declared webp in this pipeline, so the avatar
+    // keeps a png data-URI prefix (decoders sniff the actual bytes).
     const avatarBase64 = `data:image/png;base64,${avatarBuffer.toString("base64")}`;
-    let iconPath = "./public/favicon/favicon.ico";
+    let iconPath = "./public/favicon/favicon.png";
     if (siteConfig.favicon.length > 0) {
         iconPath = `./public${siteConfig.favicon[0].src}`;
     }
     const iconBuffer = fs.readFileSync(iconPath);
-    const iconBase64 = `data:image/png;base64,${iconBuffer.toString("base64")}`;
+    const lowerIconPath = iconPath.toLowerCase();
+    const iconMime = lowerIconPath.endsWith(".svg")
+        ? "image/svg+xml"
+        : lowerIconPath.endsWith(".webp")
+          ? "image/webp"
+          : "image/png";
+    const iconBase64 = `data:${iconMime};base64,${iconBuffer.toString("base64")}`;
     const hue = siteConfig.themeColor.hue;
     const primaryColor = `hsl(${hue}, 90%, 65%)`;
     const textColor = "hsl(0, 0%, 95%)";

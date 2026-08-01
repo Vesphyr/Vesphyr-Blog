@@ -19,7 +19,7 @@ export const onRequestGet = (context: { request: Request }) => {
   const headers: Record<string, string> = {
     "content-type": "application/json; charset=utf-8",
     "cache-control":
-      "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400",
+      "public, max-age=300, s-maxage=300, stale-while-revalidate=86400",
     etag,
   };
 
@@ -45,9 +45,14 @@ export const onRequestGet = (context: { request: Request }) => {
     (song) => {
       const url = song.url;
       if (typeof url !== "string" || !url) return song;
+      const isAbsolute = /^https?:\/\//i.test(url);
       const parsed = new URL(url, "https://music.local/");
       parsed.searchParams.set("v", version);
-      return { ...song, url: parsed.pathname + parsed.search };
+      return {
+        ...song,
+        // Keep the host for absolute URLs; only relative paths are rewritten.
+        url: isAbsolute ? parsed.href : parsed.pathname + parsed.search,
+      };
     },
   );
 

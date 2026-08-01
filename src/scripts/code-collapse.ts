@@ -127,6 +127,10 @@ class CodeBlockCollapser {
     if (frame.classList.contains("has-title")) {
       return;
     }
+
+    if (frame.querySelector(".collapse-toggle-btn")) {
+      return;
+    }
     codeBlock.classList.add("collapsible", "expanded");
 
     const toggleBtn = this.createToggleButton();
@@ -190,7 +194,7 @@ class CodeBlockCollapser {
     document.dispatchEvent(event);
   }
 
-  private observePageChanges(): void {
+  observePageChanges(): void {
     if (this.isThemeChanging) {
       return;
     }
@@ -265,6 +269,10 @@ registerPageScript("code-collapse", {
     codeBlockCollapser.clearProcessedBlocks();
     setTimeout(() => {
       codeBlockCollapser.setupCodeBlocks();
+      // The page-script cleanup destroys the instance (disconnecting its
+      // MutationObserver); re-establish it on every init so dynamically
+      // inserted code blocks keep being enhanced.
+      codeBlockCollapser.observePageChanges();
       codeBlockCollapser.syncWithThemeOptimizer();
     }, 50);
 

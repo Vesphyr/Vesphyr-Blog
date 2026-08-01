@@ -33,6 +33,6 @@ export async function GET(context: APIContext): Promise<Response> {
     description: siteConfig.subtitle,
     site: context.site,
     items: feed,
-    customData: `<language>${siteConfig.lang}</language>`,
+    customData: `<language>${siteConfig.lang.replace("_", "-")}</language>`,
   });
 }

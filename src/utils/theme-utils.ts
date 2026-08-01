@@ -24,6 +24,10 @@ export function applyThemeToDocument(theme: LIGHT_DARK_MODE): void {
 }
 
 export function setThemePreference(theme: LIGHT_DARK_MODE): void {
-	localStorage.setItem(THEME_STORAGE_KEY, theme);
+	try {
+		localStorage.setItem(THEME_STORAGE_KEY, theme);
+	} catch {
+		// localStorage unavailable (private mode / disabled) — still apply the theme
+	}
 	applyThemeToDocument(theme);
 }

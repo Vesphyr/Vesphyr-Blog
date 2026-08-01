@@ -189,6 +189,14 @@ const headingsJson = JSON.stringify(headings);
 			window.scrollTo({ top, behavior: "smooth" });
 		};
 
+		private readonly handleKeydown = (event: KeyboardEvent) => {
+			if (event.key !== "Enter" && event.key !== " ") return;
+			const item = (event.target as HTMLElement).closest(".card-toc-item");
+			if (!item) return;
+			event.preventDefault();
+			this.handleClick(event);
+		};
+
 		constructor(wrapper: HTMLElement) {
 			this.wrapper = wrapper;
 			this.content = wrapper.querySelector("[data-card-toc-content]");
@@ -245,8 +253,8 @@ const headingsJson = JSON.stringify(headings);
 					badge = '<span class="card-toc-dot-small"></span>';
 				}
 
-				const text = heading.text.replace(/#+\s*$/, "");
-				html += `<div class="card-toc-item" style="padding-left: ${0.5 + indent}rem" data-heading-id="${heading.slug}">${badge}<span class="card-toc-text">${text}</span></div>`;
+				const text = heading.text.replace(/\s+#+\s*$/, "");
+				html += `<div class="card-toc-item" style="padding-left: ${0.5 + indent}rem" data-heading-id="${heading.slug}" role="link" tabindex="0">${badge}<span class="card-toc-text">${text}</span></div>`;
 			});
 
 			this.render(html);
@@ -265,18 +273,27 @@ const headingsJson = JSON.stringify(headings);
 			if (!this.content || this.headings.length === 0) return;
 			const scrollY = window.scrollY;
 			updateActiveHeading(this.headings, this.tocItems, scrollY, 150);
+			this.tocItems.forEach((item) => {
+				if (item.classList.contains("active")) {
+					item.setAttribute("aria-current", "location");
+				} else {
+					item.removeAttribute("aria-current");
+				}
+			});
 		}
 
 		private bindEvents() {
 			window.addEventListener("scroll", this.handleScroll, { passive: true });
 			window.addEventListener("resize", this.handleResize, { passive: true });
 			this.content?.addEventListener("click", this.handleClick);
+			this.content?.addEventListener("keydown", this.handleKeydown);
 		}
 
 		destroy() {
 			window.removeEventListener("scroll", this.handleScroll);
 			window.removeEventListener("resize", this.handleResize);
 			this.content?.removeEventListener("click", this.handleClick);
+			this.content?.removeEventListener("keydown", this.handleKeydown);
 		}
 	}
 

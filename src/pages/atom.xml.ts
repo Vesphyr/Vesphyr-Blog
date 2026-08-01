@@ -21,14 +21,13 @@ export async function GET(context: APIContext): Promise<Response> {
   );
 
   let atomFeed = `<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="${escapeXmlAttribute(siteConfig.lang.replace("_", "-"))}">
   <title>${escapeXmlText(siteConfig.title)}</title>
   <subtitle>${escapeXmlText(siteConfig.subtitle || "No description")}</subtitle>
   <link href="${escapeXmlAttribute(siteUrl)}" rel="alternate" type="text/html"/>
   <link href="${escapeXmlAttribute(selfUrl)}" rel="self" type="application/atom+xml"/>
   <id>${escapeXmlText(siteUrl)}</id>
-  <updated>${new Date().toISOString()}</updated>
-  <language>${escapeXmlText(siteConfig.lang)}</language>`;
+  <updated>${new Date().toISOString()}</updated>`;
 
   for (const post of posts) {
     const body = parseMarkdown(post.body);

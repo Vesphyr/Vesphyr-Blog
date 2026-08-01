@@ -31,7 +31,7 @@ export const onRequestGet = async (context: PagesContext): Promise<Response> => 
   }
 
   const cache = (caches as CloudflareCacheStorage).default;
-  const cacheKey = new Request(url.toString(), context.request);
+  const cacheKey = new Request(url.toString());
   const cached = await cache.match(cacheKey);
   if (cached) {
     return withCacheHeader(cached, "HIT");
@@ -46,4 +46,7 @@ export const onRequestGet = async (context: PagesContext): Promise<Response> => 
   return responseToCache;
 };
 
-export const onRequestHead = onRequestGet;
+// HEAD must not go through the Cache API: cache.put() only accepts GET
+// requests, and a cached hit would otherwise return a body to a HEAD request.
+export const onRequestHead = (context: PagesContext) =>
+  context.env.ASSETS.fetch(context.request);

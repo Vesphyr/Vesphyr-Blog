@@ -33,11 +33,7 @@ const personSchema = {
     "@type": "Person",
     name: profileConfig.name,
     url: siteConfig.siteURL,
-    image: profileConfig.avatar
-        ? url(profileConfig.avatar.startsWith("/")
-            ? profileConfig.avatar
-            : `/src/assets/${profileConfig.avatar}`)
-        : undefined,
+    image: url("/favicon/favicon.png"),
     description: profileConfig.bio,
     sameAs: profileConfig.links.map((link) => link.url),
 };

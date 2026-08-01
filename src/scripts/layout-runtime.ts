@@ -26,13 +26,17 @@ function scheduleIdleTask(task: () => void, timeout = 3000): void {
   globalThis.setTimeout(task, timeout);
 }
 
+declare global {
+  interface Window {
+    __layoutRuntimeBound?: boolean;
+  }
+}
+
 void initializePanelManager();
 
 function handleResize() {
   syncDesktopLayoutState();
 }
-window.addEventListener("resize", handleResize);
-handleResize();
 function reinitPageFeatures() {
   scheduleIdleTask(() => {
     void initFancybox();
@@ -42,9 +46,17 @@ function reinitPageFeatures() {
   syncDesktopLayoutState();
 }
 
+// ClientRouter re-executes module scripts on every in-site navigation, so
+// document/window listeners must be registered exactly once — otherwise they
+// accumulate and fire N times per event after N navigations.
+if (!window.__layoutRuntimeBound) {
+  window.__layoutRuntimeBound = true;
+  window.addEventListener("resize", handleResize);
+  document.addEventListener("astro:page-load", reinitPageFeatures);
+}
+handleResize();
+
 runOnDocumentReady(async () => {
   reinitPageFeatures();
   await initializePanelManager();
 });
-
-document.addEventListener("astro:page-load", reinitPageFeatures);

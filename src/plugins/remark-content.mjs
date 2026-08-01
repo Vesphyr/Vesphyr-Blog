@@ -1,5 +1,5 @@
 import getReadingTime from "reading-time";
-import { visit } from "unist-util-visit";
+import { visit, SKIP } from "unist-util-visit";
 export function remarkContent() {
     return (tree, { data }) => {
         if (!data.astro) {
@@ -34,7 +34,7 @@ export function remarkContent() {
         }
         visit(tree, (node) => {
             if (node.type === "code" || node.type === "inlineCode")
-                return "skip";
+                return SKIP;
             if (node.type === "text" && node.value) {
                 fullText += node.value + " ";
             }

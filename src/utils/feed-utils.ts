@@ -6,10 +6,15 @@ import { renderFeedMarkdown, sanitizeFeedHtml } from "./feed-html";
 
 const imagesGlob = import.meta.glob<{
   default: ImageMetadata;
-}>("/src/content/**/*.{jpeg,jpg,png,gif,webp}");
+}>("/src/content/**/*.{jpeg,jpg,png,gif,webp,avif,svg}");
 
 function absolutizeLink(value: string, context: APIContext): string {
-  return new URL(value, context.site).href;
+  if (!context.site) return value;
+  try {
+    return new URL(value, context.site).href;
+  } catch {
+    return value;
+  }
 }
 
 export async function processImagesInContent(

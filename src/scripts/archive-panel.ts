@@ -7,7 +7,7 @@ const ARCHIVE_COUNT_SELECTOR = "[data-archive-count]";
 const ARCHIVE_EMPTY_SELECTOR = "[data-archive-empty]";
 
 function getCountText(count: number, singular: string, plural: string) {
-  return `${count}${count === 1 ? singular : plural}`;
+  return `${count} ${count === 1 ? singular : plural}`;
 }
 
 function getSelectedCategories(searchParams: URLSearchParams) {
