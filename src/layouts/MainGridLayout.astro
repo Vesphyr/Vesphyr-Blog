@@ -94,6 +94,42 @@ const mainContentClass = `
 >
   <slot slot="head" name="head" />
 
+  {isPostPage && (
+    <>
+      <div
+        id="reading-progress"
+        class="fixed top-0 left-0 right-0 z-[100] h-1 transition-all duration-150 pointer-events-none"
+        style="width: 0%; background: linear-gradient(90deg, var(--primary), var(--link-hover));"
+        aria-hidden="true"
+      ></div>
+      <script is:inline>
+        (function () {
+          const progress = document.getElementById("reading-progress");
+          if (!progress) return;
+          // 清除上一页遗留的监听器（View Transitions 下 is:inline 每次导航都重新执行）
+          if (window.__readingProgressCleanup) {
+            window.__readingProgressCleanup();
+          }
+          const updateProgress = () => {
+            const scrollTop = window.scrollY;
+            const scrollHeight =
+              document.documentElement.scrollHeight - window.innerHeight;
+            const percent =
+              scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+            progress.style.width = `${percent}%`;
+          };
+          window.addEventListener("scroll", updateProgress, { passive: true });
+          window.addEventListener("resize", updateProgress);
+          updateProgress();
+          window.__readingProgressCleanup = () => {
+            window.removeEventListener("scroll", updateProgress);
+            window.removeEventListener("resize", updateProgress);
+          };
+        })();
+      </script>
+    </>
+  )}
+
   <div
     id="top-row"
     class="z-50 pointer-events-none relative transition-all duration-700 max-w-(--page-width) px-0 md:px-4 mx-auto"
