@@ -20,36 +20,24 @@
   --page-bg-paper-grain: #795e7b;
   --page-bg-vignette: rgba(0, 0, 0, 0.1);
   --page-bg-glow: #785579;
-  --page-bg-weave-primary: repeating-linear-gradient(
-    45deg,
-    transparent 0 1.5px,
-    rgba(121, 94, 123, 0.24) 1.5px 3px,
-    transparent 3px 5px
-  );
-  --page-bg-weave-secondary: repeating-linear-gradient(
-    -45deg,
-    transparent 0 2px,
-    rgba(121, 94, 123, 0.18) 2px 4px,
-    transparent 4px 8px
-  );
   --page-bg-satin: linear-gradient(
     135deg,
     transparent 0%,
-    rgba(121, 94, 123, 0.57) 15%,
+    rgba(121, 94, 123, 0.65) 15%,
     transparent 30%,
-    rgba(121, 94, 123, 0.36) 50%,
+    rgba(121, 94, 123, 0.42) 50%,
     transparent 65%,
-    rgba(121, 94, 123, 0.51) 85%,
+    rgba(121, 94, 123, 0.58) 85%,
     transparent 100%
   );
   --page-bg-satin-secondary: linear-gradient(
     -45deg,
     transparent 0%,
-    rgba(121, 94, 123, 0.27) 15%,
+    rgba(121, 94, 123, 0.34) 15%,
     transparent 30%,
-    rgba(121, 94, 123, 0.18) 50%,
+    rgba(121, 94, 123, 0.22) 50%,
     transparent 65%,
-    rgba(121, 94, 123, 0.24) 85%,
+    rgba(121, 94, 123, 0.3) 85%,
     transparent 100%
   );
   --page-bg-pearl: radial-gradient(
@@ -113,36 +101,24 @@
     );
     --page-bg-vignette: color-mix(in oklch, black 10%, transparent);
     --page-bg-glow: oklch(0.5 0.07 var(--hue) / 0.4);
-    --page-bg-weave-primary: repeating-linear-gradient(
-      45deg,
-      transparent 0 1.5px,
-      color-mix(in oklch, var(--page-bg-paper-grain) 24%, transparent) 1.5px 3px,
-      transparent 3px 5px
-    );
-    --page-bg-weave-secondary: repeating-linear-gradient(
-      -45deg,
-      transparent 0 2px,
-      color-mix(in oklch, var(--page-bg-paper-grain) 18%, transparent) 2px 4px,
-      transparent 4px 8px
-    );
     --page-bg-satin: linear-gradient(
       135deg,
       transparent 0%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 57%, transparent) 15%,
+      color-mix(in oklch, var(--page-bg-paper-grain) 65%, transparent) 15%,
       transparent 30%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 36%, transparent) 50%,
+      color-mix(in oklch, var(--page-bg-paper-grain) 42%, transparent) 50%,
       transparent 65%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 51%, transparent) 85%,
+      color-mix(in oklch, var(--page-bg-paper-grain) 58%, transparent) 85%,
       transparent 100%
     );
     --page-bg-satin-secondary: linear-gradient(
       -45deg,
       transparent 0%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 27%, transparent) 15%,
+      color-mix(in oklch, var(--page-bg-paper-grain) 34%, transparent) 15%,
       transparent 30%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 18%, transparent) 50%,
+      color-mix(in oklch, var(--page-bg-paper-grain) 22%, transparent) 50%,
       transparent 65%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 24%, transparent) 85%,
+      color-mix(in oklch, var(--page-bg-paper-grain) 30%, transparent) 85%,
       transparent 100%
     );
     --page-bg-pearl: radial-gradient(
