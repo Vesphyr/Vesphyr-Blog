@@ -749,6 +749,7 @@
               : isRepeating === 1
                 ? i18n(Key.musicPlayerRepeatOne)
                 : i18n(Key.musicPlayerRepeat)}
+            class:is-active={isShuffled || isRepeating !== 0}
             on:click|stopPropagation={toggleRepeat}
           >
             {#if isShuffled}
@@ -780,6 +781,7 @@
               ? i18n(Key.musicPlayerPause)
               : i18n(Key.musicPlayerPlay)}
             class:opacity-50={isLoading}
+            class:is-active={isPlaying && !isLoading}
             disabled={isLoading}
             on:click|stopPropagation={togglePlay}
           >
@@ -804,7 +806,7 @@
           <button
             class="btn-plain w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
             aria-label={i18n(Key.musicPlayerPlaylist)}
-            class:text-[var(--primary)]={showPlaylist}
+            class:is-active={showPlaylist}
             on:click={togglePlaylist}
             title={i18n(Key.musicPlayerPlaylist)}
           >

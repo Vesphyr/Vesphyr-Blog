@@ -79,6 +79,20 @@
   transform: scale(0.96);
 }
 
+/* Active state (playing / repeat / shuffle / playlist open) — shown on all
+   devices including touch, since touch has no persistent hover. */
+.music-player button.is-active:not(:disabled) {
+  background-color: color-mix(
+    in oklab,
+    var(--primary) 16%,
+    var(--btn-plain-bg)
+  );
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--primary) 42%, transparent),
+    inset 0 0 0 999px color-mix(in oklab, var(--primary) 10%, transparent);
+  color: var(--primary);
+}
+
 .progress-section div:hover {
   transition: transform 0.2s ease;
 }
