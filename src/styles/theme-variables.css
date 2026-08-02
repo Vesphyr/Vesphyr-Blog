@@ -27,10 +27,22 @@
     transparent 4px 9px
   );
   --page-bg-weave-secondary: repeating-linear-gradient(
-    -45deg,
+    -30deg,
     transparent 0 3px,
-    rgba(121, 94, 123, 0.24) 3px 5px,
+    rgba(121, 94, 123, 0.2) 3px 5px,
     transparent 5px 13px
+  );
+  --page-bg-weave-tertiary: repeating-linear-gradient(
+    110deg,
+    transparent 0 1.5px,
+    rgba(121, 94, 123, 0.18) 1.5px 3px,
+    transparent 3px 7px
+  );
+  --page-bg-weave-quaternary: repeating-linear-gradient(
+    -75deg,
+    transparent 0 4px,
+    rgba(121, 94, 123, 0.18) 4px 6px,
+    transparent 6px 15px
   );
   --page-bg-satin: linear-gradient(
     135deg,
@@ -120,10 +132,22 @@
       transparent 4px 9px
     );
     --page-bg-weave-secondary: repeating-linear-gradient(
-      -45deg,
+      -30deg,
       transparent 0 3px,
-      color-mix(in oklch, var(--page-bg-paper-grain) 24%, transparent) 3px 5px,
+      color-mix(in oklch, var(--page-bg-paper-grain) 20%, transparent) 3px 5px,
       transparent 5px 13px
+    );
+    --page-bg-weave-tertiary: repeating-linear-gradient(
+      110deg,
+      transparent 0 1.5px,
+      color-mix(in oklch, var(--page-bg-paper-grain) 18%, transparent) 1.5px 3px,
+      transparent 3px 7px
+    );
+    --page-bg-weave-quaternary: repeating-linear-gradient(
+      -75deg,
+      transparent 0 4px,
+      color-mix(in oklch, var(--page-bg-paper-grain) 18%, transparent) 4px 6px,
+      transparent 6px 15px
     );
     --page-bg-satin: linear-gradient(
       135deg,
