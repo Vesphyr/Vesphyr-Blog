@@ -21,7 +21,7 @@
     "artist": "巫娜",
     "pic": "/music/cover/732450981.jpg",
     "url": "/api/music/audio?id=732450981",
-    "duration": 292364
+    "duration": 292376
   },
   {
     "id": 505404927,
@@ -29,7 +29,7 @@
     "artist": "贵族精选",
     "pic": "/music/cover/505404927.jpg",
     "url": "/api/music/audio?id=505404927",
-    "duration": 486610
+    "duration": 486622
   },
   {
     "id": 335898701,
@@ -61,7 +61,7 @@
     "artist": "骆集益_周志华",
     "pic": "/music/cover/470735012.jpg",
     "url": "/api/music/audio?id=470735012",
-    "duration": 234006
+    "duration": 234018
   },
   {
     "id": 244117281,
@@ -165,7 +165,7 @@
     "artist": "赵季平",
     "pic": "/music/cover/557929442.jpg",
     "url": "/api/music/audio?id=557929442",
-    "duration": 98535
+    "duration": 98547
   },
   {
     "id": 962972642,
@@ -181,7 +181,7 @@
     "artist": "SaxyBar",
     "pic": "/music/cover/443775509.jpg",
     "url": "/api/music/audio?id=443775509",
-    "duration": 127113
+    "duration": 127125
   },
   {
     "id": 531287120,
@@ -205,7 +205,7 @@
     "artist": "Geoff Knorr",
     "pic": "/music/cover/516107590.jpg",
     "url": "/api/music/audio?id=516107590",
-    "duration": 199289
+    "duration": 199301
   },
   {
     "id": 291724590,
@@ -221,7 +221,7 @@
     "artist": "Roland Rizzo",
     "pic": "/music/cover/549075171.jpg",
     "url": "/api/music/audio?id=549075171",
-    "duration": 218777
+    "duration": 218789
   },
   {
     "id": 406213663,
@@ -237,7 +237,7 @@
     "artist": "John Dreamer",
     "pic": "/music/cover/582037572.jpg",
     "url": "/api/music/audio?id=582037572",
-    "duration": 204514
+    "duration": 204526
   },
   {
     "id": 914282629,
