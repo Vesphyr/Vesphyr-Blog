@@ -57,19 +57,19 @@
   .progress-bar:hover {
     box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 35%, transparent);
   }
-}
 
-.music-player button:hover:not(:disabled),
-.music-player button:focus-visible {
-  background-color: color-mix(
-    in oklab,
-    var(--primary) 16%,
-    var(--btn-plain-bg)
-  );
-  box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--primary) 42%, transparent),
-    inset 0 0 0 999px color-mix(in oklab, var(--primary) 10%, transparent);
-  color: var(--primary);
+  .music-player button:hover:not(:disabled),
+  .music-player button:focus-visible {
+    background-color: color-mix(
+      in oklab,
+      var(--primary) 16%,
+      var(--btn-plain-bg)
+    );
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--primary) 42%, transparent),
+      inset 0 0 0 999px color-mix(in oklab, var(--primary) 10%, transparent);
+    color: var(--primary);
+  }
 }
 
 .music-player button:active:not(:disabled),
