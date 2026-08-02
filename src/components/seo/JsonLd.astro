@@ -24,7 +24,7 @@ const websiteSchema = {
         url: siteConfig.siteURL,
         logo: {
             "@type": "ImageObject",
-            url: url("/favicon/favicon-v2.svg"),
+            url: url("/favicon/favicon-cutout.png"),
         },
     },
 };
@@ -33,7 +33,7 @@ const personSchema = {
     "@type": "Person",
     name: profileConfig.name,
     url: siteConfig.siteURL,
-    image: url("/favicon/favicon-v2.svg"),
+    image: url("/favicon/favicon-cutout.png"),
     description: profileConfig.bio,
     sameAs: profileConfig.links.map((link) => link.url),
 };
@@ -57,7 +57,7 @@ const articleSchema = article
             url: siteConfig.siteURL,
             logo: {
                 "@type": "ImageObject",
-                url: url("/favicon/favicon-v2.svg"),
+                url: url("/favicon/favicon-cutout.png"),
             },
         },
         mainEntityOfPage: {
