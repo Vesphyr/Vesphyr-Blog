@@ -253,7 +253,7 @@ const headingsJson = JSON.stringify(headings);
 					badge = '<span class="card-toc-dot-small"></span>';
 				}
 
-				const text = heading.text.replace(/\s+#+\s*$/, "");
+				const text = heading.text.replace(/\s*#+\s*$/, "");
 				html += `<div class="card-toc-item" style="padding-left: ${0.5 + indent}rem" data-heading-id="${heading.slug}" role="link" tabindex="0">${badge}<span class="card-toc-text">${text}</span></div>`;
 			});
 

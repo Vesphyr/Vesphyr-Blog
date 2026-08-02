@@ -148,7 +148,7 @@ export default defineConfig({
                         properties: {
                             className: ["anchor-icon"],
                         },
-                        children: [{ type: "text", value: "#" }],
+                        children: [],
                     },
                 },
             ],
