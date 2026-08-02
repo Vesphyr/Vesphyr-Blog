@@ -39,5 +39,8 @@
     width: var(--mobile-player-width) !important;
     max-width: var(--mobile-player-width) !important;
     right: 1rem !important;
+    /* Sit above the expanded player instead of overlapping it */
+    bottom: 11.5rem !important;
+    max-height: calc(100dvh - 13.5rem) !important;
   }
 }
