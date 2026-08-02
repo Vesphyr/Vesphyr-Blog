@@ -192,14 +192,6 @@
     "duration": 197160
   },
   {
-    "id": 516107590,
-    "name": "China (The Atomic Era)",
-    "artist": "Geoff Knorr",
-    "pic": "/music/cover/516107590.jpg",
-    "url": "/api/music/audio?id=516107590",
-    "duration": 199289
-  },
-  {
     "id": 744594594,
     "name": "Oogway's Legacy",
     "artist": "Hans Zimmer_郎朗_Gan Gou_Jian Wang",
@@ -208,20 +200,20 @@
     "duration": 120790
   },
   {
+    "id": 516107590,
+    "name": "China (The Atomic Era)",
+    "artist": "Geoff Knorr",
+    "pic": "/music/cover/516107590.jpg",
+    "url": "/api/music/audio?id=516107590",
+    "duration": 199289
+  },
+  {
     "id": 291724590,
     "name": "Palace Memories - Sunset",
     "artist": "S.E.N.S",
     "pic": "/music/cover/291724590.jpg",
     "url": "/api/music/audio?id=291724590",
     "duration": 210837
-  },
-  {
-    "id": 130483866,
-    "name": "The Stonemasons (From the Europa Universalis IV Soundtrack)",
-    "artist": "Paradox Interactive_Andreas Waldetoft",
-    "pic": "/music/cover/130483866.jpg",
-    "url": "/api/music/audio?id=130483866",
-    "duration": 232381
   },
   {
     "id": 549075171,
@@ -262,5 +254,13 @@
     "pic": "/music/cover/475465399.jpg",
     "url": "/api/music/audio?id=475465399",
     "duration": 143615
+  },
+  {
+    "id": 130483866,
+    "name": "The Stonemasons (From the Europa Universalis IV Soundtrack)",
+    "artist": "Paradox Interactive_Andreas Waldetoft",
+    "pic": "/music/cover/130483866.jpg",
+    "url": "/api/music/audio?id=130483866",
+    "duration": 232381
   }
 ]
