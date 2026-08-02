@@ -37,7 +37,7 @@ export function bindAutoplayRecovery(
           // Still buffering (common on mobile): retry shortly — the
           // track is usually ready within a second. Real failures
           // surface via the audio element's error event.
-          setTimeout(() => {
+          const retryPlayback = () => {
             const audioNow = getAudio();
             if (!audioNow || !shouldRecover()) return;
             if (!audioNow.paused) {
@@ -48,7 +48,18 @@ export function bindAutoplayRecovery(
               .play()
               .then(onRecovered)
               .catch(() => {});
-          }, 800);
+          };
+          if (audio.readyState >= 2) {
+            setTimeout(retryPlayback, 800);
+          } else {
+            // Media is not buffered yet (slow mobile network): wait for
+            // canplay so the retry isn't rejected with AbortError again.
+            const onCanPlay = () => {
+              audio.removeEventListener("canplay", onCanPlay);
+              retryPlayback();
+            };
+            audio.addEventListener("canplay", onCanPlay);
+          }
           return;
         }
         onRecoveryFailed?.();

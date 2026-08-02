@@ -216,8 +216,13 @@
     isLoading = true;
     startAudioLoadTimeout();
     const expectedSongId = currentSong.id;
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
+
+    const attemptPlayback = () => {
+      if (!audio || currentSong.id !== expectedSongId) return;
+
+      const playPromise = audio.play();
+      if (playPromise === undefined) return;
+
       playPromise.catch((error) => {
         if (currentSong.id !== expectedSongId) return;
         console.warn("Audio playback was blocked or failed.", error);
@@ -238,7 +243,22 @@
           handlePlaybackFailure(i18n(Key.musicPlayerRetryLater), false);
         }
       });
+    };
+
+    if (audio.readyState >= 2) {
+      attemptPlayback();
+      return;
     }
+
+    // audio.load() was just scheduled by loadSong; on mobile the media is
+    // almost never ready yet, so an immediate play() is rejected with
+    // AbortError and the muted-autoplay fallback never starts. Wait for the
+    // canplay event, then attempt playback once the data is buffered.
+    const onCanPlay = () => {
+      audio.removeEventListener("canplay", onCanPlay);
+      attemptPlayback();
+    };
+    audio.addEventListener("canplay", onCanPlay);
   }
 
   async function togglePlay() {
