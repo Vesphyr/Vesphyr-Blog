@@ -23,35 +23,41 @@
   --page-bg-weave-primary: repeating-linear-gradient(
     0deg,
     transparent 0 3px,
-    rgba(121, 94, 123, 0.16) 3px 5px,
+    rgba(121, 94, 123, 0.24) 3px 5px,
     transparent 5px 8px
   );
   --page-bg-weave-secondary: repeating-linear-gradient(
     90deg,
     transparent 0 4px,
-    rgba(121, 94, 123, 0.16) 4px 6px,
+    rgba(121, 94, 123, 0.24) 4px 6px,
     transparent 6px 9px
   );
   --page-bg-satin: linear-gradient(
     135deg,
     transparent 0%,
-    rgba(121, 94, 123, 0.38) 15%,
+    rgba(121, 94, 123, 0.57) 15%,
     transparent 30%,
-    rgba(121, 94, 123, 0.24) 50%,
+    rgba(121, 94, 123, 0.36) 50%,
     transparent 65%,
-    rgba(121, 94, 123, 0.34) 85%,
+    rgba(121, 94, 123, 0.51) 85%,
     transparent 100%
   );
   --page-bg-satin-secondary: linear-gradient(
     -45deg,
     transparent 0%,
-    rgba(121, 94, 123, 0.18) 15%,
+    rgba(121, 94, 123, 0.27) 15%,
     transparent 30%,
-    rgba(121, 94, 123, 0.12) 50%,
+    rgba(121, 94, 123, 0.18) 50%,
     transparent 65%,
-    rgba(121, 94, 123, 0.16) 85%,
+    rgba(121, 94, 123, 0.24) 85%,
     transparent 100%
   );
+  --page-bg-pearl: radial-gradient(
+    circle at 2px 2px,
+    rgba(255, 255, 255, 0.06) 0 1px,
+    transparent 1.5px
+  )
+  0 0 / 6px 6px;
   --card-bg: #674f68;
   --card-bg-transparent: rgba(103, 79, 104, 0.88);
   --btn-content: #f3d1f4;
@@ -110,35 +116,41 @@
     --page-bg-weave-primary: repeating-linear-gradient(
       0deg,
       transparent 0 3px,
-      color-mix(in oklch, var(--page-bg-paper-grain) 16%, transparent) 3px 5px,
+      color-mix(in oklch, var(--page-bg-paper-grain) 24%, transparent) 3px 5px,
       transparent 5px 8px
     );
     --page-bg-weave-secondary: repeating-linear-gradient(
       90deg,
       transparent 0 4px,
-      color-mix(in oklch, var(--page-bg-paper-grain) 16%, transparent) 4px 6px,
+      color-mix(in oklch, var(--page-bg-paper-grain) 24%, transparent) 4px 6px,
       transparent 6px 9px
     );
     --page-bg-satin: linear-gradient(
       135deg,
       transparent 0%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 38%, transparent) 15%,
+      color-mix(in oklch, var(--page-bg-paper-grain) 57%, transparent) 15%,
       transparent 30%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 24%, transparent) 50%,
+      color-mix(in oklch, var(--page-bg-paper-grain) 36%, transparent) 50%,
       transparent 65%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 34%, transparent) 85%,
+      color-mix(in oklch, var(--page-bg-paper-grain) 51%, transparent) 85%,
       transparent 100%
     );
     --page-bg-satin-secondary: linear-gradient(
       -45deg,
       transparent 0%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 18%, transparent) 15%,
+      color-mix(in oklch, var(--page-bg-paper-grain) 27%, transparent) 15%,
       transparent 30%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 12%, transparent) 50%,
+      color-mix(in oklch, var(--page-bg-paper-grain) 18%, transparent) 50%,
       transparent 65%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 16%, transparent) 85%,
+      color-mix(in oklch, var(--page-bg-paper-grain) 24%, transparent) 85%,
       transparent 100%
     );
+    --page-bg-pearl: radial-gradient(
+      circle at 2px 2px,
+      color-mix(in oklch, white 6%, transparent) 0 1px,
+      transparent 1.5px
+    )
+    0 0 / 6px 6px;
     --card-bg: oklch(0.46 0.05 var(--hue));
     --card-bg-transparent: oklch(0.46 0.05 var(--hue) / 0.88);
     --btn-content: oklch(0.9 0.06 var(--hue));
