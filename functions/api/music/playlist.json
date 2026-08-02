@@ -1,14 +1,5 @@
 [
   {
-    "id": 1690698,
-    "name": "ブリティッシュ・グレナディアーズ (不列颠掷弹兵进行曲)",
-    "artist": "浜口史郎",
-    "author": "浜口史郎",
-    "pic": "/music/cover/1690698.jpg",
-    "url": "/api/music/audio?id=1690698",
-    "duration": 97907
-  },
-  {
     "id": 29401808,
     "name": "故梦(琵琶版)",
     "artist": "千年破晓",
@@ -16,15 +7,6 @@
     "pic": "/music/cover/29401808.jpg",
     "url": "/api/music/audio?id=29401808",
     "duration": 224000
-  },
-  {
-    "id": 29722369,
-    "name": "The Stonemasons (From the Europa Universalis IV Soundtrack)",
-    "artist": "Paradox Interactive / Andreas Waldetoft",
-    "author": "Paradox Interactive / Andreas Waldetoft",
-    "pic": "/music/cover/29722369.jpg",
-    "url": "/api/music/audio?id=29722369",
-    "duration": 232381
   },
   {
     "id": 33789445,
@@ -36,49 +18,13 @@
     "duration": 154128
   },
   {
-    "id": 417594093,
-    "name": "阿里郎（纯音乐）",
-    "artist": "SaxyBar",
-    "author": "SaxyBar",
-    "pic": "/music/cover/417594093.jpg",
-    "url": "/api/music/audio?id=417594093",
-    "duration": 127002
-  },
-  {
-    "id": 425295995,
-    "name": "Kids",
-    "artist": "Kyle Dixon & Michael Stein",
-    "author": "Kyle Dixon & Michael Stein",
-    "pic": "/music/cover/425295995.jpg",
-    "url": "/api/music/audio?id=425295995",
-    "duration": 158000
-  },
-  {
-    "id": 441116114,
-    "name": "Rome (The Medieval Era)",
-    "artist": "Roland Rizzo",
-    "author": "Roland Rizzo",
-    "pic": "/music/cover/441116114.jpg",
-    "url": "/api/music/audio?id=441116114",
-    "duration": 218757
-  },
-  {
-    "id": 441120082,
-    "name": "China (The Atomic Era)",
-    "artist": "Geoff Knorr",
-    "author": "Geoff Knorr",
-    "pic": "/music/cover/441120082.jpg",
-    "url": "/api/music/audio?id=441120082",
-    "duration": 199281
-  },
-  {
-    "id": 465110289,
-    "name": "Peer Gynt Suite No. 1, Op. 46:IV. In the Hall of the Mountain King",
-    "artist": "Iceland Symphony Orchestra / Bjarte Engeset",
-    "author": "Iceland Symphony Orchestra / Bjarte Engeset",
-    "pic": "/music/cover/465110289.jpg",
-    "url": "/api/music/audio?id=465110289",
-    "duration": 162400
+    "id": 1817410059,
+    "name": "尘世闲游 Rex Incognito",
+    "artist": "陈致逸 / HOYO-MiX",
+    "author": "陈致逸 / HOYO-MiX",
+    "pic": "/music/cover/1817410059.jpg",
+    "url": "/api/music/audio?id=1817410059",
+    "duration": 108827
   },
   {
     "id": 1357785684,
@@ -99,22 +45,58 @@
     "duration": 82383
   },
   {
-    "id": 1817410059,
-    "name": "尘世闲游 Rex Incognito",
-    "artist": "陈致逸 / HOYO-MiX",
-    "author": "陈致逸 / HOYO-MiX",
-    "pic": "/music/cover/1817410059.jpg",
-    "url": "/api/music/audio?id=1817410059",
-    "duration": 108827
+    "id": 417594093,
+    "name": "阿里郎（纯音乐）",
+    "artist": "SaxyBar",
+    "author": "SaxyBar",
+    "pic": "/music/cover/417594093.jpg",
+    "url": "/api/music/audio?id=417594093",
+    "duration": 127002
   },
   {
-    "id": 2676131032,
-    "name": "Discover the World",
-    "artist": "Serge Pavkin",
-    "author": "Serge Pavkin",
-    "pic": "/music/cover/2676131032.jpg",
-    "url": "/api/music/audio?id=2676131032",
-    "duration": 270000
+    "id": 3349676395,
+    "name": "洪炉",
+    "artist": "铁痕电台-MSR",
+    "author": "铁痕电台-MSR",
+    "pic": "/music/cover/3349676395.jpg",
+    "url": "/api/music/audio?id=3349676395",
+    "duration": 434123
+  },
+  {
+    "id": 441120082,
+    "name": "China (The Atomic Era)",
+    "artist": "Geoff Knorr",
+    "author": "Geoff Knorr",
+    "pic": "/music/cover/441120082.jpg",
+    "url": "/api/music/audio?id=441120082",
+    "duration": 199281
+  },
+  {
+    "id": 29722369,
+    "name": "The Stonemasons (From the Europa Universalis IV Soundtrack)",
+    "artist": "Paradox Interactive / Andreas Waldetoft",
+    "author": "Paradox Interactive / Andreas Waldetoft",
+    "pic": "/music/cover/29722369.jpg",
+    "url": "/api/music/audio?id=29722369",
+    "duration": 232381
+  },
+  {
+    "id": 441116114,
+    "name": "Rome (The Medieval Era)",
+    "artist": "Roland Rizzo",
+    "author": "Roland Rizzo",
+    "pic": "/music/cover/441116114.jpg",
+    "url": "/api/music/audio?id=441116114",
+    "duration": 218757
+  },
+  {
+    "id": 465110289,
+    "name": "Peer Gynt Suite No. 1, Op. 46:IV. In the Hall of the Mountain King",
+    "artist": "Iceland Symphony Orchestra / Bjarte Engeset",
+    "author": "Iceland Symphony Orchestra / Bjarte Engeset",
+    "pic": "/music/cover/465110289.jpg",
+    "url": "/api/music/audio?id=465110289",
+    "duration": 162400
   },
   {
     "id": 3319151600,
@@ -126,12 +108,30 @@
     "duration": 178200
   },
   {
-    "id": 3349676395,
-    "name": "洪炉",
-    "artist": "铁痕电台-MSR",
-    "author": "铁痕电台-MSR",
-    "pic": "/music/cover/3349676395.jpg",
-    "url": "/api/music/audio?id=3349676395",
-    "duration": 434123
+    "id": 2676131032,
+    "name": "Discover the World",
+    "artist": "Serge Pavkin",
+    "author": "Serge Pavkin",
+    "pic": "/music/cover/2676131032.jpg",
+    "url": "/api/music/audio?id=2676131032",
+    "duration": 270000
+  },
+  {
+    "id": 1690698,
+    "name": "ブリティッシュ・グレナディアーズ (不列颠掷弹兵进行曲)",
+    "artist": "浜口史郎",
+    "author": "浜口史郎",
+    "pic": "/music/cover/1690698.jpg",
+    "url": "/api/music/audio?id=1690698",
+    "duration": 97907
+  },
+  {
+    "id": 425295995,
+    "name": "Kids",
+    "artist": "Kyle Dixon & Michael Stein",
+    "author": "Kyle Dixon & Michael Stein",
+    "pic": "/music/cover/425295995.jpg",
+    "url": "/api/music/audio?id=425295995",
+    "duration": 158000
   }
 ]
