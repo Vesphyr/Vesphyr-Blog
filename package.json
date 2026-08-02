@@ -62,7 +62,6 @@
     "remark-sectionize": "^2.1.0",
     "satori": "^0.26.0",
     "sharp": "^0.34.5",
-    "stylus": "^0.64.0",
     "svelte": "^5.55.1",
     "tailwindcss": "^4.2.2",
     "typescript": "^6.0.2",
@@ -77,6 +76,7 @@
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-svelte": "^3.5.1",
+    "stylus": "^0.64.0",
     "tsx": "^4.21.0"
   },
   "packageManager": "pnpm@10.22.0",
