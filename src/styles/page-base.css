@@ -50,8 +50,6 @@ body::before {
     var(--page-bg-satin-secondary),
     var(--page-bg-weave-primary),
     var(--page-bg-weave-secondary),
-    var(--page-bg-weave-tertiary),
-    var(--page-bg-weave-quaternary),
     var(--page-bg-pearl),
     radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, var(--page-bg-vignette) 100%),
     linear-gradient(
@@ -60,7 +58,7 @@ body::before {
       var(--page-bg) 52%,
       var(--page-bg-bottom) 100%
     );
-  background-blend-mode: normal, soft-light, soft-light, soft-light, soft-light, soft-light, soft-light, soft-light, normal, normal;
+  background-blend-mode: normal, soft-light, soft-light, soft-light, soft-light, soft-light, normal, normal;
   transition:
     background-color 0.2s ease,
     background-image 0.2s ease;
