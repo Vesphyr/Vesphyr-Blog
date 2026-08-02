@@ -88,50 +88,5 @@
     "pic": "/music/cover/441116114.jpg",
     "url": "/api/music/audio?id=441116114",
     "duration": 218757
-  },
-  {
-    "id": 465110289,
-    "name": "Peer Gynt Suite No. 1, Op. 46:IV. In the Hall of the Mountain King",
-    "artist": "Iceland Symphony Orchestra / Bjarte Engeset",
-    "author": "Iceland Symphony Orchestra / Bjarte Engeset",
-    "pic": "/music/cover/465110289.jpg",
-    "url": "/api/music/audio?id=465110289",
-    "duration": 162400
-  },
-  {
-    "id": 3319151600,
-    "name": "Flower Gardens",
-    "artist": "Magnus Ringblom",
-    "author": "Magnus Ringblom",
-    "pic": "/music/cover/3319151600.jpg",
-    "url": "/api/music/audio?id=3319151600",
-    "duration": 178200
-  },
-  {
-    "id": 2676131032,
-    "name": "Discover the World",
-    "artist": "Serge Pavkin",
-    "author": "Serge Pavkin",
-    "pic": "/music/cover/2676131032.jpg",
-    "url": "/api/music/audio?id=2676131032",
-    "duration": 270000
-  },
-  {
-    "id": 1690698,
-    "name": "ブリティッシュ・グレナディアーズ (不列颠掷弹兵进行曲)",
-    "artist": "浜口史郎",
-    "author": "浜口史郎",
-    "pic": "/music/cover/1690698.jpg",
-    "url": "/api/music/audio?id=1690698",
-    "duration": 97907
-  },
-  {
-    "id": 425295995,
-    "name": "Kids",
-    "artist": "Kyle Dixon & Michael Stein",
-    "author": "Kyle Dixon & Michael Stein",
-    "pic": "/music/cover/425295995.jpg",
-    "url": "/api/music/audio?id=425295995",
-    "duration": 158000
   }
 ]
