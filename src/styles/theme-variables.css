@@ -1,12 +1,12 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-sans: "Crimson Pro", "ZhuqueFangsong", "Zhuque Fangsong UI";
-  --font-serif: "Crimson Pro", "ZhuqueFangsong", "Zhuque Fangsong UI";
-  --font-mono: "Crimson Pro", "ZhuqueFangsong", "Zhuque Fangsong UI";
-  --font-latin: "Crimson Pro";
-  --font-cjk: "ZhuqueFangsong", "Zhuque Fangsong UI";
-  --font-content: "Crimson Pro", "ZhuqueFangsong", "Zhuque Fangsong UI";
+  --font-sans: "Crimson Pro", "ZhuqueFangsong", "Zhuque Fangsong UI", "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+  --font-serif: "Crimson Pro", "ZhuqueFangsong", "Zhuque Fangsong UI", "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+  --font-mono: "Crimson Pro", ui-monospace, "SF Mono", "Cascadia Mono", Consolas, "Liberation Mono", monospace;
+  --font-latin: "Crimson Pro", Georgia, "Times New Roman", serif;
+  --font-cjk: "ZhuqueFangsong", "Zhuque Fangsong UI", "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+  --font-content: "Crimson Pro", "ZhuqueFangsong", "Zhuque Fangsong UI", "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
 }
 
 /* 单一固定配色：舒适护眼深色基底（非纯黑）+ 暖米白文字，缣帛丝绸纹理 */

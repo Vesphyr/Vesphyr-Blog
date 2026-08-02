@@ -2,8 +2,8 @@
 
 :root {
   --site-scale: 0.88;
-  --site-root-font-mobile: 15px;
-  --site-root-font-desktop: 15px;
+  --site-root-font-mobile: 16px;
+  --site-root-font-desktop: 16px;
 }
 
 html {
@@ -124,6 +124,17 @@ body
     samp
   ) {
   font-family: var(--font-content);
+}
+
+/* 中文（朱雀仿宋）仅提供 400 单字重：禁用浏览器伪造加粗（faux bold），
+   标题层级改由字号、字距与主色承担，避免中文标题字形被拉伸变形。 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-synthesis-weight: none;
 }
 
 html::-webkit-scrollbar,
