@@ -1,5 +1,3 @@
-import type { DARK_MODE } from "../constants/constants";
-
 export type SiteConfig = {
   title: string;
   subtitle: string;
@@ -88,24 +86,6 @@ export type ProfileConfig = {
     url: string;
     icon: string;
   }[];
-};
-
-export type LIGHT_DARK_MODE = typeof DARK_MODE;
-
-export type BlogPostData = {
-  body: string;
-  title: string;
-  published: Date;
-  description: string;
-  tags: string[];
-  draft?: boolean;
-  image?: string;
-  category?: string;
-  pinned?: boolean;
-  prevTitle?: string;
-  prevSlug?: string;
-  nextTitle?: string;
-  nextSlug?: string;
 };
 
 export type ExpressiveCodeConfig = {

@@ -1,6 +1,3 @@
-import type { LIGHT_DARK_MODE } from "@/types/config";
-import { setThemePreference } from "./theme-utils";
-
 const UI_TO_HUE_MULTIPLIER = 1;
 const DEFAULT_HUE = 0;
 const HUE_STORAGE_KEY = "hue";
@@ -47,8 +44,4 @@ export function setHueUI(uiValue: number): void {
   document.documentElement.style.setProperty("--hue", String(actualHue));
 
   document.documentElement.setAttribute("data-theme-material", "silk");
-}
-
-export function setTheme(theme: LIGHT_DARK_MODE): void {
-  setThemePreference(theme);
 }

@@ -3,7 +3,6 @@ let fancyboxSelectors: string[] = [];
 let Fancybox: typeof FancyboxType | null = null;
 let fancyboxStylesLoaded = false;
 type FancyboxBind = (selector: string, options?: unknown) => void;
-type FancyboxUnbind = (selector: string) => void;
 export function checkKatex(): void {
     if (document.querySelector(".katex")) {
         void import("katex/dist/katex.css");
@@ -85,14 +84,4 @@ export async function initFancybox(): Promise<void> {
     fancyboxSelectors.push(albumLinksSelector);
     bindFancybox(singleFancyboxSelector, commonConfig);
     fancyboxSelectors.push(singleFancyboxSelector);
-}
-export function cleanupFancybox(): void {
-    const fancybox = Fancybox;
-    if (!fancybox)
-        return;
-    const unbindFancybox = fancybox.unbind as unknown as FancyboxUnbind;
-    fancyboxSelectors.forEach((selector) => {
-        unbindFancybox(selector);
-    });
-    fancyboxSelectors = [];
 }
