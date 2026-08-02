@@ -46,15 +46,15 @@
     transparent 1.5px
   )
   0 0 / 6px 6px;
-  /* 贡品锦：宋锦回纹提花（极淡金线纹样）+ 织金锦暖金光晕 */
-  --page-bg-brocade: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Crect x='18' y='18' width='44' height='44' fill='none' stroke='%23D4AF37' stroke-width='1' opacity='0.35'/%3E%3Crect x='30' y='30' width='20' height='20' fill='none' stroke='%23D4AF37' stroke-width='1' opacity='0.3'/%3E%3C/svg%3E")
+  /* 贡品锦：宋锦回纹+菱纹提花（细古金线，极淡）+ 织金锦暖金光晕 */
+  --page-bg-brocade: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Crect x='12' y='12' width='56' height='56' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.25'/%3E%3Crect x='22' y='22' width='36' height='36' fill='none' stroke='%23C9A227' stroke-width='0.5' opacity='0.2'/%3E%3Cpath d='M40,31 L49,40 L40,49 L31,40 Z' fill='none' stroke='%23C9A227' stroke-width='0.5' opacity='0.2'/%3E%3Ccircle cx='40' cy='40' r='1.6' fill='%23C9A227' opacity='0.18'/%3E%3C/svg%3E")
     0 0 / 80px 80px;
   --page-bg-gold: linear-gradient(
     115deg,
     transparent 0%,
-    rgba(212, 175, 55, 0.16) 22%,
+    rgba(201, 162, 39, 0.14) 22%,
     transparent 45%,
-    rgba(212, 175, 55, 0.1) 68%,
+    rgba(201, 162, 39, 0.08) 68%,
     transparent 100%
   );
   --card-bg: #674f68;
@@ -138,15 +138,15 @@
       transparent 1.5px
     )
     0 0 / 6px 6px;
-    /* 贡品锦：宋锦回纹提花（极淡金线纹样）+ 织金锦暖金光晕 */
-    --page-bg-brocade: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Crect x='18' y='18' width='44' height='44' fill='none' stroke='%23D4AF37' stroke-width='1' opacity='0.35'/%3E%3Crect x='30' y='30' width='20' height='20' fill='none' stroke='%23D4AF37' stroke-width='1' opacity='0.3'/%3E%3C/svg%3E")
+    /* 贡品锦：宋锦回纹+菱纹提花（细古金线，极淡）+ 织金锦暖金光晕 */
+    --page-bg-brocade: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Crect x='12' y='12' width='56' height='56' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.25'/%3E%3Crect x='22' y='22' width='36' height='36' fill='none' stroke='%23C9A227' stroke-width='0.5' opacity='0.2'/%3E%3Cpath d='M40,31 L49,40 L40,49 L31,40 Z' fill='none' stroke='%23C9A227' stroke-width='0.5' opacity='0.2'/%3E%3Ccircle cx='40' cy='40' r='1.6' fill='%23C9A227' opacity='0.18'/%3E%3C/svg%3E")
       0 0 / 80px 80px;
     --page-bg-gold: linear-gradient(
       115deg,
       transparent 0%,
-      color-mix(in oklch, #d4af37 16%, transparent) 22%,
+      color-mix(in oklch, #c9a227 14%, transparent) 22%,
       transparent 45%,
-      color-mix(in oklch, #d4af37 10%, transparent) 68%,
+      color-mix(in oklch, #c9a227 8%, transparent) 68%,
       transparent 100%
     );
     --card-bg: oklch(0.46 0.05 var(--hue));
