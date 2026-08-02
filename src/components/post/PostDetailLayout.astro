@@ -41,8 +41,8 @@ const { entry, headings = [], jsonLd, canonicalUrl, remarkPluginFrontmatter, } =
 	</script>
 	<div
 		id="reading-progress"
-		class="fixed top-0 left-0 z-[100] h-[3px] bg-(--primary) transition-all duration-150 pointer-events-none"
-		style="width: 0%"
+		class="fixed top-0 left-0 z-[100] h-[3px] transition-all duration-150 pointer-events-none"
+		style="width: 0%; background: linear-gradient(90deg, var(--primary), var(--link-hover));"
 		aria-hidden="true"
 	></div>
 	<script is:inline>
