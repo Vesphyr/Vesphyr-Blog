@@ -82,7 +82,7 @@ export async function GET({ props, }: APIContext<{
     // Satori rejects correctly-declared webp in this pipeline, so the avatar
     // keeps a png data-URI prefix (decoders sniff the actual bytes).
     const avatarBase64 = `data:image/png;base64,${avatarBuffer.toString("base64")}`;
-    let iconPath = "./public/favicon/favicon-cutout.png";
+    let iconPath = "./public/favicon/favicon.png";
     if (siteConfig.favicon.length > 0) {
         iconPath = `./public${siteConfig.favicon[0].src}`;
     }
