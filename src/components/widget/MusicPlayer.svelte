@@ -315,10 +315,6 @@
         return;
       }
       if (isRepeating === 1) {
-        isRepeating = 0;
-        return;
-      }
-      if (isRepeating === 0) {
         isShuffled = true;
         isRepeating = 2;
         return;
@@ -765,11 +761,6 @@
               <Icon icon="material-symbols:shuffle" class="text-[1.05rem]" />
             {:else if isRepeating === 1}
               <Icon icon="material-symbols:repeat-one" class="text-[1.05rem]" />
-            {:else if isRepeating === 0}
-              <Icon
-                icon="material-symbols:repeat"
-                class="text-[1.05rem]"
-              />
             {:else}
               <Icon icon="material-symbols:repeat" class="text-[1.05rem]" />
             {/if}
