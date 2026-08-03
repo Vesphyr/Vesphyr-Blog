@@ -1,7 +1,5 @@
 ---
-import { profileConfig } from "../config";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
-import ImageWrapper from "../components/misc/ImageWrapper.astro";
 ---
 
 <MainGridLayout title="关于" description="关于本站和作者">
@@ -12,33 +10,6 @@ import ImageWrapper from "../components/misc/ImageWrapper.astro";
 		class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32"
 	>
 		<div class="card-base z-10 px-9 py-6 relative w-full">
-			
-			<header class="mb-8">
-				<h1
-					class="text-[2rem] font-bold text-90 mb-3 relative
-                  before:w-1 before:h-8 before:rounded-md before:bg-(--primary)
-                  before:absolute before:top-1/2 before:-translate-y-1/2 before:-left-4"
-				>
-					关于
-				</h1>
-			</header>
-
-			
-			<section class="about-section">
-				<div class="about-avatar-wrapper">
-					<ImageWrapper
-						src={profileConfig.avatar || ""}
-						alt={profileConfig.name}
-						class="about-avatar"
-						width={128}
-						height={128}
-					/>
-				</div>
-				<h2 class="about-name">{profileConfig.name}</h2>
-				{profileConfig.bio && (
-					<p class="about-bio">{profileConfig.bio}</p>
-				)}
-			</section>
 
 			
 			<section class="about-section">
