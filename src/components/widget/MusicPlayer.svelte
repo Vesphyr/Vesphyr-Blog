@@ -789,7 +789,6 @@
             aria-label={isPlaying
               ? i18n(Key.musicPlayerPause)
               : i18n(Key.musicPlayerPlay)}
-            class:opacity-50={isLoading}
             disabled={isLoading}
             on:click|stopPropagation={togglePlay}
           >
