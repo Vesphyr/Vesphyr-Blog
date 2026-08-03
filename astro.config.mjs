@@ -6,7 +6,6 @@ import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import { defineConfig } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeComponents from "rehype-components";
 import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
@@ -132,23 +131,6 @@ export default defineConfig({
                         important: (x, y) => AdmonitionComponent(x, y, "important"),
                         caution: (x, y) => AdmonitionComponent(x, y, "caution"),
                         warning: (x, y) => AdmonitionComponent(x, y, "warning"),
-                    },
-                },
-            ],
-            [
-                rehypeAutolinkHeadings,
-                {
-                    behavior: "append",
-                    properties: {
-                        className: ["anchor"],
-                    },
-                    content: {
-                        type: "element",
-                        tagName: "span",
-                        properties: {
-                            className: ["anchor-icon"],
-                        },
-                        children: [],
                     },
                 },
             ],
