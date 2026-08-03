@@ -27,7 +27,7 @@
   let currentTime = 0;
   let duration = 0;
   let isLoading = false;
-  let isShuffled = false;
+  let isShuffled = true;
   let isRepeating = 2;
   let errorMessage = "";
   let showError = false;
@@ -309,19 +309,19 @@
   }
 
   function toggleRepeat() {
-    if (!isShuffled) {
-      if (isRepeating === 2) {
-        isRepeating = 1;
-        return;
-      }
-      if (isRepeating === 1) {
-        isShuffled = true;
-        isRepeating = 2;
-        return;
-      }
+    if (isShuffled) {
+      // 随机播放 → 循环播放
+      isShuffled = false;
+      isRepeating = 2;
+      return;
     }
-
-    isShuffled = false;
+    if (isRepeating === 2) {
+      // 循环播放 → 单曲循环
+      isRepeating = 1;
+      return;
+    }
+    // 单曲循环 → 随机播放
+    isShuffled = true;
     isRepeating = 2;
   }
 
@@ -638,19 +638,7 @@
       >
         <div class="flex items-center gap-3 mb-3">
           <div
-            class="cover-container relative w-13 h-13 rounded-full overflow-hidden shrink-0 cursor-pointer"
-            on:click={togglePlay}
-            on:keydown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                togglePlay();
-              }
-            }}
-            role="button"
-            tabindex="0"
-            aria-label={isPlaying
-              ? i18n(Key.musicPlayerPause)
-              : i18n(Key.musicPlayerPlay)}
+            class="cover-container relative w-13 h-13 rounded-full overflow-hidden shrink-0"
           >
             {#if currentSong.cover}
               <img
@@ -670,21 +658,7 @@
             {/if}
           </div>
 
-          <div
-            class="flex-1 min-w-0 cursor-pointer"
-            on:click={togglePlay}
-            on:keydown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                togglePlay();
-              }
-            }}
-            role="button"
-            tabindex="0"
-            aria-label={isPlaying
-              ? i18n(Key.musicPlayerPause)
-              : i18n(Key.musicPlayerPlay)}
-          >
+          <div class="flex-1 min-w-0">
             <div
               bind:this={songTitleViewport}
               class="song-title text-base font-bold text-90 mb-0.5"

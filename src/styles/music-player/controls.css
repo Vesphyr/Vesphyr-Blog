@@ -44,8 +44,7 @@
   .music-player button:hover:not(:disabled),
   .music-player [role="button"]:hover,
   .progress-bar:hover,
-  .playlist-item:hover,
-  .cover-container:hover {
+  .playlist-item:hover {
     transform: translateY(-1px) scale(1.03);
   }
 
@@ -74,8 +73,7 @@
 
 .music-player button:active:not(:disabled),
 .music-player [role="button"]:active,
-.playlist-item:active,
-.cover-container:active {
+.playlist-item:active {
   transform: scale(0.96);
 }
 
