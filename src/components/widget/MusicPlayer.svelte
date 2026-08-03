@@ -768,7 +768,7 @@
             {:else if isRepeating === 0}
               <Icon
                 icon="material-symbols:repeat"
-                class="text-[1.05rem] opacity-40"
+                class="text-[1.05rem]"
               />
             {:else}
               <Icon icon="material-symbols:repeat" class="text-[1.05rem]" />
