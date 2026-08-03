@@ -332,8 +332,18 @@
   function previousSong() {
     if (playlist.length <= 1) return;
 
-    const newIndex = currentIndex > 0 ? currentIndex - 1 : playlist.length - 1;
-    playSong(newIndex);
+    // Walk backwards to the previous playable track, skipping broken songs
+    // (mirrors nextSong's behavior).
+    for (let i = 0; i < playlist.length; i++) {
+      const newIndex =
+        currentIndex > 0 ? currentIndex - 1 - i : playlist.length - 1 - i;
+      const wrapped =
+        newIndex >= 0 ? newIndex : newIndex + playlist.length;
+      if (!brokenSongs.has(playlist[wrapped]?.id)) {
+        playSong(wrapped);
+        return;
+      }
+    }
   }
 
   function nextSong(autoPlay = true) {
@@ -553,7 +563,7 @@
 
 {#if musicPlayerConfig.enable}
   {#if showError}
-    <div class="fixed bottom-20 right-4 z-60 max-w-sm">
+    <div class="fixed bottom-20 right-4 z-[60] max-w-sm">
       <div
         class="bg-red-500 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 animate-slide-up"
       >
