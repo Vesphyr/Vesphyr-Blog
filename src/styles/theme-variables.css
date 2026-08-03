@@ -46,17 +46,11 @@
     transparent 1.5px
   )
   0 0 / 6px 6px;
-  /* 宋锦：回纹+菱纹提花（细古金线，极淡）+ 织金锦暖金光晕 */
+  /* 宋锦：回纹+菱纹提花 + 龟背纹（六边形蜂窝网格，细古金线，极淡） */
   --page-bg-brocade: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Crect x='12' y='12' width='56' height='56' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.25'/%3E%3Crect x='22' y='22' width='36' height='36' fill='none' stroke='%23C9A227' stroke-width='0.5' opacity='0.2'/%3E%3Cpath d='M40,31 L49,40 L40,49 L31,40 Z' fill='none' stroke='%23C9A227' stroke-width='0.5' opacity='0.2'/%3E%3Ccircle cx='40' cy='40' r='1.6' fill='%23C9A227' opacity='0.18'/%3E%3C/svg%3E")
     0 0 / 80px 80px;
-  --page-bg-gold: linear-gradient(
-    115deg,
-    transparent 0%,
-    rgba(201, 162, 39, 0.14) 22%,
-    transparent 45%,
-    rgba(201, 162, 39, 0.08) 68%,
-    transparent 100%
-  );
+  --page-bg-tortoise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='27.71' viewBox='0 0 48 27.71'%3E%3Cpath d='M8,-16 L21.86,-8 L21.86,8 L8,16 L-5.86,8 L-5.86,-8 Z' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.2'/%3E%3Cpath d='M32,-2.15 L45.86,5.85 L45.86,21.85 L32,29.85 L18.14,21.85 L18.14,5.85 Z' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.18'/%3E%3C/svg%3E")
+    0 0 / 48px 27.71px;
   --card-bg: #674f68;
   --card-bg-transparent: rgba(103, 79, 104, 0.88);
   --btn-content: #f3d1f4;
@@ -138,17 +132,11 @@
       transparent 1.5px
     )
     0 0 / 6px 6px;
-    /* 宋锦：回纹+菱纹提花（细古金线，极淡）+ 织金锦暖金光晕 */
+    /* 宋锦：回纹+菱纹提花 + 龟背纹（六边形蜂窝网格，细古金线，极淡） */
     --page-bg-brocade: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Crect x='12' y='12' width='56' height='56' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.25'/%3E%3Crect x='22' y='22' width='36' height='36' fill='none' stroke='%23C9A227' stroke-width='0.5' opacity='0.2'/%3E%3Cpath d='M40,31 L49,40 L40,49 L31,40 Z' fill='none' stroke='%23C9A227' stroke-width='0.5' opacity='0.2'/%3E%3Ccircle cx='40' cy='40' r='1.6' fill='%23C9A227' opacity='0.18'/%3E%3C/svg%3E")
       0 0 / 80px 80px;
-    --page-bg-gold: linear-gradient(
-      115deg,
-      transparent 0%,
-      color-mix(in oklch, #c9a227 14%, transparent) 22%,
-      transparent 45%,
-      color-mix(in oklch, #c9a227 8%, transparent) 68%,
-      transparent 100%
-    );
+    --page-bg-tortoise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='27.71' viewBox='0 0 48 27.71'%3E%3Cpath d='M8,-16 L21.86,-8 L21.86,8 L8,16 L-5.86,8 L-5.86,-8 Z' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.2'/%3E%3Cpath d='M32,-2.15 L45.86,5.85 L45.86,21.85 L32,29.85 L18.14,21.85 L18.14,5.85 Z' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.18'/%3E%3C/svg%3E")
+      0 0 / 48px 27.71px;
     --card-bg: oklch(0.46 0.05 var(--hue));
     --card-bg-transparent: oklch(0.46 0.05 var(--hue) / 0.88);
     --btn-content: oklch(0.9 0.06 var(--hue));

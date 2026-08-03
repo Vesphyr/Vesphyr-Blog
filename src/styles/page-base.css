@@ -46,7 +46,7 @@ body::before {
   pointer-events: none;
   background:
     radial-gradient(ellipse 80% 50% at 50% 0%, var(--page-bg-glow), transparent),
-    var(--page-bg-gold),
+    var(--page-bg-tortoise),
     var(--page-bg-satin),
     var(--page-bg-satin-secondary),
     var(--page-bg-brocade),
