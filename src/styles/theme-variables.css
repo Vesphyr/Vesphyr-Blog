@@ -1,11 +1,6 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-sans: "Crimson Pro", "ZhuqueFangsong", "Zhuque Fangsong UI", "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
-  --font-serif: "Crimson Pro", "ZhuqueFangsong", "Zhuque Fangsong UI", "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
-  --font-mono: "Crimson Pro", ui-monospace, "SF Mono", "Cascadia Mono", Consolas, "Liberation Mono", monospace;
-  --font-latin: "Crimson Pro", Georgia, "Times New Roman", serif;
-  --font-cjk: "ZhuqueFangsong", "Zhuque Fangsong UI", "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
   --font-content: "Crimson Pro", "ZhuqueFangsong", "Zhuque Fangsong UI", "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
 }
 
@@ -56,11 +51,8 @@
   --btn-content: #f3d1f4;
   --btn-regular-bg: #6b556c;
   --btn-regular-bg-hover: #795e7b;
-  --btn-regular-bg-active: #876888;
   --btn-plain-bg-hover: #655066;
   --btn-plain-bg-active: #5e4b5f;
-  --btn-card-bg-hover: #5e4b5f;
-  --btn-card-bg-active: #725a73;
   --deep-text: #f9f2fa;
   --text-main: rgba(244, 237, 231, 0.92);
   --text-secondary: rgba(244, 237, 231, 0.82);
@@ -141,13 +133,10 @@
     --card-bg-transparent: oklch(0.46 0.05 var(--hue) / 0.88);
     --btn-content: oklch(0.9 0.06 var(--hue));
     --btn-regular-bg: oklch(0.48 0.045 var(--hue));
-    --btn-regular-bg-hover: oklch(0.52 0.055 var(--hue));
-    --btn-regular-bg-active: oklch(0.56 0.06 var(--hue));
-    --btn-plain-bg-hover: oklch(0.46 0.045 var(--hue));
-    --btn-plain-bg-active: oklch(0.44 0.04 var(--hue));
-    --btn-card-bg-hover: oklch(0.44 0.04 var(--hue));
-    --btn-card-bg-active: oklch(0.5 0.05 var(--hue));
-    --deep-text: oklch(0.97 0.012 var(--hue));
+         --btn-regular-bg-hover: oklch(0.52 0.055 var(--hue));
+         --btn-plain-bg-hover: oklch(0.46 0.045 var(--hue));
+         --btn-plain-bg-active: oklch(0.44 0.04 var(--hue));
+         --deep-text: oklch(0.97 0.012 var(--hue));
     --selection-bg: oklch(0.52 0.08 var(--hue));
     --codeblock-bg: oklch(0.34 0.03 var(--hue));
     --codeblock-topbar-bg: oklch(0.3 0.025 var(--hue));

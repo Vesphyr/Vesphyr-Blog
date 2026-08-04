@@ -69,8 +69,13 @@ const skipToContentLabel = isChineseSite
         for the async /fonts/font-faces.css to load + the unicode-range slice to download. */}
     <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/ZhuqueFangsong-Regular-UI.woff2" />
     {/* Font @font-face declarations — non-render-blocking async stylesheet. */}
-    <link rel="preload" as="style" href="/fonts/font-faces.css" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="preload" as="style" href="/fonts/font-faces.css" id="font-faces-preload" />
     <noscript><link rel="stylesheet" href="/fonts/font-faces.css" /></noscript>
+    <script>
+      document.getElementById("font-faces-preload")?.addEventListener("load", function (this: HTMLLinkElement) {
+        this.rel = "stylesheet";
+      });
+    </script>
     <link rel="canonical" href={canonicalUrl} />
     <ClientRouter />
     <meta name="description" content={pageDescription} />

@@ -1,0 +1,16 @@
+---
+import ArchivePanel from "@components/ArchivePanel.astro";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { getSortedPostsList } from "@utils/content-utils";
+
+const posts = await getSortedPostsList();
+---
+
+<MainGridLayout title="文章">
+	<script>
+		import("../scripts/right-sidebar-layout.ts");
+		import("../scripts/archive-panel.ts");
+	</script>
+
+	<ArchivePanel sortedPosts={posts} />
+</MainGridLayout>
