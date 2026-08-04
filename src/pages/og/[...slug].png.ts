@@ -305,10 +305,10 @@ export async function GET({ props, }: APIContext<{
         height: 630,
         fonts,
     });
-    const png = await sharp(Buffer.from(svg)).png().toBuffer();
+    const png = await sharp(Buffer.from(svg)).webp({ lossless: true }).toBuffer();
     return new Response(new Uint8Array(png), {
         headers: {
-            "Content-Type": "image/png",
+            "Content-Type": "image/webp",
             "Cache-Control": "public, max-age=31536000, immutable",
         },
     });
