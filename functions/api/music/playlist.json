@@ -1,5 +1,13 @@
 [
   {
+    "id": 505404927,
+    "name": "听禅",
+    "artist": "贵族精选",
+    "pic": "/music/cover/505404927.jpg",
+    "url": "/api/music/audio?id=505404927",
+    "duration": 486622
+  },
+  {
     "id": 953222394,
     "name": "故梦(琵琶版)",
     "artist": "千年破晓",
@@ -22,14 +30,6 @@
     "pic": "/music/cover/732450981.jpg",
     "url": "/api/music/audio?id=732450981",
     "duration": 292376
-  },
-  {
-    "id": 505404927,
-    "name": "听禅",
-    "artist": "贵族精选",
-    "pic": "/music/cover/505404927.jpg",
-    "url": "/api/music/audio?id=505404927",
-    "duration": 486622
   },
   {
     "id": 335898701,
