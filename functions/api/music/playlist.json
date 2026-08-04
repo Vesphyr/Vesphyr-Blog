@@ -58,7 +58,7 @@
   {
     "id": 470735012,
     "name": "凤鸣榣山",
-    "artist": "骆集益_周志华",
+    "artist": "骆集益·周志华",
     "pic": "/music/cover/470735012.jpg",
     "url": "/api/music/audio?id=470735012",
     "duration": 234018
@@ -106,7 +106,7 @@
   {
     "id": 380398717,
     "name": "尘世闲游 Rex Incognito",
-    "artist": "陈致逸_HOYO-MiX",
+    "artist": "陈致逸·HOYO-MiX",
     "pic": "/music/cover/380398717.jpg",
     "url": "/api/music/audio?id=380398717",
     "duration": 108828
@@ -114,7 +114,7 @@
   {
     "id": 678625055,
     "name": "往事随风",
-    "artist": "程池_高颖",
+    "artist": "程池·高颖",
     "pic": "/music/cover/678625055.jpg",
     "url": "/api/music/audio?id=678625055",
     "duration": 104438
@@ -122,7 +122,7 @@
   {
     "id": 517596185,
     "name": "如梦",
-    "artist": "程池_高颖",
+    "artist": "程池·高颖",
     "pic": "/music/cover/517596185.jpg",
     "url": "/api/music/audio?id=517596185",
     "duration": 119000
@@ -185,7 +185,7 @@
   },
   {
     "id": 531287120,
-    "name": "Total War_ Three Kingdoms",
+    "name": "Total War· Three Kingdoms",
     "artist": "Richard Beddow",
     "pic": "/music/cover/531287120.jpg",
     "url": "/api/music/audio?id=531287120",
@@ -194,7 +194,7 @@
   {
     "id": 744594594,
     "name": "Oogway's Legacy",
-    "artist": "Hans Zimmer_郎朗_Gan Gou_Jian Wang",
+    "artist": "Hans Zimmer·郎朗·Gan Gou·Jian Wang",
     "pic": "/music/cover/744594594.jpg",
     "url": "/api/music/audio?id=744594594",
     "duration": 120790
@@ -258,7 +258,7 @@
   {
     "id": 130483866,
     "name": "The Stonemasons (From the Europa Universalis IV Soundtrack)",
-    "artist": "Paradox Interactive_Andreas Waldetoft",
+    "artist": "Paradox Interactive·Andreas Waldetoft",
     "pic": "/music/cover/130483866.jpg",
     "url": "/api/music/audio?id=130483866",
     "duration": 232381
