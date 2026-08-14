@@ -328,15 +328,20 @@
   function previousSong() {
     if (playlist.length <= 1) return;
 
-    // Walk backwards to the previous playable track, skipping broken songs
-    // (mirrors nextSong's behavior).
+    // Mirrors nextSong: in shuffle mode pick a random playable track,
+    // otherwise walk backwards to the previous playable one, skipping
+    // broken songs in both cases.
+    let newIndex = currentIndex;
     for (let i = 0; i < playlist.length; i++) {
-      const newIndex =
-        currentIndex > 0 ? currentIndex - 1 - i : playlist.length - 1 - i;
-      const wrapped =
-        newIndex >= 0 ? newIndex : newIndex + playlist.length;
-      if (!brokenSongs.has(playlist[wrapped]?.id)) {
-        playSong(wrapped);
+      if (isShuffled) {
+        do {
+          newIndex = Math.floor(Math.random() * playlist.length);
+        } while (newIndex === currentIndex && playlist.length > 1);
+      } else {
+        newIndex = newIndex > 0 ? newIndex - 1 : playlist.length - 1;
+      }
+      if (!brokenSongs.has(playlist[newIndex]?.id)) {
+        playSong(newIndex);
         return;
       }
     }
@@ -695,14 +700,35 @@
             bind:this={progressBar}
             on:click={setProgress}
             on:keydown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                const percent = 0.5;
-                const newTime = percent * duration;
-                if (audio) {
-                  audio.currentTime = newTime;
-                  currentTime = newTime;
-                }
+              const SEEK_STEP_SECONDS = 5;
+              let newTime: number | null = null;
+              switch (e.key) {
+                case "ArrowLeft":
+                  e.preventDefault();
+                  newTime = currentTime - SEEK_STEP_SECONDS;
+                  break;
+                case "ArrowRight":
+                  e.preventDefault();
+                  newTime = currentTime + SEEK_STEP_SECONDS;
+                  break;
+                case "Home":
+                  e.preventDefault();
+                  newTime = 0;
+                  break;
+                case "End":
+                  e.preventDefault();
+                  newTime = duration;
+                  break;
+                case "Enter":
+                case " ":
+                  e.preventDefault();
+                  newTime = duration / 2;
+                  break;
+              }
+              if (newTime !== null && audio && duration > 0) {
+                const clamped = Math.min(Math.max(newTime, 0), duration);
+                audio.currentTime = clamped;
+                currentTime = clamped;
               }
             }}
             role="slider"
