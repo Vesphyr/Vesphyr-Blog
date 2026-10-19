@@ -40,14 +40,6 @@
     "duration": 288360
   },
   {
-    "id": 758534171,
-    "name": "曲院风荷",
-    "artist": "JINBAO",
-    "pic": "/music/cover/758534171.jpg",
-    "url": "/api/music/audio?id=758534171",
-    "duration": 241286
-  },
-  {
     "id": 245763035,
     "name": "落叶",
     "artist": "JINBAO",
@@ -88,14 +80,6 @@
     "duration": 214289
   },
   {
-    "id": 717306206,
-    "name": "惊鸿",
-    "artist": "Forbearance ye",
-    "pic": "/music/cover/717306206.jpg",
-    "url": "/api/music/audio?id=717306206",
-    "duration": 150000
-  },
-  {
     "id": 572482581,
     "name": "天涯",
     "artist": "彭答（答答）",
@@ -110,22 +94,6 @@
     "pic": "/music/cover/380398717.jpg",
     "url": "/api/music/audio?id=380398717",
     "duration": 108828
-  },
-  {
-    "id": 678625055,
-    "name": "往事随风",
-    "artist": "程池·高颖",
-    "pic": "/music/cover/678625055.jpg",
-    "url": "/api/music/audio?id=678625055",
-    "duration": 104438
-  },
-  {
-    "id": 517596185,
-    "name": "如梦",
-    "artist": "程池·高颖",
-    "pic": "/music/cover/517596185.jpg",
-    "url": "/api/music/audio?id=517596185",
-    "duration": 119000
   },
   {
     "id": 854761840,
