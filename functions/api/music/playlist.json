@@ -32,44 +32,12 @@
     "duration": 292376
   },
   {
-    "id": 335898701,
-    "name": "听心",
-    "artist": "苏一",
-    "pic": "/music/cover/335898701.jpg",
-    "url": "/api/music/audio?id=335898701",
-    "duration": 288360
-  },
-  {
     "id": 245763035,
     "name": "落叶",
     "artist": "JINBAO",
     "pic": "/music/cover/245763035.jpg",
     "url": "/api/music/audio?id=245763035",
     "duration": 177450
-  },
-  {
-    "id": 470735012,
-    "name": "凤鸣榣山",
-    "artist": "骆集益·周志华",
-    "pic": "/music/cover/470735012.jpg",
-    "url": "/api/music/audio?id=470735012",
-    "duration": 234018
-  },
-  {
-    "id": 244117281,
-    "name": "帝都胜景(长安)",
-    "artist": "骆集益",
-    "pic": "/music/cover/244117281.jpg",
-    "url": "/api/music/audio?id=244117281",
-    "duration": 119653
-  },
-  {
-    "id": 235959108,
-    "name": "长安",
-    "artist": "群星",
-    "pic": "/music/cover/235959108.jpg",
-    "url": "/api/music/audio?id=235959108",
-    "duration": 154128
   },
   {
     "id": 609113223,
@@ -80,22 +48,6 @@
     "duration": 214289
   },
   {
-    "id": 572482581,
-    "name": "天涯",
-    "artist": "彭答（答答）",
-    "pic": "/music/cover/572482581.jpg",
-    "url": "/api/music/audio?id=572482581",
-    "duration": 82383
-  },
-  {
-    "id": 380398717,
-    "name": "尘世闲游 Rex Incognito",
-    "artist": "陈致逸·HOYO-MiX",
-    "pic": "/music/cover/380398717.jpg",
-    "url": "/api/music/audio?id=380398717",
-    "duration": 108828
-  },
-  {
     "id": 854761840,
     "name": "大乘天",
     "artist": "程池",
@@ -104,60 +56,12 @@
     "duration": 309281
   },
   {
-    "id": 126532098,
-    "name": "乱世孤旅",
-    "artist": "程池",
-    "pic": "/music/cover/126532098.jpg",
-    "url": "/api/music/audio?id=126532098",
-    "duration": 152761
-  },
-  {
-    "id": 518201518,
-    "name": "扬州~柳外残阳~",
-    "artist": "变奏的梦想",
-    "pic": "/music/cover/518201518.jpg",
-    "url": "/api/music/audio?id=518201518",
-    "duration": 270749
-  },
-  {
-    "id": 425534375,
-    "name": "行而思雨",
-    "artist": "夜雨寻风",
-    "pic": "/music/cover/425534375.jpg",
-    "url": "/api/music/audio?id=425534375",
-    "duration": 267344
-  },
-  {
-    "id": 557929442,
-    "name": "王进打高俅",
-    "artist": "赵季平",
-    "pic": "/music/cover/557929442.jpg",
-    "url": "/api/music/audio?id=557929442",
-    "duration": 98547
-  },
-  {
-    "id": 962972642,
-    "name": "洪炉",
-    "artist": "铁痕电台-MSR",
-    "pic": "/music/cover/962972642.jpg",
-    "url": "/api/music/audio?id=962972642",
-    "duration": 434124
-  },
-  {
     "id": 443775509,
     "name": "阿里郎（纯音乐）",
     "artist": "SaxyBar",
     "pic": "/music/cover/443775509.jpg",
     "url": "/api/music/audio?id=443775509",
     "duration": 127125
-  },
-  {
-    "id": 531287120,
-    "name": "Total War· Three Kingdoms",
-    "artist": "Richard Beddow",
-    "pic": "/music/cover/531287120.jpg",
-    "url": "/api/music/audio?id=531287120",
-    "duration": 197160
   },
   {
     "id": 744594594,
@@ -184,51 +88,11 @@
     "duration": 210837
   },
   {
-    "id": 549075171,
-    "name": "Rome (The Medieval Era)",
-    "artist": "Roland Rizzo",
-    "pic": "/music/cover/549075171.jpg",
-    "url": "/api/music/audio?id=549075171",
-    "duration": 218789
-  },
-  {
-    "id": 406213663,
-    "name": "Spirit of the Earth",
-    "artist": "Stive Morgan",
-    "pic": "/music/cover/406213663.jpg",
-    "url": "/api/music/audio?id=406213663",
-    "duration": 372121
-  },
-  {
-    "id": 582037572,
-    "name": "True Strength - Epic Music",
-    "artist": "John Dreamer",
-    "pic": "/music/cover/582037572.jpg",
-    "url": "/api/music/audio?id=582037572",
-    "duration": 204526
-  },
-  {
-    "id": 914282629,
-    "name": "Flower Gardens",
-    "artist": "Magnus Ringblom",
-    "pic": "/music/cover/914282629.jpg",
-    "url": "/api/music/audio?id=914282629",
-    "duration": 178200
-  },
-  {
     "id": 475465399,
     "name": "秋田",
     "artist": "Ben Mooter",
     "pic": "/music/cover/475465399.jpg",
     "url": "/api/music/audio?id=475465399",
     "duration": 143615
-  },
-  {
-    "id": 130483866,
-    "name": "The Stonemasons (From the Europa Universalis IV Soundtrack)",
-    "artist": "Paradox Interactive·Andreas Waldetoft",
-    "pic": "/music/cover/130483866.jpg",
-    "url": "/api/music/audio?id=130483866",
-    "duration": 232381
   }
 ]
