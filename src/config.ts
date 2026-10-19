@@ -82,7 +82,11 @@ export const profileConfig: ProfileConfig = {
     {
       name: "QQ",
       icon: "fa7-brands:qq",
-      url: "https://wpa.qq.com/msgrd?v=3&uin=1986659730&site=qq&menu=yes",
+      // 桌面端：唤起 QQ 客户端并直接进入「添加好友」资料卡
+      url: "tencent://AddContact/?fromId=45&fromSubId=1&subd=all&uin=1986659730&website=qq",
+      // 移动端：直接打开该 QQ 号的资料名片
+      mobileUrl:
+        "mqqapi://card/show_pslcard?src_type=internal&version=1&uin=1986659730&card_type=person&source=sharecard",
     },
     {
       name: "Steam",

@@ -85,6 +85,11 @@ export type ProfileConfig = {
     name: string;
     url: string;
     icon: string;
+    /**
+     * 移动端专用地址。桌面端用 url，移动端（Android / iOS / HarmonyOS）点击时改走这里。
+     * 用于应用协议类链接：QQ 在 PC 与手机上的 scheme 不同，无法用同一个 URL 覆盖两端。
+     */
+    mobileUrl?: string;
   }[];
 };
 

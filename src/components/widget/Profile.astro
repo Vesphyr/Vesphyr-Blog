@@ -55,7 +55,8 @@ import ImageWrapper from "../misc/ImageWrapper.astro";
               rel="me"
               aria-label={item.name}
               href={item.url}
-              target="_blank"
+              target={item.mobileUrl ? "_self" : "_blank"}
+              data-mobile-url={item.mobileUrl}
               class="btn-regular rounded-lg h-10 w-10 active:scale-90"
             >
               <Icon name={item.icon} class="text-[1.5rem]" />
@@ -68,7 +69,8 @@ import ImageWrapper from "../misc/ImageWrapper.astro";
             rel="me"
             aria-label={profileConfig.links[0].name}
             href={profileConfig.links[0].url}
-            target="_blank"
+            target={profileConfig.links[0].mobileUrl ? "_self" : "_blank"}
+            data-mobile-url={profileConfig.links[0].mobileUrl}
             class="btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95"
           >
             <Icon name={profileConfig.links[0].icon} class="text-[1.5rem]" />
@@ -79,3 +81,23 @@ import ImageWrapper from "../misc/ImageWrapper.astro";
     </div>
   </div>
 </div>
+
+<script>
+  /**
+   * QQ 等应用协议链接在桌面端与移动端的 scheme 不同，无法用同一个 href 覆盖两端：
+   * 桌面走 tencent://（唤起客户端），移动端需 mqqapi://（直接打开资料卡）。
+   * 这里只在移动端改写目标，桌面端完全交给原生 href，不拦截、不加延迟。
+   */
+  const MOBILE_UA = /Android|iPhone|iPad|iPod|HarmonyOS|Mobile/i;
+
+  document.querySelectorAll<HTMLAnchorElement>("a[data-mobile-url]").forEach((anchor) => {
+    const mobileUrl = anchor.dataset.mobileUrl;
+    if (!mobileUrl) return;
+
+    anchor.addEventListener("click", (event) => {
+      if (!MOBILE_UA.test(navigator.userAgent)) return;
+      event.preventDefault();
+      window.location.href = mobileUrl;
+    });
+  });
+</script>
