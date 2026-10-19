@@ -80,9 +80,9 @@ export const profileConfig: ProfileConfig = {
       url: "https://www.zhihu.com/people/80-57-6-25",
     },
     {
-      name: "GitHub",
-      icon: "fa7-brands:github",
-      url: "https://github.com/Vesphyr",
+      name: "QQ",
+      icon: "fa7-brands:qq",
+      url: "https://wpa.qq.com/msgrd?v=3&uin=1986659730&site=qq&menu=yes",
     },
     {
       name: "Steam",
