@@ -1,7 +1,19 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-content: "Crimson Pro", "ZhuqueFangsong", "Zhuque Fangsong UI", "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+  /*
+   * 中文 → 朱雀仿宋；英文与数字 → Crimson Pro；兜底 → 方正仿宋_GBK。
+   *
+   * 顺序要点：Zhuque Fangsong UI（约 2000 常用字，单文件 403KB，已 preload）
+   * 必须排在 ZhuqueFangsong（185 个 unicode-range 分片）之前。字体匹配按
+   * family 顺序进行，与加载快慢无关；若分片排在前面，常用字会走分片、预加载
+   * 的 UI 子集反而只在长尾字符上生效，等于每次访问白下 400KB。
+   */
+  --font-content:
+    "Crimson Pro", "Zhuque Fangsong UI", "ZhuqueFangsong",
+    /* 备用：方正仿宋_GBK，Windows 下 family 名可能是以下任一形式 */
+    "FZFangSong-Z02S", "FZFangSong-Z02", "方正仿宋_GBK", "FangSong_GBK",
+    "STFangsong", "FangSong", serif;
 }
 
 /* 单一固定配色：舒适护眼深色基底（非纯黑）+ 暖米白文字，缣帛丝绸纹理 */

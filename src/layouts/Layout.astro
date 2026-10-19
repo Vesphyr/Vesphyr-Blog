@@ -63,19 +63,36 @@ const skipToContentLabel = isChineseSite
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="preconnect" href="https://api.iconify.design" crossorigin />
-    <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/CrimsonPro-Regular.woff2" />
-    {/* Preload the primary CJK body font (covers ~2000 common Hanzi + punctuation) so
-        first-screen Chinese text swaps off the fallback immediately instead of waiting
-        for the async /fonts/font-faces.css to load + the unicode-range slice to download. */}
-    <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/ZhuqueFangsong-Regular-UI.woff2" />
-    {/* Font @font-face declarations — non-render-blocking async stylesheet. */}
-    <link rel="preload" as="style" href="/fonts/font-faces.css" id="font-faces-preload" />
+    {/* 拉丁字母/数字字体：正文字重 450 按 CSS 字重匹配规则会落到 500（Medium），
+        因此预加载 Medium 而不是 Regular，避免首屏先下 Regular 再补 Medium。 */}
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      fetchpriority="high"
+      href="/assets/fonts/CrimsonPro-Medium.woff2"
+    />
+    {/* 中文首屏字体：约 2000 常用字（403KB），字形与分片一致，预加载后中文
+        立刻从系统兜底字体切换，不必等待 /fonts/font-faces.css 解析 + 分片下载。 */}
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      fetchpriority="high"
+      href="/assets/fonts/ZhuqueFangsong-Regular-UI.woff2"
+    />
+    {/* 186 条 @font-face 以非阻塞方式挂载：media=print 让浏览器低优先级下载，
+        加载完成后立刻切回 all。不用 load 事件改 rel，因为命中缓存时 load 可能
+        早于内联脚本执行，导致样式表永远挂不上、全站中文退化到兜底字体。 */}
+    <link
+      rel="stylesheet"
+      media="print"
+      onload="this.onload=null;this.media='all'"
+      href="/fonts/font-faces.css"
+    />
     <noscript><link rel="stylesheet" href="/fonts/font-faces.css" /></noscript>
-    <script>
-      document.getElementById("font-faces-preload")?.addEventListener("load", function (this: HTMLLinkElement) {
-        this.rel = "stylesheet";
-      });
-    </script>
     <link rel="canonical" href={canonicalUrl} />
     <ClientRouter />
     <meta name="description" content={pageDescription} />
