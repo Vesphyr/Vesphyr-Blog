@@ -207,3 +207,21 @@
     padding-inline: 0.5rem;
   }
 }
+
+/*
+ * 桌面端（≥1280px，栅格模式）：把导航内容对齐到主内容区轨道。
+ * 左侧品牌区与头像列（侧栏 20rem 卡片、内边距 0.75rem、200px 头像居中）左右端对齐；
+ * 右侧操作区与内容右轨对齐，两者同为 200px 宽，形成镜像。
+ * 60px = 卡片 p-3(12px) + 头像在 320px 卡片内的居中留白 (320 - 24 - 200) / 2 = 48px
+ */
+@media (min-width: 1280px) {
+  #navbar .navbar-shell {
+    padding-inline: 0;
+    padding-inline-start: 60px;
+    grid-template-columns: 200px minmax(0, 1fr) 200px;
+  }
+
+  #navbar .navbar-brand {
+    padding-inline: 0;
+  }
+}
