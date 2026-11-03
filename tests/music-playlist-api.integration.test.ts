@@ -4,7 +4,7 @@ import { onRequestGet } from "../functions/api/music/playlist.ts";
 
 test("music playlist api returns local tracks without contacting upstream", async () => {
   const response = await onRequestGet({
-    request: new Request("https://vesphyr.com/api/music/playlist"),
+    request: new Request("https://dionys.com/api/music/playlist"),
   });
 
   assert.equal(response.status, 200);
@@ -35,13 +35,13 @@ test("music playlist api returns local tracks without contacting upstream", asyn
 
 test("music playlist api returns 304 when the etag matches", async () => {
   const first = await onRequestGet({
-    request: new Request("https://vesphyr.com/api/music/playlist"),
+    request: new Request("https://dionys.com/api/music/playlist"),
   });
   const etag = first.headers.get("etag");
   assert.ok(etag, "response should expose an ETag header");
 
   const second = await onRequestGet({
-    request: new Request("https://vesphyr.com/api/music/playlist", {
+    request: new Request("https://dionys.com/api/music/playlist", {
       headers: { "if-none-match": etag },
     }),
   });

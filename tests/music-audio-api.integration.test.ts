@@ -33,7 +33,7 @@ function makeContext(
 test("missing or invalid song id returns 400", async () => {
   const response = await onRequestGet(
     makeContext(
-      new Request("https://vesphyr.com/api/music/audio?id=abc"),
+      new Request("https://dionys.com/api/music/audio?id=abc"),
       () => makeAudioResponse(),
     ),
   );
@@ -46,7 +46,7 @@ test("missing or invalid song id returns 400", async () => {
 test("returns 404 when the track is not self-hosted", async () => {
   const response = await onRequestGet(
     makeContext(
-      new Request("https://vesphyr.com/api/music/audio?id=999999"),
+      new Request("https://dionys.com/api/music/audio?id=999999"),
       (request) =>
         request.url.includes("/music/")
           ? new Response("Not Found", { status: 404 })
@@ -63,7 +63,7 @@ test("serves the self-hosted mp3 when present", async () => {
   let fetchedLocalFile = false;
   const response = await onRequestGet(
     makeContext(
-      new Request("https://vesphyr.com/api/music/audio?id=1690698"),
+      new Request("https://dionys.com/api/music/audio?id=1690698"),
       (request) => {
         if (request.url.includes("/music/")) fetchedLocalFile = true;
         return makeAudioResponse();
@@ -80,7 +80,7 @@ test("forwards the range header and returns 206", async () => {
   let sawRange = false;
   const response = await onRequestGet(
     makeContext(
-      new Request("https://vesphyr.com/api/music/audio?id=1690698", {
+      new Request("https://dionys.com/api/music/audio?id=1690698", {
         headers: { range: "bytes=0-1023" },
       }),
       (request) => {
@@ -99,7 +99,7 @@ test("forwards the range header and returns 206", async () => {
 test("HEAD request returns headers without a body", async () => {
   const response = await onRequestGet(
     makeContext(
-      new Request("https://vesphyr.com/api/music/audio?id=1690698", {
+      new Request("https://dionys.com/api/music/audio?id=1690698", {
         method: "HEAD",
       }),
       () => makeAudioResponse(),

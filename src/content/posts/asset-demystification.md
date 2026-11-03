@@ -2,7 +2,7 @@
 title: "资产祛魅：基于房产价值公式的定价分析"
 description: "以房产价值公式为核心，拆解现金流、附加效用与增长预期，附估值工具与案例。"
 published: 2026-03-07
-author: "Vesphyr"
+author: "Dionys"
 tags: ["投资", "房产", "财务模型"]
 category: "投资"
 ---

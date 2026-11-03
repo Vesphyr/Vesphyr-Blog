@@ -4,8 +4,8 @@ import { createSong, type Song } from "./player-types";
 // ETag is derived from the playlist content, so any deploy that changes the
 // list invalidates the cached copy automatically — no fixed TTL that could
 // hide edits for hours.
-const LS_ETAG_KEY = "vesphyr:music-playlist-etag";
-const LS_SONGS_KEY = "vesphyr:music-playlist-songs";
+const LS_ETAG_KEY = "dionys:music-playlist-etag";
+const LS_SONGS_KEY = "dionys:music-playlist-songs";
 
 function isValidSong(song: unknown): song is Song {
   if (!song || typeof song !== "object") return false;

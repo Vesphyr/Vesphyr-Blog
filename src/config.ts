@@ -12,7 +12,7 @@ const SITE_LANG = "zh_CN";
 const SITE_TIMEZONE = 8;
 
 export const siteConfig: SiteConfig = {
-  title: "Vesphyr",
+  title: "Dionys",
   subtitle: "",
   siteURL: "https://dionys.net/",
   siteStartDate: "2026-07-01",
@@ -33,7 +33,7 @@ export const siteConfig: SiteConfig = {
 
   navbarTitle: {
     mode: "text-icon",
-    text: "Vesphyr",
+    text: "Dionys",
     icon: "",
     logo: "",
   },
@@ -66,7 +66,7 @@ export const navBarConfig: NavBarConfig = {
 
 export const profileConfig: ProfileConfig = {
   avatar: "assets/images/avatar.webp",
-  name: "Vesphyr",
+  name: "Dionys",
   bio: "\u884C\u8DEF\u96BE\uFF01\u884C\u8DEF\u96BE\uFF01\u591A\u6B67\u8DEF\uFF0C\u4ECA\u5B89\u5728\uFF1F\n\u957F\u98CE\u7834\u6D6A\u4F1A\u6709\u65F6\uFF0C\u76F4\u6302\u4E91\u5E06\u6D4E\u6CA7\u6D77\u3002",
   links: [
     {

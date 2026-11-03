@@ -1,8 +1,8 @@
 {
-  "name": "vesphyr-blog",
+  "name": "dionys-blog",
   "version": "1.0",
   "description": "A personal Astro blog inspired by Material Design 3",
-  "author": "Vesphyr",
+  "author": "Dionys",
   "license": "Apache-2.0",
   "type": "module",
   "homepage": "https://dionys.net",
