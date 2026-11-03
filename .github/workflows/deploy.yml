@@ -42,5 +42,5 @@ jobs:
       - name: Deploy to Cloudflare Pages with Functions
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: da23ef8209c693719b684dcc5403eb38
-        run: pnpm dlx wrangler@4 pages deploy dist --project-name=vesphyr-blog
+          CLOUDFLARE_ACCOUNT_ID: ded6617de5614d7612e6d9d28bb13122
+        run: pnpm dlx wrangler@4 pages deploy dist --project-name=dionys-blog
