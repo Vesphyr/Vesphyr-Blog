@@ -219,10 +219,12 @@
     padding-inline: 0;
     padding-inline-start: 60px;
     grid-template-columns: 200px minmax(0, 1fr) 200px;
-    justify-items: start;
   }
 
+  /* 品牌块撑满 200px 列（与头像同宽），但内容左对齐——
+     .btn-plain 默认 justify-center，会把文字挤到列中间。 */
   #navbar .navbar-brand {
     padding-inline: 0;
+    justify-content: flex-start;
   }
 }
