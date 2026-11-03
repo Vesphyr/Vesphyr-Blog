@@ -219,6 +219,7 @@
     padding-inline: 0;
     padding-inline-start: 60px;
     grid-template-columns: 200px minmax(0, 1fr) 200px;
+    justify-items: start;
   }
 
   #navbar .navbar-brand {
