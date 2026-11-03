@@ -14,7 +14,7 @@ const SITE_TIMEZONE = 8;
 export const siteConfig: SiteConfig = {
   title: "Vesphyr",
   subtitle: "",
-  siteURL: "https://vesphyr.com/",
+  siteURL: "https://dionys.net/",
   siteStartDate: "2026-07-01",
   keywords: [
     "\u535A\u5BA2",
