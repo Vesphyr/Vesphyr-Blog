@@ -216,8 +216,7 @@
  */
 @media (min-width: 1280px) {
   #navbar .navbar-shell {
-    padding-inline: 0;
-    padding-inline-start: 60px;
+    padding-inline: 60px;
     grid-template-columns: 200px minmax(0, 1fr) 200px;
   }
 
@@ -226,5 +225,11 @@
   #navbar .navbar-brand {
     padding-inline: 0;
     justify-content: center;
+  }
+
+  /* 右侧操作区与品牌区关于页面中轴镜像：列宽同为 200px、内缩同为 60px，
+     内容也居中，使图标中心落在品牌中心的对称点上。 */
+  #navbar .navbar-actions {
+    justify-self: center;
   }
 }
