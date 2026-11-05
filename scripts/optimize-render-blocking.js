@@ -50,6 +50,62 @@ async function buildCssManifest() {
   } catch {}
   return files;
 }
+
+const cssRuleCache = new Map();
+
+async function cssRuleSet(filename) {
+  if (cssRuleCache.has(filename)) return cssRuleCache.get(filename);
+  let set = null;
+  try {
+    const css = await fs.readFile(path.join(distDir, "assets", filename), "utf-8");
+    set = new Set(
+      (css.match(/(?:@[^{}]+\{[^{}]*\}|[^{}]+\{[^{}]*\})/g) || []).map((rule) =>
+        rule.trim(),
+      ),
+    );
+  } catch {
+    set = null;
+  }
+  cssRuleCache.set(filename, set);
+  return set;
+}
+
+/**
+ * 找到「规则集被同页另一个样式表完全覆盖」的样式表。
+ *
+ * Astro/Vite 拆分 CSS 时，页面级产物（如 MainGridLayout.*.css）会逐字复制一份
+ * 全局样式，于是这类页面同时链接两份内容重叠的 CSS，白下一个 90KB 的文件。
+ * 这里按规则文本做严格包含判断：只有 B 的每一条规则都原样出现在 A 中，才认为
+ * B 在本页是冗余的（级联顺序无关，因为声明完全一致）。判断不出包含关系时不做
+ * 任何改动，属于安全的空操作。
+ */
+async function findRedundantCss(filenames) {
+  const redundant = new Set();
+  if (filenames.length < 2) return redundant;
+  const sets = new Map();
+  for (const name of filenames) sets.set(name, await cssRuleSet(name));
+  for (const outer of filenames) {
+    const outerSet = sets.get(outer);
+    if (!outerSet || outerSet.size === 0) continue;
+    for (const inner of filenames) {
+      if (inner === outer) continue;
+      const innerSet = sets.get(inner);
+      if (!innerSet || innerSet.size === 0) continue;
+      if (outerSet.size <= innerSet.size) continue;
+      let covers = true;
+      for (const rule of innerSet) {
+        if (!outerSet.has(rule)) {
+          covers = false;
+          break;
+        }
+      }
+      if (covers) redundant.add(inner);
+    }
+  }
+  // 保险：不能把所有样式表都判成冗余。
+  if (redundant.size >= filenames.length) return new Set();
+  return redundant;
+}
 function classifyCss(filename) {
   const prefix = cssPrefix(filename);
   if (REMOVABLE_CSS.has(prefix)) return "remove";
@@ -86,12 +142,25 @@ async function optimizeHtmlFile(htmlPath, cssManifest) {
   const toModify = [];
   const allLinks = head.querySelectorAll("link");
   const cssLinks = allLinks.filter(isCssLink);
+  const linkedCssNames = [
+    ...new Set(
+      cssLinks
+        .map((link) => path.posix.basename(link.getAttribute("href") || ""))
+        .filter((name) => name && cssManifest.has(name)),
+    ),
+  ];
+  const redundantCss = await findRedundantCss(linkedCssNames);
   for (const link of cssLinks) {
     const href = link.getAttribute("href");
     if (!href) continue;
     const filename = path.posix.basename(href);
     const prefix = cssPrefix(filename);
     if (isHomepage && HOMEPAGE_UNUSED_CSS.has(prefix)) {
+      toRemove.push(link);
+      modified = true;
+      continue;
+    }
+    if (redundantCss.has(filename)) {
       toRemove.push(link);
       modified = true;
       continue;
