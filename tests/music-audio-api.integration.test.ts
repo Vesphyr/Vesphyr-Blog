@@ -1,21 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { onRequestGet } from "../functions/api/music/audio.ts";
+import { onRequestGet, onRequestHead } from "../functions/api/music/audio.ts";
 
-// The audio endpoint is fully self-hosted: it serves /music/<id>.mp3 from the
-// site's own static storage (env.ASSETS) and returns 404 when a track is not
-// part of the library. There is no upstream resolver or KV cache to mock.
-function makeAudioResponse(range = false): Response {
-  return new Response("fake-audio-body", {
-    status: range ? 206 : 200,
-    headers: {
-      "content-type": "audio/mpeg",
-      "content-length": "15",
-      ...(range ? { "content-range": "bytes 0-14/15" } : {}),
-    },
-  });
-}
-
+// The audio endpoint is a thin resolver: it verifies that /music/<id>.mp3 exists
+// in the site's own static storage (env.ASSETS) and then redirects the browser
+// there. It deliberately does NOT stream the bytes itself — ASSETS.fetch does not
+// honour Range, so proxying the body would hand <audio> a 200 with the whole file
+// while advertising `Accept-Ranges: bytes`, breaking seeking and stalling playback.
 function makeContext(
   request: Request,
   assetsHandler: (request: Request) => Response,
@@ -30,12 +21,12 @@ function makeContext(
   };
 }
 
+const found = () => new Response(null, { status: 200 });
+const missing = () => new Response("Not Found", { status: 404 });
+
 test("missing or invalid song id returns 400", async () => {
   const response = await onRequestGet(
-    makeContext(
-      new Request("https://dionys.com/api/music/audio?id=abc"),
-      () => makeAudioResponse(),
-    ),
+    makeContext(new Request("https://dionys.com/api/music/audio?id=abc"), found),
   );
 
   assert.equal(response.status, 400);
@@ -47,10 +38,7 @@ test("returns 404 when the track is not self-hosted", async () => {
   const response = await onRequestGet(
     makeContext(
       new Request("https://dionys.com/api/music/audio?id=999999"),
-      (request) =>
-        request.url.includes("/music/")
-          ? new Response("Not Found", { status: 404 })
-          : makeAudioResponse(),
+      missing,
     ),
   );
 
@@ -59,53 +47,62 @@ test("returns 404 when the track is not self-hosted", async () => {
   assert.equal(payload.code, "NOT_FOUND");
 });
 
-test("serves the self-hosted mp3 when present", async () => {
-  let fetchedLocalFile = false;
+test("redirects to the self-hosted mp3 when present", async () => {
+  let probedPath = "";
   const response = await onRequestGet(
     makeContext(
       new Request("https://dionys.com/api/music/audio?id=1690698"),
       (request) => {
-        if (request.url.includes("/music/")) fetchedLocalFile = true;
-        return makeAudioResponse();
+        probedPath = new URL(request.url).pathname;
+        return found();
       },
     ),
   );
 
-  assert.equal(response.status, 200);
-  assert.equal(response.headers.get("content-type"), "audio/mpeg");
-  assert.ok(fetchedLocalFile, "should request the local /music/<id>.mp3 file");
+  assert.equal(response.status, 302);
+  assert.equal(probedPath, "/music/1690698.mp3");
+  assert.equal(response.headers.get("location"), "/music/1690698.mp3");
 });
 
-test("forwards the range header and returns 206", async () => {
-  let sawRange = false;
+test("range requests are answered by redirect, not by proxying bytes", async () => {
   const response = await onRequestGet(
     makeContext(
       new Request("https://dionys.com/api/music/audio?id=1690698", {
         headers: { range: "bytes=0-1023" },
       }),
-      (request) => {
-        if (request.url.includes("/music/") && request.headers.get("range")) {
-          sawRange = true;
-        }
-        return makeAudioResponse(Boolean(request.headers.get("range")));
-      },
+      found,
     ),
   );
 
-  assert.equal(response.status, 206);
-  assert.ok(sawRange, "range header should be forwarded to the static file");
+  assert.equal(response.status, 302);
+  assert.equal(response.headers.get("location"), "/music/1690698.mp3");
 });
 
-test("HEAD request returns headers without a body", async () => {
-  const response = await onRequestGet(
+test("HEAD request redirects without a body", async () => {
+  const response = await onRequestHead(
     makeContext(
       new Request("https://dionys.com/api/music/audio?id=1690698", {
         method: "HEAD",
       }),
-      () => makeAudioResponse(),
+      found,
     ),
   );
 
-  assert.equal(response.status, 200);
-  assert.equal(response.headers.get("content-type"), "audio/mpeg");
+  assert.equal(response.status, 302);
+  assert.equal(response.body, null);
+});
+
+test("asset lookup failure is reported as 404", async () => {
+  const response = await onRequestGet(
+    makeContext(
+      new Request("https://dionys.com/api/music/audio?id=1690698"),
+      () => {
+        throw new Error("ASSETS unavailable");
+      },
+    ),
+  );
+
+  assert.equal(response.status, 404);
+  const payload = await response.json();
+  assert.equal(payload.code, "NOT_FOUND");
 });

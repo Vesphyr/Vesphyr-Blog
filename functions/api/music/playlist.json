@@ -4,7 +4,7 @@
     "name": "听禅",
     "artist": "贵族精选",
     "pic": "/music/cover/505404927.jpg",
-    "url": "/api/music/audio?id=505404927",
+    "url": "/music/505404927.mp3",
     "duration": 486622
   },
   {
@@ -12,7 +12,7 @@
     "name": "故梦(琵琶版)",
     "artist": "千年破晓",
     "pic": "/music/cover/953222394.jpg",
-    "url": "/api/music/audio?id=953222394",
+    "url": "/music/953222394.mp3",
     "duration": 224000
   },
   {
@@ -20,7 +20,7 @@
     "name": "青石巷",
     "artist": "箜篌",
     "pic": "/music/cover/315267373.jpg",
-    "url": "/api/music/audio?id=315267373",
+    "url": "/music/315267373.mp3",
     "duration": 214720
   },
   {
@@ -28,7 +28,7 @@
     "name": "细雨松涛",
     "artist": "巫娜",
     "pic": "/music/cover/732450981.jpg",
-    "url": "/api/music/audio?id=732450981",
+    "url": "/music/732450981.mp3",
     "duration": 292376
   },
   {
@@ -36,7 +36,7 @@
     "name": "落叶",
     "artist": "JINBAO",
     "pic": "/music/cover/245763035.jpg",
-    "url": "/api/music/audio?id=245763035",
+    "url": "/music/245763035.mp3",
     "duration": 177450
   },
   {
@@ -44,7 +44,7 @@
     "name": "濯海令",
     "artist": "关大洲",
     "pic": "/music/cover/609113223.jpg",
-    "url": "/api/music/audio?id=609113223",
+    "url": "/music/609113223.mp3",
     "duration": 214289
   },
   {
@@ -52,7 +52,7 @@
     "name": "大乘天",
     "artist": "程池",
     "pic": "/music/cover/854761840.jpg",
-    "url": "/api/music/audio?id=854761840",
+    "url": "/music/854761840.mp3",
     "duration": 309281
   },
   {
@@ -60,7 +60,7 @@
     "name": "阿里郎（纯音乐）",
     "artist": "SaxyBar",
     "pic": "/music/cover/443775509.jpg",
-    "url": "/api/music/audio?id=443775509",
+    "url": "/music/443775509.mp3",
     "duration": 127125
   },
   {
@@ -68,7 +68,7 @@
     "name": "Oogway's Legacy",
     "artist": "Hans Zimmer·郎朗·Gan Gou·Jian Wang",
     "pic": "/music/cover/744594594.jpg",
-    "url": "/api/music/audio?id=744594594",
+    "url": "/music/744594594.mp3",
     "duration": 120790
   },
   {
@@ -76,7 +76,7 @@
     "name": "China (The Atomic Era)",
     "artist": "Geoff Knorr",
     "pic": "/music/cover/516107590.jpg",
-    "url": "/api/music/audio?id=516107590",
+    "url": "/music/516107590.mp3",
     "duration": 199301
   },
   {
@@ -84,7 +84,7 @@
     "name": "Palace Memories - Sunset",
     "artist": "S.E.N.S",
     "pic": "/music/cover/291724590.jpg",
-    "url": "/api/music/audio?id=291724590",
+    "url": "/music/291724590.mp3",
     "duration": 210837
   },
   {
@@ -92,7 +92,7 @@
     "name": "秋田",
     "artist": "Ben Mooter",
     "pic": "/music/cover/475465399.jpg",
-    "url": "/api/music/audio?id=475465399",
+    "url": "/music/475465399.mp3",
     "duration": 143615
   }
 ]
