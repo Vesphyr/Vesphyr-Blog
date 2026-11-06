@@ -30,7 +30,9 @@ export default defineConfig({
     compressHTML: true,
     prefetch: {
         prefetchAll: true,
-        defaultStrategy: "viewport",
+        // hover（触摸设备为 tap 开始时）才预取目标页 HTML；viewport 策略会把
+        // 首屏视口内所有链接页面全部拉下来，浪费带宽并争抢首屏资源。
+        defaultStrategy: "hover",
     },
     build: {
         inlineStylesheets: "auto",

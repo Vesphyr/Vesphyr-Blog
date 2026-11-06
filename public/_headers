@@ -38,6 +38,22 @@
 /assets/*.js
   Cache-Control: public, max-age=31536000, immutable
 
+# Astro 图片优化产物直接落在 /assets/ 下（文件名带内容 hash，如
+# avatar.CESddvee_ZTPKI8.webp），与 css/js 一样可永久缓存；不覆盖的话
+# 只会拿到 Pages 默认的 4 小时缓存。
+/assets/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*.avif
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*.png
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*.jpeg
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
 /assets/fonts/*
   Cache-Control: public, max-age=31536000, immutable
   Access-Control-Allow-Origin: *
@@ -101,4 +117,4 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src 'self' https://*.music.126.net; font-src 'self' data:; connect-src 'self' https://api.iconify.design https://api.github.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src 'self' https://*.music.126.net; font-src 'self' data:; connect-src 'self' https://api.github.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests

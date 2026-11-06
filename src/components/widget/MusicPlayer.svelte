@@ -1,5 +1,8 @@
 <script lang="ts">
   import Icon from "@iconify/svelte";
+  // 离线注册播放器用到的 16 个图标（构建期从 @iconify-json 提取，见
+  // scripts/extract-music-icons.py），避免运行时请求 api.iconify.design。
+  import "./music-icons";
   import { onMount, tick } from "svelte";
   import { musicPlayerConfig } from "../../config";
   import Key from "../../i18n/i18nKey";
@@ -604,7 +607,7 @@
     >
       {#if isLoading}
         <Icon
-          icon="eos-icons:loading"
+          icon="material-symbols:progress-activity"
           class="hidden-player-icon text-(--primary) text-3xl"
         />
       {:else if isPlaying}
@@ -784,7 +787,7 @@
             on:click|stopPropagation={togglePlay}
           >
             {#if isLoading}
-              <Icon icon="eos-icons:loading" class="text-lg" />
+              <Icon icon="material-symbols:progress-activity" class="text-lg" />
             {:else if isPlaying}
               <Icon icon="material-symbols:pause" class="text-lg" />
             {:else}
