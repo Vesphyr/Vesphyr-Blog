@@ -28,8 +28,7 @@ function shouldShowPost(
   let isVisible = true;
 
   if (selectedCategories.length > 0) {
-    isVisible =
-      category !== "" && selectedCategories.includes(category);
+    isVisible = category !== "" && selectedCategories.includes(category);
   }
 
   if (showUncategorized) {
@@ -47,7 +46,9 @@ function restoreArchivePanel(panel: HTMLElement) {
 
   groups.forEach((group) => {
     const posts = group.querySelectorAll<HTMLElement>(ARCHIVE_POST_SELECTOR);
-    const countElement = group.querySelector<HTMLElement>(ARCHIVE_COUNT_SELECTOR);
+    const countElement = group.querySelector<HTMLElement>(
+      ARCHIVE_COUNT_SELECTOR,
+    );
 
     group.classList.remove("hidden");
     posts.forEach((post) => {
@@ -94,7 +95,9 @@ registerPageScript("archive-panel", {
 
     groups.forEach((group) => {
       const posts = group.querySelectorAll<HTMLElement>(ARCHIVE_POST_SELECTOR);
-      const countElement = group.querySelector<HTMLElement>(ARCHIVE_COUNT_SELECTOR);
+      const countElement = group.querySelector<HTMLElement>(
+        ARCHIVE_COUNT_SELECTOR,
+      );
 
       let visiblePostCount = 0;
 

@@ -164,9 +164,7 @@ function scanPhotos(folderPath: string, albumId: string): Photo[] {
         tags,
         // Album dates follow the site's +8 (Asia/Shanghai) convention instead
         // of the UTC day, which can otherwise be a day behind local time.
-        date: new Date(
-          stats.mtime.getTime() + 8 * 60 * 60 * 1000,
-        )
+        date: new Date(stats.mtime.getTime() + 8 * 60 * 60 * 1000)
           .toISOString()
           .split("T")[0],
       };

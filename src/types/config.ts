@@ -103,11 +103,7 @@ export type MusicPlayerConfig = {
 };
 
 export type WidgetComponentType =
-  | "profile"
-  | "categories"
-  | "card-toc"
-  | "music-player"
-  | "site-stats";
+  "profile" | "categories" | "card-toc" | "music-player" | "site-stats";
 
 export type WidgetComponentConfig = {
   type: WidgetComponentType;

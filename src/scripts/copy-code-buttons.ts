@@ -47,9 +47,8 @@ async function writeClipboardText(text: string): Promise<void> {
   textArea.select();
 
   try {
-    const execCommand = (
-      document as unknown as Record<string, unknown>
-    ).execCommand as
+    const execCommand = (document as unknown as Record<string, unknown>)
+      .execCommand as
       | undefined
       | ((commandId: string, showUI?: boolean, value?: string) => boolean);
     execCommand?.call(document, "copy");

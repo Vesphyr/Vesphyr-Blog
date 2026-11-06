@@ -18,104 +18,109 @@
   flex-shrink: 0;
 }
 
-#navbar :is(
-  .navbar-action-icon,
-  .navbar-link-icon,
-  .theme-switch-glyph,
-  .navbar-arrow,
-  .theme-icon
-) {
+#navbar
+  :is(
+    .navbar-action-icon,
+    .navbar-link-icon,
+    .theme-switch-glyph,
+    .navbar-arrow,
+    .theme-icon
+  ) {
   color: inherit !important;
 }
 
-#navbar :is(
-  .dropdown-container > a,
-  .dropdown-container > button,
-  .navbar-actions .btn-plain
-) :is(
-  span,
-  .navbar-action-icon,
-  .navbar-link-icon,
-  .theme-switch-glyph,
-  .navbar-action-icon *,
-  .navbar-link-icon *,
-  .theme-switch-glyph *
-) {
-  color: inherit !important;
-  transition: none !important;
-  animation: none !important;
-}
-
-#navbar :is(
-  .navbar-action-icon,
-  .navbar-link-icon,
-  .theme-switch-glyph,
-  .navbar-action-icon svg,
-  .navbar-link-icon svg,
-  .theme-switch-glyph svg,
-  .navbar-arrow svg,
-  .theme-icon svg,
-  .navbar-action-icon use,
-  .navbar-link-icon use,
-  .theme-switch-glyph use,
-  .navbar-arrow use,
-  .theme-icon use,
-  .navbar-action-icon path,
-  .navbar-link-icon path,
-  .theme-switch-glyph path,
-  .navbar-arrow path,
-  .theme-icon path,
-  .navbar-action-icon circle,
-  .navbar-link-icon circle,
-  .theme-switch-glyph circle,
-  .navbar-arrow circle,
-  .theme-icon circle,
-  .navbar-action-icon rect,
-  .navbar-link-icon rect,
-  .theme-switch-glyph rect,
-  .navbar-arrow rect,
-  .theme-icon rect,
-  .navbar-action-icon ellipse,
-  .navbar-link-icon ellipse,
-  .theme-switch-glyph ellipse,
-  .navbar-arrow ellipse,
-  .theme-icon ellipse,
-  .navbar-action-icon line,
-  .navbar-link-icon line,
-  .theme-switch-glyph line,
-  .navbar-arrow line,
-  .theme-icon line,
-  .navbar-action-icon polyline,
-  .navbar-link-icon polyline,
-  .theme-switch-glyph polyline,
-  .navbar-arrow polyline,
-  .theme-icon polyline,
-  .navbar-action-icon polygon,
-  .navbar-link-icon polygon,
-  .theme-switch-glyph polygon,
-  .navbar-arrow polygon,
-  .theme-icon polygon,
-  .navbar-action-icon g,
-  .navbar-link-icon g,
-  .theme-switch-glyph g,
-  .navbar-arrow g,
-  .theme-icon g,
-  .navbar-action-icon *,
-  .navbar-link-icon *,
-  .theme-switch-glyph *,
-  .navbar-arrow *,
-  .theme-icon *
-) {
+#navbar
+  :is(
+    .dropdown-container > a,
+    .dropdown-container > button,
+    .navbar-actions .btn-plain
+  )
+  :is(
+    span,
+    .navbar-action-icon,
+    .navbar-link-icon,
+    .theme-switch-glyph,
+    .navbar-action-icon *,
+    .navbar-link-icon *,
+    .theme-switch-glyph *
+  ) {
   color: inherit !important;
   transition: none !important;
   animation: none !important;
 }
 
-#navbar :is(
-  .dropdown-container > a,
-  .dropdown-container > button,
-  .navbar-actions .btn-plain
-) {
+#navbar
+  :is(
+    .navbar-action-icon,
+    .navbar-link-icon,
+    .theme-switch-glyph,
+    .navbar-action-icon svg,
+    .navbar-link-icon svg,
+    .theme-switch-glyph svg,
+    .navbar-arrow svg,
+    .theme-icon svg,
+    .navbar-action-icon use,
+    .navbar-link-icon use,
+    .theme-switch-glyph use,
+    .navbar-arrow use,
+    .theme-icon use,
+    .navbar-action-icon path,
+    .navbar-link-icon path,
+    .theme-switch-glyph path,
+    .navbar-arrow path,
+    .theme-icon path,
+    .navbar-action-icon circle,
+    .navbar-link-icon circle,
+    .theme-switch-glyph circle,
+    .navbar-arrow circle,
+    .theme-icon circle,
+    .navbar-action-icon rect,
+    .navbar-link-icon rect,
+    .theme-switch-glyph rect,
+    .navbar-arrow rect,
+    .theme-icon rect,
+    .navbar-action-icon ellipse,
+    .navbar-link-icon ellipse,
+    .theme-switch-glyph ellipse,
+    .navbar-arrow ellipse,
+    .theme-icon ellipse,
+    .navbar-action-icon line,
+    .navbar-link-icon line,
+    .theme-switch-glyph line,
+    .navbar-arrow line,
+    .theme-icon line,
+    .navbar-action-icon polyline,
+    .navbar-link-icon polyline,
+    .theme-switch-glyph polyline,
+    .navbar-arrow polyline,
+    .theme-icon polyline,
+    .navbar-action-icon polygon,
+    .navbar-link-icon polygon,
+    .theme-switch-glyph polygon,
+    .navbar-arrow polygon,
+    .theme-icon polygon,
+    .navbar-action-icon g,
+    .navbar-link-icon g,
+    .theme-switch-glyph g,
+    .navbar-arrow g,
+    .theme-icon g,
+    .navbar-action-icon *,
+    .navbar-link-icon *,
+    .theme-switch-glyph *,
+    .navbar-arrow *,
+    .theme-icon *
+  ) {
+  color: inherit !important;
+  transition: none !important;
+  animation: none !important;
+}
+
+#navbar
+  :is(
+    .dropdown-container > a,
+    .dropdown-container > button,
+    .navbar-actions .btn-plain
+  ) {
   transition:
     background-color 300ms ease-in-out,
     color 300ms ease-in-out;

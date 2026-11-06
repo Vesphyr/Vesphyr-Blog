@@ -13,7 +13,8 @@ const SITE_TIMEZONE = 8;
 
 export const siteConfig: SiteConfig = {
   title: "Dionys",
-  subtitle: "Dionys 的自留地：技术拆解、路上见闻，还有纯粹因为喜欢而写下的东西。",
+  subtitle:
+    "Dionys 的自留地：技术拆解、路上见闻，还有纯粹因为喜欢而写下的东西。",
   siteURL: "https://dionys.net/",
   siteStartDate: "2026-07-01",
   keywords: [

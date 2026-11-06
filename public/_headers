@@ -92,6 +92,9 @@
   Cache-Control: public, max-age=60
 
 # HTML pages - security headers
+# 注意：script-src 的 'unsafe-inline' 只是本地预览的回退值；构建末期
+# scripts/csp-script-hashes.mjs 会把它替换为 dist 全部内联脚本/事件处理器的
+# SHA-256 白名单（含 script-src-attr），线上策略不含 'unsafe-inline'。
 /*
   X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN

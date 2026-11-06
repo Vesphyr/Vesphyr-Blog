@@ -91,7 +91,6 @@
     }
   }
 
-  
   a:not(.no-styling) {
     @apply relative bg-none font-medium text-(--primary)
         underline decoration-(--link-underline) decoration-1 decoration-dashed underline-offset-4;
@@ -107,7 +106,6 @@
     }
   }
 
-  
   code {
     @apply bg-(--inline-code-bg) text-(--inline-code-color) px-1 py-0.5 rounded-md overflow-hidden;
 
@@ -133,7 +131,6 @@
     }
   }
 
-  
   ul,
   ol {
     li::marker {
@@ -141,7 +138,6 @@
     }
   }
 
-  
   blockquote {
     @apply not-italic border-transparent relative;
     font-weight: inherit;
@@ -167,12 +163,10 @@
     color: color-mix(in oklch, var(--primary) 45%, white);
   }
 
-  
   .table-wrapper {
     @apply w-full overflow-x-auto m-0 rounded-(--radius-large);
     -webkit-overflow-scrolling: touch;
 
-    
     &::-webkit-scrollbar {
       height: 6px;
       width: 6px;
@@ -233,7 +227,6 @@
     transition: none;
   }
 
-  
   .katex-display {
     @apply w-full overflow-x-auto overflow-y-hidden box-border my-4;
     padding-bottom: 6px;
@@ -276,7 +269,6 @@
     margin-bottom: 1.75rem;
   }
 }
-
 
 .custom-md .expressive-code :is(ul, ol) li::marker {
   @apply text-inherit;

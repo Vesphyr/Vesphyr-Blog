@@ -1,0 +1,4 @@
+# 构建期自动生成的文件：每次 build 由脚本重写，格式由生成器决定，
+# 不应被 prettier 校验/改写（否则本地 build 后 verify 必然失败）。
+src/styles/generated-zhuque-font.css
+src/styles/generated-zhuque-ui-font.css

@@ -10,306 +10,312 @@ import { profileConfig, siteConfig } from "../../config";
 type Weight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 type FontStyle = "normal" | "italic";
 interface FontOptions {
-    data: Buffer | ArrayBuffer;
-    name: string;
-    weight?: Weight;
-    style?: FontStyle;
-    lang?: string;
+  data: Buffer | ArrayBuffer;
+  name: string;
+  weight?: Weight;
+  style?: FontStyle;
+  lang?: string;
 }
 export const prerender = true;
 export const getStaticPaths: GetStaticPaths = async () => {
-    if (!siteConfig.generateOgImages) {
-        return [];
-    }
-    const allPosts = await getCollection("posts");
-    const publishedPosts = allPosts.filter((post: CollectionEntry<"posts">) => !post.data.draft);
-    const postPaths = publishedPosts.map((post: CollectionEntry<"posts">) => {
-        const slug = getDefaultPostSlug(post.id);
-        return {
-            params: { slug },
-            props: { post },
-        };
-    });
-    // Default OG image for the homepage (no per-post slug). Reuses the same satori
-    // template with site-level branding instead of post fields.
-    const homePost = {
-        id: "home",
-        data: {
-            title: siteConfig.title,
-            description: siteConfig.subtitle ?? "",
-            published: new Date(),
-        },
-    } as unknown as CollectionEntry<"posts">;
-    return [
-        ...postPaths,
-        { params: { slug: "home" }, props: { post: homePost } },
-    ];
+  if (!siteConfig.generateOgImages) {
+    return [];
+  }
+  const allPosts = await getCollection("posts");
+  const publishedPosts = allPosts.filter(
+    (post: CollectionEntry<"posts">) => !post.data.draft,
+  );
+  const postPaths = publishedPosts.map((post: CollectionEntry<"posts">) => {
+    const slug = getDefaultPostSlug(post.id);
+    return {
+      params: { slug },
+      props: { post },
+    };
+  });
+  // Default OG image for the homepage (no per-post slug). Reuses the same satori
+  // template with site-level branding instead of post fields.
+  const homePost = {
+    id: "home",
+    data: {
+      title: siteConfig.title,
+      description: siteConfig.subtitle ?? "",
+      published: new Date(),
+    },
+  } as unknown as CollectionEntry<"posts">;
+  return [
+    ...postPaths,
+    { params: { slug: "home" }, props: { post: homePost } },
+  ];
 };
 let fontCache: {
-    regular: Buffer | null;
-    bold: Buffer | null;
+  regular: Buffer | null;
+  bold: Buffer | null;
 } | null = null;
 function loadOgFonts(): {
-    regular: Buffer | null;
-    bold: Buffer | null;
+  regular: Buffer | null;
+  bold: Buffer | null;
 } {
-    if (fontCache) {
-        return fontCache;
+  if (fontCache) {
+    return fontCache;
+  }
+  try {
+    const fontPath = path.resolve(
+      process.cwd(),
+      "fonts/ZhuqueFangsong-Regular.ttf",
+    );
+    if (!fs.existsSync(fontPath)) {
+      console.warn(`OG font not found: ${fontPath}`);
+      fontCache = { regular: null, bold: null };
+      return fontCache;
     }
-    try {
-        const fontPath = path.resolve(process.cwd(), "fonts/ZhuqueFangsong-Regular.ttf");
-        if (!fs.existsSync(fontPath)) {
-            console.warn(`OG font not found: ${fontPath}`);
-            fontCache = { regular: null, bold: null };
-            return fontCache;
-        }
-        const fontBuffer = fs.readFileSync(fontPath);
-        fontCache = { regular: fontBuffer, bold: fontBuffer };
-        return fontCache;
-    }
-    catch (err) {
-        console.warn("Error loading OG fonts:", err);
-        fontCache = { regular: null, bold: null };
-        return fontCache;
-    }
+    const fontBuffer = fs.readFileSync(fontPath);
+    fontCache = { regular: fontBuffer, bold: fontBuffer };
+    return fontCache;
+  } catch (err) {
+    console.warn("Error loading OG fonts:", err);
+    fontCache = { regular: null, bold: null };
+    return fontCache;
+  }
 }
-export async function GET({ props, }: APIContext<{
-    post: CollectionEntry<"posts">;
+export async function GET({
+  props,
+}: APIContext<{
+  post: CollectionEntry<"posts">;
 }>): Promise<Response> {
-    const { post } = props;
-    const { regular: fontRegular, bold: fontBold } = loadOgFonts();
-    const avatarBuffer = fs.readFileSync(`./src/${profileConfig.avatar}`);
-    // Satori rejects correctly-declared webp in this pipeline, so the avatar
-    // keeps a png data-URI prefix (decoders sniff the actual bytes).
-    const avatarBase64 = `data:image/png;base64,${avatarBuffer.toString("base64")}`;
-    let iconPath = "./public/favicon/favicon.png";
-    if (siteConfig.favicon.length > 0) {
-        iconPath = `./public${siteConfig.favicon[0].src}`;
-    }
-    const iconBuffer = fs.readFileSync(iconPath);
-    const lowerIconPath = iconPath.toLowerCase();
-    const iconMime = lowerIconPath.endsWith(".svg")
-        ? "image/svg+xml"
-        : lowerIconPath.endsWith(".webp")
-          ? "image/webp"
-          : "image/png";
-    const iconBase64 = `data:${iconMime};base64,${iconBuffer.toString("base64")}`;
-    const hue = siteConfig.themeColor.hue;
-    const primaryColor = `hsl(${hue}, 90%, 65%)`;
-    const textColor = "hsl(0, 0%, 95%)";
-    const subtleTextColor = `hsl(${hue}, 10%, 75%)`;
-    const backgroundColor = `hsl(${hue}, 15%, 12%)`;
-    const pubDate = post.data.published.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-    });
-    const description = post.data.description;
-    const template = {
-        type: "div",
-        props: {
+  const { post } = props;
+  const { regular: fontRegular, bold: fontBold } = loadOgFonts();
+  const avatarBuffer = fs.readFileSync(`./src/${profileConfig.avatar}`);
+  // Satori rejects correctly-declared webp in this pipeline, so the avatar
+  // keeps a png data-URI prefix (decoders sniff the actual bytes).
+  const avatarBase64 = `data:image/png;base64,${avatarBuffer.toString("base64")}`;
+  let iconPath = "./public/favicon/favicon.png";
+  if (siteConfig.favicon.length > 0) {
+    iconPath = `./public${siteConfig.favicon[0].src}`;
+  }
+  const iconBuffer = fs.readFileSync(iconPath);
+  const lowerIconPath = iconPath.toLowerCase();
+  const iconMime = lowerIconPath.endsWith(".svg")
+    ? "image/svg+xml"
+    : lowerIconPath.endsWith(".webp")
+      ? "image/webp"
+      : "image/png";
+  const iconBase64 = `data:${iconMime};base64,${iconBuffer.toString("base64")}`;
+  const hue = siteConfig.themeColor.hue;
+  const primaryColor = `hsl(${hue}, 90%, 65%)`;
+  const textColor = "hsl(0, 0%, 95%)";
+  const subtleTextColor = `hsl(${hue}, 10%, 75%)`;
+  const backgroundColor = `hsl(${hue}, 15%, 12%)`;
+  const pubDate = post.data.published.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+  const description = post.data.description;
+  const template = {
+    type: "div",
+    props: {
+      style: {
+        height: "100%",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: backgroundColor,
+        fontFamily: '"Zhuque Fangsong OG"',
+        padding: "60px",
+      },
+      children: [
+        {
+          type: "div",
+          props: {
             style: {
-                height: "100%",
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                backgroundColor: backgroundColor,
-                fontFamily: '"Zhuque Fangsong OG"',
-                padding: "60px",
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              gap: "20px",
             },
             children: [
-                {
-                    type: "div",
-                    props: {
-                        style: {
-                            width: "100%",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "20px",
-                        },
-                        children: [
-                            {
-                                type: "img",
-                                props: {
-                                    src: iconBase64,
-                                    width: 48,
-                                    height: 48,
-                                    style: { borderRadius: "10px" },
-                                },
-                            },
-                            {
-                                type: "div",
-                                props: {
-                                    style: {
-                                        fontSize: "36px",
-                                        fontWeight: 600,
-                                        color: subtleTextColor,
-                                    },
-                                    children: siteConfig.title,
-                                },
-                            },
-                        ],
-                    },
+              {
+                type: "img",
+                props: {
+                  src: iconBase64,
+                  width: 48,
+                  height: 48,
+                  style: { borderRadius: "10px" },
                 },
-                {
-                    type: "div",
-                    props: {
-                        style: {
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
-                            flexGrow: 1,
-                            gap: "20px",
-                        },
-                        children: [
-                            {
-                                type: "div",
-                                props: {
-                                    style: {
-                                        display: "flex",
-                                        alignItems: "flex-start",
-                                    },
-                                    children: [
-                                        {
-                                            type: "div",
-                                            props: {
-                                                style: {
-                                                    width: "10px",
-                                                    height: "68px",
-                                                    backgroundColor: primaryColor,
-                                                    borderRadius: "6px",
-                                                    marginTop: "14px",
-                                                },
-                                            },
-                                        },
-                                        {
-                                            type: "div",
-                                            props: {
-                                                style: {
-                                                    fontSize: "72px",
-                                                    fontWeight: 700,
-                                                    lineHeight: 1.2,
-                                                    color: textColor,
-                                                    marginLeft: "25px",
-                                                    display: "-webkit-box",
-                                                    overflow: "hidden",
-                                                    textOverflow: "ellipsis",
-                                                    lineClamp: 3,
-                                                    WebkitLineClamp: 3,
-                                                    WebkitBoxOrient: "vertical",
-                                                },
-                                                children: post.data.title,
-                                            },
-                                        },
-                                    ],
-                                },
-                            },
-                            description && {
-                                type: "div",
-                                props: {
-                                    style: {
-                                        fontSize: "32px",
-                                        lineHeight: 1.5,
-                                        color: subtleTextColor,
-                                        paddingLeft: "35px",
-                                        display: "-webkit-box",
-                                        overflow: "hidden",
-                                        textOverflow: "ellipsis",
-                                        lineClamp: 2,
-                                        WebkitLineClamp: 2,
-                                        WebkitBoxOrient: "vertical",
-                                    },
-                                    children: description,
-                                },
-                            },
-                        ],
-                    },
+              },
+              {
+                type: "div",
+                props: {
+                  style: {
+                    fontSize: "36px",
+                    fontWeight: 600,
+                    color: subtleTextColor,
+                  },
+                  children: siteConfig.title,
                 },
-                {
-                    type: "div",
-                    props: {
-                        style: {
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            width: "100%",
-                        },
-                        children: [
-                            {
-                                type: "div",
-                                props: {
-                                    style: {
-                                        display: "flex",
-                                        alignItems: "center",
-                                        gap: "20px",
-                                    },
-                                    children: [
-                                        {
-                                            type: "img",
-                                            props: {
-                                                src: avatarBase64,
-                                                width: 60,
-                                                height: 60,
-                                                style: { borderRadius: "50%" },
-                                            },
-                                        },
-                                        {
-                                            type: "div",
-                                            props: {
-                                                style: {
-                                                    fontSize: "28px",
-                                                    fontWeight: 600,
-                                                    color: textColor,
-                                                },
-                                                children: profileConfig.name,
-                                            },
-                                        },
-                                    ],
-                                },
-                            },
-                            {
-                                type: "div",
-                                props: {
-                                    style: {
-                                        fontSize: "28px",
-                                        color: subtleTextColor,
-                                    },
-                                    children: pubDate,
-                                },
-                            },
-                        ],
-                    },
-                },
+              },
             ],
+          },
         },
-    };
-    const fonts: FontOptions[] = [];
-    if (fontRegular) {
-        fonts.push({
-            name: "Zhuque Fangsong OG",
-            data: fontRegular,
-            weight: 400,
-            style: "normal",
-        });
-    }
-    if (fontBold) {
-        fonts.push({
-            name: "Zhuque Fangsong OG",
-            data: fontBold,
-            weight: 700,
-            style: "normal",
-        });
-    }
-    const svg = await satori(template, {
-        width: 1200,
-        height: 630,
-        fonts,
-    });
-    const png = await sharp(Buffer.from(svg)).webp({ lossless: true }).toBuffer();
-    return new Response(new Uint8Array(png), {
-        headers: {
-            "Content-Type": "image/webp",
-            "Cache-Control": "public, max-age=31536000, immutable",
+        {
+          type: "div",
+          props: {
+            style: {
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              flexGrow: 1,
+              gap: "20px",
+            },
+            children: [
+              {
+                type: "div",
+                props: {
+                  style: {
+                    display: "flex",
+                    alignItems: "flex-start",
+                  },
+                  children: [
+                    {
+                      type: "div",
+                      props: {
+                        style: {
+                          width: "10px",
+                          height: "68px",
+                          backgroundColor: primaryColor,
+                          borderRadius: "6px",
+                          marginTop: "14px",
+                        },
+                      },
+                    },
+                    {
+                      type: "div",
+                      props: {
+                        style: {
+                          fontSize: "72px",
+                          fontWeight: 700,
+                          lineHeight: 1.2,
+                          color: textColor,
+                          marginLeft: "25px",
+                          display: "-webkit-box",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          lineClamp: 3,
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: "vertical",
+                        },
+                        children: post.data.title,
+                      },
+                    },
+                  ],
+                },
+              },
+              description && {
+                type: "div",
+                props: {
+                  style: {
+                    fontSize: "32px",
+                    lineHeight: 1.5,
+                    color: subtleTextColor,
+                    paddingLeft: "35px",
+                    display: "-webkit-box",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    lineClamp: 2,
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+                  },
+                  children: description,
+                },
+              },
+            ],
+          },
         },
+        {
+          type: "div",
+          props: {
+            style: {
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "100%",
+            },
+            children: [
+              {
+                type: "div",
+                props: {
+                  style: {
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "20px",
+                  },
+                  children: [
+                    {
+                      type: "img",
+                      props: {
+                        src: avatarBase64,
+                        width: 60,
+                        height: 60,
+                        style: { borderRadius: "50%" },
+                      },
+                    },
+                    {
+                      type: "div",
+                      props: {
+                        style: {
+                          fontSize: "28px",
+                          fontWeight: 600,
+                          color: textColor,
+                        },
+                        children: profileConfig.name,
+                      },
+                    },
+                  ],
+                },
+              },
+              {
+                type: "div",
+                props: {
+                  style: {
+                    fontSize: "28px",
+                    color: subtleTextColor,
+                  },
+                  children: pubDate,
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+  };
+  const fonts: FontOptions[] = [];
+  if (fontRegular) {
+    fonts.push({
+      name: "Zhuque Fangsong OG",
+      data: fontRegular,
+      weight: 400,
+      style: "normal",
     });
+  }
+  if (fontBold) {
+    fonts.push({
+      name: "Zhuque Fangsong OG",
+      data: fontBold,
+      weight: 700,
+      style: "normal",
+    });
+  }
+  const svg = await satori(template, {
+    width: 1200,
+    height: 630,
+    fonts,
+  });
+  const png = await sharp(Buffer.from(svg)).webp({ lossless: true }).toBuffer();
+  return new Response(new Uint8Array(png), {
+    headers: {
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+    },
+  });
 }
