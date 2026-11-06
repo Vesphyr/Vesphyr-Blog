@@ -17,19 +17,21 @@
     serif;
 }
 
-/* 单一固定配色：舒适护眼深色基底（非纯黑，L≈0.42，正文对比度约 7.9:1，卡片上约 7.3:1，达 WCAG AAA）+ 暖米白文字，缣帛丝绸纹理 */
+/* 单一固定配色：深夜色基底（非纯黑，L≈0.33，白字在卡片上 11.8:1，远超 WCAG AAA）
+   + 缣帛丝绸纹理。深底带来的对比度余量允许次级文字回落到 0.82/0.78，
+   恢复「正文—次级—元信息」的可见层级（L 0.42 时被 AAA 压缩到 0.97/0.96，层级消失）。 */
 /* 默认回退：sRGB 十六进制近似（hue=325），供不支持 oklch/color-mix 的旧浏览器使用 */
 :root {
   --radius-large: 1rem;
   /* JS（setting-utils.ts）运行前的默认值；正常情况会被内联脚本覆盖 */
   --hue: 325;
   --primary: #da8dde;
-  --page-bg: #5c455d;
-  --page-bg-top: #614c61;
-  --page-bg-bottom: #533f54;
-  --page-bg-paper-grain: #584a68;
-  --page-bg-vignette: rgba(0, 0, 0, 0.07);
-  --page-bg-glow: rgba(129, 94, 130, 0.12);
+  --page-bg: #3f2d40;
+  --page-bg-top: #432e44;
+  --page-bg-bottom: #342435;
+  --page-bg-paper-grain: #452c46;
+  --page-bg-vignette: rgba(0, 0, 0, 0.12);
+  --page-bg-glow: rgba(108, 74, 110, 0.1);
   --page-bg-satin: linear-gradient(
     135deg,
     transparent 0%,
@@ -61,35 +63,39 @@
     0 0 / 80px 80px;
   --page-bg-tortoise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='27.71' viewBox='0 0 48 27.71'%3E%3Cpath d='M8,-16 L21.86,-8 L21.86,8 L8,16 L-5.86,8 L-5.86,-8 Z' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.2'/%3E%3Cpath d='M32,-2.15 L45.86,5.85 L45.86,21.85 L32,29.85 L18.14,21.85 L18.14,5.85 Z' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.18'/%3E%3C/svg%3E")
     0 0 / 48px 27.71px;
-  --card-bg: #604a61;
-  --card-bg-transparent: rgba(96, 74, 97, 0.88);
+  --card-bg: #463048;
+  --card-bg-transparent: rgba(70, 48, 72, 0.88);
   --btn-content: #ffffff;
-  --btn-regular-bg: #5c475d;
-  --btn-regular-bg-active: #524052;
-  --btn-regular-bg-hover: #655066;
-  --btn-plain-bg-hover: #665069;
-  --btn-plain-bg-active: #5c475d;
+  --btn-regular-bg: #402c41;
+  --btn-regular-bg-active: #372638;
+  --btn-regular-bg-hover: #49334a;
+  --btn-plain-bg-hover: #473248;
+  --btn-plain-bg-active: #3f2d3f;
+  --btn-card-bg-hover: #4e3750;
+  --btn-card-bg-active: #3d2a3e;
   --deep-text: #ffffff;
-  /* 文字层全面提亮：正文在卡片底（L≈0.44）上达 7.3:1（WCAG AAA），次级文字约 6.3:1。 */
+  /* 深底下的文字层级：正文纯白（卡片上 11.8:1），次级 0.82（8.5:1）、
+     三级 0.78（7.9:1）、元信息 0.80 —— 全部 ≥7:1（AAA）且层级重新可见。 */
   --text-main: #ffffff;
   /* WCAG AAA：装饰/图标用 --primary（3.3:1，过 3:1 图形件要求），
      文字级强调一律用 --primary-text（卡片底 7.4:1）。 */
-  --text-secondary: rgba(255, 255, 255, 0.97);
-  --primary-text: #fff4ff;
-  --text-tertiary: rgba(255, 255, 255, 0.96);
-  --text-disabled: rgba(250, 245, 242, 0.5);
-  --line-divider: rgba(255, 255, 255, 0.07);
-  --line-color: rgba(255, 255, 255, 0.09);
-  --content-meta: rgba(255, 255, 255, 0.96);
-  --selection-bg: #6c3270;
+  --text-secondary: rgba(255, 255, 255, 0.82);
+  --primary-text: #fde0fe;
+  --text-tertiary: rgba(255, 255, 255, 0.78);
+  --text-disabled: rgba(255, 255, 255, 0.45);
+  --line-divider: rgba(255, 255, 255, 0.06);
+  --line-color: rgba(255, 255, 255, 0.08);
+  --content-meta: rgba(255, 255, 255, 0.8);
+  --selection-bg: #5b275f;
   --codeblock-bg: #281e2a;
   --codeblock-topbar-bg: #1e1820;
+  --license-block-bg: #402c41;
   --link-underline: #cfa8d2;
   --link-hover: #d9a8dc;
   --link-active: #cf9ecc;
-  --float-panel-bg: #615761;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
-  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.18);
+  --float-panel-bg: #49394a;
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.38);
+  --shadow-lg: 0 6px 22px rgba(0, 0, 0, 0.45);
   --radius-std: 0.75rem;
   --nav-bg: var(--card-bg);
   --nav-blur: none;
@@ -97,9 +103,9 @@
   --nav-radius: var(--radius-std);
   --panel-bg: var(--card-bg-transparent);
   --panel-blur: blur(20px);
-  --display-panel-bg: rgba(98, 86, 99, 0.82);
-  --display-panel-border: rgba(255, 255, 255, 0.1);
-  --display-panel-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+  --display-panel-bg: rgba(73, 57, 74, 0.88);
+  --display-panel-border: rgba(255, 255, 255, 0.12);
+  --display-panel-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
   --navbar-foreground: var(--deep-text);
   --navbar-overlay-foreground: #ffffff;
 }
@@ -108,12 +114,12 @@
 @supports (color: oklch(0% 0 0)) {
   :root {
     --primary: oklch(0.75 0.14 var(--hue));
-    --page-bg: oklch(0.423 0.048 var(--hue));
-    --page-bg-top: oklch(0.43 0.048 var(--hue));
-    --page-bg-bottom: oklch(0.383 0.043 var(--hue));
-    --page-bg-paper-grain: oklch(0.42 0.055 var(--hue));
-    --page-bg-vignette: color-mix(in oklch, black 7%, transparent);
-    --page-bg-glow: oklch(0.53 0.07 var(--hue) / 0.12);
+    --page-bg: oklch(0.325 0.042 var(--hue));
+    --page-bg-top: oklch(0.335 0.046 var(--hue));
+    --page-bg-bottom: oklch(0.285 0.038 var(--hue));
+    --page-bg-paper-grain: oklch(0.335 0.055 var(--hue));
+    --page-bg-vignette: color-mix(in oklch, black 12%, transparent);
+    --page-bg-glow: oklch(0.46 0.07 var(--hue) / 0.1);
     --page-bg-satin: linear-gradient(
       135deg,
       transparent 0%,
@@ -145,24 +151,27 @@
       0 0 / 80px 80px;
     --page-bg-tortoise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='27.71' viewBox='0 0 48 27.71'%3E%3Cpath d='M8,-16 L21.86,-8 L21.86,8 L8,16 L-5.86,8 L-5.86,-8 Z' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.2'/%3E%3Cpath d='M32,-2.15 L45.86,5.85 L45.86,21.85 L32,29.85 L18.14,21.85 L18.14,5.85 Z' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.18'/%3E%3C/svg%3E")
       0 0 / 48px 27.71px;
-    --card-bg: oklch(0.44 0.05 var(--hue));
-    --card-bg-transparent: oklch(0.44 0.05 var(--hue) / 0.88);
+    --card-bg: oklch(0.345 0.05 var(--hue));
+    --card-bg-transparent: oklch(0.345 0.05 var(--hue) / 0.88);
     --btn-content: #ffffff;
-    --btn-regular-bg: oklch(0.42 0.045 var(--hue));
-    --btn-regular-bg-active: oklch(0.385 0.04 var(--hue));
-    --btn-regular-bg-hover: oklch(0.465 0.05 var(--hue));
-    --btn-plain-bg-hover: oklch(0.45 0.045 var(--hue));
-    --btn-plain-bg-active: oklch(0.42 0.04 var(--hue));
+    --btn-regular-bg: oklch(0.325 0.045 var(--hue));
+    --btn-regular-bg-active: oklch(0.295 0.04 var(--hue));
+    --btn-regular-bg-hover: oklch(0.355 0.05 var(--hue));
+    --btn-plain-bg-hover: oklch(0.35 0.045 var(--hue));
+    --btn-plain-bg-active: oklch(0.325 0.04 var(--hue));
+    --btn-card-bg-hover: oklch(0.365 0.05 var(--hue));
+    --btn-card-bg-active: oklch(0.315 0.045 var(--hue));
+    --license-block-bg: oklch(0.325 0.045 var(--hue));
     --deep-text: #ffffff;
-    --primary-text: oklch(0.98 0.02 var(--hue));
-    --selection-bg: oklch(0.42 0.12 var(--hue));
+    --primary-text: oklch(0.94 0.05 var(--hue));
+    --selection-bg: oklch(0.37 0.11 var(--hue));
     --codeblock-bg: oklch(0.255 0.026 var(--hue));
     --codeblock-topbar-bg: oklch(0.215 0.022 var(--hue));
     --link-underline: oklch(0.75 0.08 var(--hue));
     --link-hover: oklch(0.76 0.085 var(--hue));
     --link-active: oklch(0.76 0.075 var(--hue));
-    --float-panel-bg: oklch(0.47 0.02 var(--hue));
-    --display-panel-bg: oklch(0.47 0.025 var(--hue) / 0.82);
+    --float-panel-bg: oklch(0.37 0.035 var(--hue));
+    --display-panel-bg: oklch(0.37 0.035 var(--hue) / 0.88);
     --navbar-overlay-foreground: #ffffff;
   }
 }

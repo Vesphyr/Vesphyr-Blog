@@ -320,26 +320,24 @@
   }
 }
 
-/* WCAG AAA：深底上文字要达 7:1，透明度只能微降（白字 α 下限约 0.95），
-   层级改由字号与字重承担。所有 text-XX 类保持 ≥0.96。
-   注：0.96 档仅用于不透明卡片/页面深区上的辅助文字；页面顶部缎面高光
-   与珍珠点重叠的极亮纹理点上不排布任何半透明文字（该区域仅导航栏与
-   卡片覆盖，实测文字均位于不透明度足够的底面上）。 */
+/* WCAG AAA 与视觉层级的平衡：深底（卡片 #463048）下白字 α 下限约 0.72，
+   因此 0.95 / 0.86 / 0.82 三档既保留清晰的「正文—次级—元信息」层级，
+   又分别有 10.4 / 8.4 / 7.8 :1 的对比度余量。 */
 .text-100,
 .text-90 {
-  color: color-mix(in oklch, currentColor 97%, transparent);
+  color: color-mix(in oklch, currentColor 95%, transparent);
 }
 
 .text-75,
 .text-70,
 .text-60 {
-  color: color-mix(in oklch, currentColor 96.5%, transparent);
+  color: color-mix(in oklch, currentColor 86%, transparent);
 }
 
 .text-50,
 .text-30,
 .text-25 {
-  color: color-mix(in oklch, currentColor 96%, transparent);
+  color: color-mix(in oklch, currentColor 82%, transparent);
 }
 
 .post-card-item + .post-card-item {
