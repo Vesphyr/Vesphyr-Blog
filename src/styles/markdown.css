@@ -95,8 +95,19 @@
     }
   }
 
+  mark {
+    /* 朱砂色块：白字 9.8:1，是最接近真实朱砂的用法（色块而非文字） */
+    background: var(--pigment-cinnabar-block);
+    color: #fff;
+    padding: 0.1em 0.25em;
+    border-radius: 0.25em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
   a:not(.no-styling) {
-    @apply relative bg-none font-medium text-(--primary-text)
+    /* 群青承担"信息/外部"语义：文字用正文档（7.7:1），下划线用装饰档（3.6:1） */
+    @apply relative bg-none font-medium text-(--pigment-ultramarine-text)
         underline decoration-(--link-underline) decoration-1 decoration-dashed underline-offset-4;
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
@@ -105,7 +116,7 @@
     &:active {
       @apply decoration-transparent;
       background: var(--btn-plain-bg-hover);
-      border-bottom: 1px dashed var(--link-hover);
+      border-bottom: 1px dashed var(--pigment-ultramarine-strong);
       text-decoration: none;
     }
   }

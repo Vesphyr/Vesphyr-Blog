@@ -17,21 +17,22 @@
     serif;
 }
 
-/* 单一固定配色：深夜色基底（非纯黑，L≈0.33，白字在卡片上 11.8:1，远超 WCAG AAA）
-   + 缣帛丝绸纹理。深底带来的对比度余量允许次级文字回落到 0.82/0.78，
-   恢复「正文—次级—元信息」的可见层级（L 0.42 时被 AAA 压缩到 0.97/0.96，层级消失）。 */
+/* 单一固定配色：深夜色基底（非纯黑，L≈0.33）+ 缣帛丝绸纹理。
+   强调色采用传统颜料体系：骨螺紫（品牌，h335）/ 群青（信息与链接，h272）/
+   朱砂（警示与强调，h32）。每个颜料给出三档明度 + 色块版——
+   明度门槛由背景亮度决定（3:1 装饰 L≥0.63 / 4.5:1 大字 L≥0.73 / 7:1 正文 L≥0.84）。 */
 /* 默认回退：sRGB 十六进制近似（hue=325），供不支持 oklch/color-mix 的旧浏览器使用 */
 :root {
   --radius-large: 1rem;
   /* JS（setting-utils.ts）运行前的默认值；正常情况会被内联脚本覆盖 */
-  --hue: 325;
-  --primary: #da8dde;
-  --page-bg: #3f2d40;
-  --page-bg-top: #432e44;
-  --page-bg-bottom: #342435;
-  --page-bg-paper-grain: #452c46;
+  --hue: 335;
+  --primary: #e48ad1;
+  --page-bg: #422c3d;
+  --page-bg-top: #462d40;
+  --page-bg-bottom: #362332;
+  --page-bg-paper-grain: #482b42;
   --page-bg-vignette: rgba(0, 0, 0, 0.12);
-  --page-bg-glow: rgba(108, 74, 110, 0.1);
+  --page-bg-glow: rgba(112, 73, 104, 0.1);
   --page-bg-satin: linear-gradient(
     135deg,
     transparent 0%,
@@ -63,16 +64,16 @@
     0 0 / 80px 80px;
   --page-bg-tortoise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='27.71' viewBox='0 0 48 27.71'%3E%3Cpath d='M8,-16 L21.86,-8 L21.86,8 L8,16 L-5.86,8 L-5.86,-8 Z' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.2'/%3E%3Cpath d='M32,-2.15 L45.86,5.85 L45.86,21.85 L32,29.85 L18.14,21.85 L18.14,5.85 Z' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.18'/%3E%3C/svg%3E")
     0 0 / 48px 27.71px;
-  --card-bg: #463048;
-  --card-bg-transparent: rgba(70, 48, 72, 0.88);
+  --card-bg: #492f44;
+  --card-bg-transparent: rgba(73, 47, 68, 0.88);
   --btn-content: #ffffff;
-  --btn-regular-bg: #402c41;
-  --btn-regular-bg-active: #372638;
-  --btn-regular-bg-hover: #49334a;
-  --btn-plain-bg-hover: #473248;
-  --btn-plain-bg-active: #3f2d3f;
-  --btn-card-bg-hover: #4e3750;
-  --btn-card-bg-active: #3d2a3e;
+  --btn-regular-bg: #432b3d;
+  --btn-regular-bg-active: #392535;
+  --btn-regular-bg-hover: #4c3246;
+  --btn-plain-bg-hover: #493244;
+  --btn-plain-bg-active: #412c3c;
+  --btn-card-bg-hover: #513349;
+  --btn-card-bg-active: #3f2939;
   --deep-text: #ffffff;
   /* 深底下的文字层级：正文纯白（卡片上 11.8:1），次级 0.82（8.5:1）、
      三级 0.78（7.9:1）、元信息 0.80 —— 全部 ≥7:1（AAA）且层级重新可见。 */
@@ -80,20 +81,49 @@
   /* WCAG AAA：装饰/图标用 --primary（3.3:1，过 3:1 图形件要求），
      文字级强调一律用 --primary-text（卡片底 7.4:1）。 */
   --text-secondary: rgba(255, 255, 255, 0.82);
-  --primary-text: #fde0fe;
+  --primary-text: #ffdff9;
+
+  /* ---- 传统颜料三档色阶 ----------------------------------------------
+     每色四值：装饰（3:1，线/图标/边框）/ 大字（4.5:1，≥24px 或粗体标题）/
+     正文（7:1，AAA）/ 色块（作背景，白字 8.3~9.9:1，颜色最接近真实颜料）。
+     彩度刻意压在 0.055~0.15：满彩度在 L 0.75 会变成霓虹色。 */
+  /* 朱砂 h32 —— 警示、强调、高亮 */
+  --pigment-cinnabar: #dc6c57;
+  --pigment-cinnabar-strong: #ea9685;
+  --pigment-cinnabar-text: #f6c5bb;
+  --pigment-cinnabar-block: #7f2213;
+  /* 群青 h272 —— 信息、链接、引用 */
+  --pigment-ultramarine: #748ae3;
+  --pigment-ultramarine-strong: #98aaee;
+  --pigment-ultramarine-text: #c4d0f6;
+  --pigment-ultramarine-block: #324087;
+  /* 骨螺紫 h335 —— 品牌主色（与 --hue 同族） */
+  --pigment-tyrian: #cc6eb9;
+  --pigment-tyrian-strong: #db98cc;
+  --pigment-tyrian-text: #ecc4e2;
+  --pigment-tyrian-block: #6f2563;
+
+  /* 提示框（admonition）按颜料语义分配：信息类走群青、强调走骨螺紫、
+     风险类走朱砂。标题为 1.1rem 粗体，未达"大字"门槛，故一律用正文档（≥7:1）；
+     五种类型靠图标与标签文字区分，不靠色相细分。 */
+  --admonitions-color-tip: var(--pigment-ultramarine-text);
+  --admonitions-color-note: var(--pigment-ultramarine-text);
+  --admonitions-color-important: var(--pigment-tyrian-text);
+  --admonitions-color-warning: var(--pigment-cinnabar-text);
+  --admonitions-color-caution: var(--pigment-cinnabar-text);
   --text-tertiary: rgba(255, 255, 255, 0.78);
   --text-disabled: rgba(255, 255, 255, 0.45);
   --line-divider: rgba(255, 255, 255, 0.06);
   --line-color: rgba(255, 255, 255, 0.08);
   --content-meta: rgba(255, 255, 255, 0.8);
-  --selection-bg: #5b275f;
+  --selection-bg: #6f2563;
   --codeblock-bg: #281e2a;
   --codeblock-topbar-bg: #1e1820;
-  --license-block-bg: #402c41;
-  --link-underline: #cfa8d2;
-  --link-hover: #d9a8dc;
-  --link-active: #cf9ecc;
-  --float-panel-bg: #49394a;
+  --license-block-bg: #432b3d;
+  --link-underline: #748ae3;
+  --link-hover: #98aaee;
+  --link-active: #5d74fc;
+  --float-panel-bg: #4c3947;
   --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.38);
   --shadow-lg: 0 6px 22px rgba(0, 0, 0, 0.45);
   --radius-std: 0.75rem;
@@ -103,7 +133,7 @@
   --nav-radius: var(--radius-std);
   --panel-bg: var(--card-bg-transparent);
   --panel-blur: blur(20px);
-  --display-panel-bg: rgba(73, 57, 74, 0.88);
+  --display-panel-bg: rgba(76, 57, 71, 0.88);
   --display-panel-border: rgba(255, 255, 255, 0.12);
   --display-panel-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
   --navbar-foreground: var(--deep-text);
@@ -164,12 +194,12 @@
     --license-block-bg: oklch(0.325 0.045 var(--hue));
     --deep-text: #ffffff;
     --primary-text: oklch(0.94 0.05 var(--hue));
-    --selection-bg: oklch(0.37 0.11 var(--hue));
+    --selection-bg: oklch(0.4 0.13 335);
     --codeblock-bg: oklch(0.255 0.026 var(--hue));
     --codeblock-topbar-bg: oklch(0.215 0.022 var(--hue));
-    --link-underline: oklch(0.75 0.08 var(--hue));
-    --link-hover: oklch(0.76 0.085 var(--hue));
-    --link-active: oklch(0.76 0.075 var(--hue));
+    --link-underline: oklch(0.655 0.135 272);
+    --link-hover: oklch(0.75 0.1 272);
+    --link-active: oklch(0.615 0.203 272);
     --float-panel-bg: oklch(0.37 0.035 var(--hue));
     --display-panel-bg: oklch(0.37 0.035 var(--hue) / 0.88);
     --navbar-overlay-foreground: #ffffff;

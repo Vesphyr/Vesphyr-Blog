@@ -28,7 +28,8 @@ export const siteConfig: SiteConfig = {
   lang: SITE_LANG,
 
   themeColor: {
-    hue: 325,
+    /* 骨螺紫 h335：传统推罗紫的紫红侧，比原 325（粉紫）更有史料依据 */
+    hue: 335,
     fixed: false,
   },
 

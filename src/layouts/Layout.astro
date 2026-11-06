@@ -150,7 +150,7 @@ const skipToContentLabel = isChineseSite
       }}
     >
       let storedHue = null;
-      try { storedHue = localStorage.getItem("hue"); } catch (_e) {}
+      try { storedHue = localStorage.getItem("hue-v2"); } catch (_e) {}
       const hue = storedHue || configHue;
       document.documentElement.style.setProperty("--hue", hue);
       (function () {
@@ -172,9 +172,9 @@ const skipToContentLabel = isChineseSite
       document.addEventListener("astro:page-load", () => {
         const root = document.documentElement;
         const carrier = document.getElementById("config-carrier");
-        const defaultHue = carrier?.dataset.hue ?? (root.style.getPropertyValue("--hue") || "325");
+        const defaultHue = carrier?.dataset.hue ?? (root.style.getPropertyValue("--hue") || "335");
         let storedHue: string | null = null;
-        try { storedHue = localStorage.getItem("hue"); } catch (_e) {}
+        try { storedHue = localStorage.getItem("hue-v2"); } catch (_e) {}
         const hue = storedHue ?? defaultHue;
         root.style.setProperty("--hue", hue);
       });

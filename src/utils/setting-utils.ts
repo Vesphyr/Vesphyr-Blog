@@ -1,6 +1,7 @@
 const UI_TO_HUE_MULTIPLIER = 1;
 const DEFAULT_HUE = 0;
-const HUE_STORAGE_KEY = "hue";
+/* 键名带版本：改默认色相时旧缓存会永久覆盖新默认值，升级键名即失效 */
+const HUE_STORAGE_KEY = "hue-v2";
 
 function parseHue(value: string | null | undefined, fallback: number): number {
   const parsed = Number.parseInt(value || "", 10);
