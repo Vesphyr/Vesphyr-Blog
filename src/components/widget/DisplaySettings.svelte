@@ -144,6 +144,22 @@
     justify-content center
     box-sizing border-box
 
+    // 复刻页面的顶光与缎面光泽，让色条不只是"底色"，而是背景的缩略图
+    &::before
+      content ''
+      position absolute
+      inset 0
+      pointer-events none
+      background linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 70%), linear-gradient(118deg, transparent 0%, rgba(255, 255, 255, 0.06) 14%, transparent 30%, rgba(255, 255, 255, 0.04) 48%, transparent 64%, rgba(255, 255, 255, 0.05) 82%, transparent 100%)
+
+    // 复刻页面的顶光与缎面光泽，让色条不只是"底色"，而是背景的缩略图
+    &::before
+      content ''
+      position absolute
+      inset 0
+      pointer-events none
+      background linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 70%), linear-gradient(118deg, transparent 0%, rgba(255, 255, 255, 0.06) 14%, transparent 30%, rgba(255, 255, 255, 0.04) 48%, transparent 64%, rgba(255, 255, 255, 0.05) 82%, transparent 100%)
+
     &::after
       content ''
       position absolute
