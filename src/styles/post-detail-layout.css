@@ -2,6 +2,17 @@
   max-width: 100%;
 }
 
+/* 阅读栏（文章卡片 + 正文操作区 + 上下篇导航）在中等及以上屏幕收窄居中。
+   WCAG AAA 1.4.8「视觉呈现」建议 CJK 行宽 ≤40 字：正文 1.1rem(17.6px) × 40
+   ≈ 704px，加上卡片两侧 px-12（48px×2）得 800px = 50rem。收窄后卡片、
+   正文与导航共用同一中轴，左右留白自然形成呼吸感。 */
+@media (min-width: 768px) {
+  .post-reading-column {
+    max-width: 50rem;
+    margin-inline: auto;
+  }
+}
+
 .post-article-card {
   max-width: 100%;
   margin-inline: auto;

@@ -39,6 +39,9 @@ const { entry, headings = [], jsonLd, canonicalUrl, remarkPluginFrontmatter, } =
 	<script>
 		import("../../scripts/right-sidebar-layout.ts");
 	</script>
+	{/* 阅读栏：桌面端收窄至 50rem 并居中（正文行宽 ≈40 个汉字，WCAG AAA 1.4.8），
+	    卡片、正文操作区与上下篇导航保持同一中轴。 */}
+	<div class="post-reading-column">
 	<div
 		class="post-article-shell content-panel-shell flex w-full rounded-(--radius-large) overflow-hidden relative mb-4"
 	>
@@ -122,7 +125,7 @@ const { entry, headings = [], jsonLd, canonicalUrl, remarkPluginFrontmatter, } =
 							src={entry.data.image}
 							basePath={getFileDirFromPath(entry.filePath || "")}
 							class="mb-8 rounded-xl banner-container onload-animation"
-							sizes="(max-width: 1023px) 95vw, 75vw"
+							sizes="(max-width: 1023px) 92vw, 704px"
 							blur={true}
 						/>
 					</>
@@ -140,6 +143,7 @@ const { entry, headings = [], jsonLd, canonicalUrl, remarkPluginFrontmatter, } =
 		prevSlug={entry.data.prevSlug}
 		prevTitle={entry.data.prevTitle}
 	/>
+	</div>
 </MainGridLayout>
 
 <style is:global>
