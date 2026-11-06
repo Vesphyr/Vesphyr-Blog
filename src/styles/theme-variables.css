@@ -31,38 +31,60 @@
   --page-bg-top: #533a4d;
   --page-bg-bottom: #432f3e;
   --page-bg-paper-grain: #56384f;
-  --page-bg-vignette: rgba(0, 0, 0, 0.1);
+  --page-bg-vignette: rgba(0, 0, 0, 0.14);
   --page-bg-glow: rgba(130, 89, 121, 0.1);
+  /* 顶光：模拟上方光源，让页面"有顶"，是深色界面显层次最省成本的一层。
+     强度上限受对比度约束：页顶是全页最亮处，叠上缎面亮带后 0.88 白只能到
+     约 6.8:1 —— 因此页顶区域不排布半透明文字（导航为不透明卡片、
+     页脚位于最暗的页底，实测 8.1:1）。 */
+  --page-bg-toplight: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04) 0,
+    rgba(255, 255, 255, 0.012) 90px,
+    transparent 240px
+  );
+  /* 染斑：缣帛染色不会均匀，两团极淡的冷暖偏移给"呼吸感"（±3%） */
+  --page-bg-dye-warm: radial-gradient(
+    ellipse 85% 65% at 16% 18%,
+    rgba(170, 92, 130, 0.06),
+    transparent 68%
+  );
+  --page-bg-dye-cool: radial-gradient(
+    ellipse 75% 60% at 84% 78%,
+    rgba(94, 94, 176, 0.09),
+    transparent 70%
+  );
+  /* 缎面光泽：亮带（经）+ 暗带（纬）交替，角度偏斜以避开棋盘感 */
   --page-bg-satin: linear-gradient(
-    135deg,
+    118deg,
     transparent 0%,
-    rgba(120, 90, 116, 0.4) 15%,
+    rgba(152, 126, 172, 0.44) 14%,
     transparent 30%,
-    rgba(120, 90, 116, 0.27) 50%,
-    transparent 65%,
-    rgba(120, 90, 116, 0.37) 85%,
+    rgba(152, 126, 172, 0.3) 48%,
+    transparent 64%,
+    rgba(152, 126, 172, 0.38) 82%,
     transparent 100%
   );
   --page-bg-satin-secondary: linear-gradient(
-    -45deg,
+    -56deg,
     transparent 0%,
-    rgba(120, 90, 116, 0.2) 15%,
-    transparent 30%,
-    rgba(120, 90, 116, 0.13) 50%,
-    transparent 65%,
-    rgba(120, 90, 116, 0.18) 85%,
+    rgba(104, 74, 98, 0.38) 16%,
+    transparent 32%,
+    rgba(104, 74, 98, 0.27) 52%,
+    transparent 68%,
+    rgba(104, 74, 98, 0.33) 86%,
     transparent 100%
   );
   --page-bg-pearl: radial-gradient(
       circle at 2px 2px,
-      rgba(255, 255, 255, 0.04) 0 1px,
-      transparent 1.5px
+      rgba(255, 255, 255, 0.05) 0 1px,
+      transparent 1.6px
     )
-    0 0 / 6px 6px;
+    0 0 / 10px 10px;
   /* 宋锦：回纹+菱纹提花 + 龟背纹（六边形蜂窝网格，细古金线，极淡） */
-  --page-bg-brocade: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Crect x='12' y='12' width='56' height='56' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.25'/%3E%3Crect x='22' y='22' width='36' height='36' fill='none' stroke='%23C9A227' stroke-width='0.5' opacity='0.2'/%3E%3Cpath d='M40,31 L49,40 L40,49 L31,40 Z' fill='none' stroke='%23C9A227' stroke-width='0.5' opacity='0.2'/%3E%3Ccircle cx='40' cy='40' r='1.6' fill='%23C9A227' opacity='0.18'/%3E%3C/svg%3E")
+  --page-bg-brocade: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Crect x='12' y='12' width='56' height='56' fill='none' stroke='%23A8853A' stroke-width='0.6' opacity='0.3'/%3E%3Crect x='22' y='22' width='36' height='36' fill='none' stroke='%23A8853A' stroke-width='0.5' opacity='0.2'/%3E%3Cpath d='M40,31 L49,40 L40,49 L31,40 Z' fill='none' stroke='%23A8853A' stroke-width='0.5' opacity='0.2'/%3E%3Ccircle cx='40' cy='40' r='1.6' fill='%23A8853A' opacity='0.18'/%3E%3C/svg%3E")
     0 0 / 80px 80px;
-  --page-bg-tortoise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='27.71' viewBox='0 0 48 27.71'%3E%3Cpath d='M8,-16 L21.86,-8 L21.86,8 L8,16 L-5.86,8 L-5.86,-8 Z' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.2'/%3E%3Cpath d='M32,-2.15 L45.86,5.85 L45.86,21.85 L32,29.85 L18.14,21.85 L18.14,5.85 Z' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.18'/%3E%3C/svg%3E")
+  --page-bg-tortoise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='27.71' viewBox='0 0 48 27.71'%3E%3Cpath d='M8,-16 L21.86,-8 L21.86,8 L8,16 L-5.86,8 L-5.86,-8 Z' fill='none' stroke='%23A8853A' stroke-width='0.6' opacity='0.2'/%3E%3Cpath d='M32,-2.15 L45.86,5.85 L45.86,21.85 L32,29.85 L18.14,21.85 L18.14,5.85 Z' fill='none' stroke='%23A8853A' stroke-width='0.6' opacity='0.18'/%3E%3C/svg%3E")
     0 0 / 48px 27.71px;
   --card-bg: #573c51;
   --card-bg-transparent: rgba(87, 60, 81, 0.88);
@@ -161,38 +183,39 @@
     --page-bg-top: oklch(0.385 0.046 var(--hue));
     --page-bg-bottom: oklch(0.335 0.038 var(--hue));
     --page-bg-paper-grain: oklch(0.385 0.055 var(--hue));
-    --page-bg-vignette: color-mix(in oklch, black 10%, transparent);
-    --page-bg-glow: oklch(0.52 0.07 var(--hue) / 0.1);
+    --page-bg-vignette: color-mix(in oklch, black 14%, transparent);
+    --page-bg-glow: oklch(0.56 0.07 var(--hue) / 0.14);
+    /* 缎面与 sRGB 分支同构，色相跟随 --hue（亮带偏亮、暗带偏深） */
     --page-bg-satin: linear-gradient(
-      135deg,
+      118deg,
       transparent 0%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 40%, transparent) 15%,
+      oklch(0.62 0.05 var(--hue) / 0.44) 14%,
       transparent 30%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 27%, transparent) 50%,
-      transparent 65%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 37%, transparent) 85%,
+      oklch(0.62 0.05 var(--hue) / 0.3) 48%,
+      transparent 64%,
+      oklch(0.62 0.05 var(--hue) / 0.38) 82%,
       transparent 100%
     );
     --page-bg-satin-secondary: linear-gradient(
-      -45deg,
+      -56deg,
       transparent 0%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 20%, transparent) 15%,
-      transparent 30%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 13%, transparent) 50%,
-      transparent 65%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 18%, transparent) 85%,
+      oklch(0.42 0.045 var(--hue) / 0.38) 16%,
+      transparent 32%,
+      oklch(0.42 0.045 var(--hue) / 0.27) 52%,
+      transparent 68%,
+      oklch(0.42 0.045 var(--hue) / 0.33) 86%,
       transparent 100%
     );
     --page-bg-pearl: radial-gradient(
         circle at 2px 2px,
-        color-mix(in oklch, white 4%, transparent) 0 1px,
-        transparent 1.5px
+        color-mix(in oklch, white 5%, transparent) 0 1px,
+        transparent 1.6px
       )
-      0 0 / 6px 6px;
+      0 0 / 10px 10px;
     /* 宋锦：回纹+菱纹提花 + 龟背纹（六边形蜂窝网格，细古金线，极淡） */
-    --page-bg-brocade: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Crect x='12' y='12' width='56' height='56' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.25'/%3E%3Crect x='22' y='22' width='36' height='36' fill='none' stroke='%23C9A227' stroke-width='0.5' opacity='0.2'/%3E%3Cpath d='M40,31 L49,40 L40,49 L31,40 Z' fill='none' stroke='%23C9A227' stroke-width='0.5' opacity='0.2'/%3E%3Ccircle cx='40' cy='40' r='1.6' fill='%23C9A227' opacity='0.18'/%3E%3C/svg%3E")
+    --page-bg-brocade: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Crect x='12' y='12' width='56' height='56' fill='none' stroke='%23A8853A' stroke-width='0.6' opacity='0.3'/%3E%3Crect x='22' y='22' width='36' height='36' fill='none' stroke='%23A8853A' stroke-width='0.5' opacity='0.2'/%3E%3Cpath d='M40,31 L49,40 L40,49 L31,40 Z' fill='none' stroke='%23A8853A' stroke-width='0.5' opacity='0.2'/%3E%3Ccircle cx='40' cy='40' r='1.6' fill='%23A8853A' opacity='0.18'/%3E%3C/svg%3E")
       0 0 / 80px 80px;
-    --page-bg-tortoise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='27.71' viewBox='0 0 48 27.71'%3E%3Cpath d='M8,-16 L21.86,-8 L21.86,8 L8,16 L-5.86,8 L-5.86,-8 Z' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.2'/%3E%3Cpath d='M32,-2.15 L45.86,5.85 L45.86,21.85 L32,29.85 L18.14,21.85 L18.14,5.85 Z' fill='none' stroke='%23C9A227' stroke-width='0.6' opacity='0.18'/%3E%3C/svg%3E")
+    --page-bg-tortoise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='27.71' viewBox='0 0 48 27.71'%3E%3Cpath d='M8,-16 L21.86,-8 L21.86,8 L8,16 L-5.86,8 L-5.86,-8 Z' fill='none' stroke='%23A8853A' stroke-width='0.6' opacity='0.2'/%3E%3Cpath d='M32,-2.15 L45.86,5.85 L45.86,21.85 L32,29.85 L18.14,21.85 L18.14,5.85 Z' fill='none' stroke='%23A8853A' stroke-width='0.6' opacity='0.18'/%3E%3C/svg%3E")
       0 0 / 48px 27.71px;
     --card-bg: oklch(0.395 0.05 var(--hue));
     --card-bg-transparent: oklch(0.395 0.05 var(--hue) / 0.88);

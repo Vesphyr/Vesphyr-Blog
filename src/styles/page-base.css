@@ -36,28 +36,34 @@ body::before {
   z-index: -1;
   pointer-events: none;
   background:
+    /* 1. 顶光：让页面有明确光源方向 */
+    var(--page-bg-toplight),
+    /* 2. 顶部辉光：把视线拉到内容起点 */
+    radial-gradient(ellipse 80% 50% at 50% 0%, var(--page-bg-glow), transparent),
+    /* 3–4. 染斑：冷暖各一团，制造"手工染色不均"的呼吸感 */
+    var(--page-bg-dye-warm),
+    var(--page-bg-dye-cool),
+    /* 5. 龟背纹（宋锦底纹） */ var(--page-bg-tortoise),
+    /* 6–7. 缎面亮带 / 暗带（经纬） */ var(--page-bg-satin),
+    var(--page-bg-satin-secondary),
+    /* 8. 回纹提花 */ var(--page-bg-brocade),
+    /* 9. 珍珠点（织物质感） */ var(--page-bg-pearl),
+    /* 10. 暗角：四周压沉，聚焦中央 */
     radial-gradient(
-      ellipse 80% 50% at 50% 0%,
-      var(--page-bg-glow),
-      transparent
-    ),
-    var(--page-bg-tortoise), var(--page-bg-satin),
-    var(--page-bg-satin-secondary), var(--page-bg-brocade),
-    var(--page-bg-pearl),
-    radial-gradient(
-      ellipse 120% 90% at 50% 50%,
-      transparent 55%,
-      var(--page-bg-vignette) 100%
-    ),
+        ellipse 120% 90% at 50% 50%,
+        transparent 55%,
+        var(--page-bg-vignette) 100%
+      ),
+    /* 11. 底色纵向渐变 */
     linear-gradient(
-      180deg,
-      var(--page-bg-top) 0%,
-      var(--page-bg) 52%,
-      var(--page-bg-bottom) 100%
-    );
+        180deg,
+        var(--page-bg-top) 0%,
+        var(--page-bg) 52%,
+        var(--page-bg-bottom) 100%
+      );
   background-blend-mode:
-    normal, soft-light, soft-light, soft-light, soft-light, soft-light, normal,
-    normal;
+    normal, normal, normal, normal, soft-light, soft-light, soft-light,
+    soft-light, soft-light, normal, normal;
 }
 
 body
