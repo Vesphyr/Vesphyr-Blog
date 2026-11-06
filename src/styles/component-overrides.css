@@ -320,9 +320,9 @@
   }
 }
 
-/* WCAG AAA 与视觉层级的平衡：深底（卡片 #463048）下白字 α 下限约 0.72，
-   因此 0.95 / 0.86 / 0.82 三档既保留清晰的「正文—次级—元信息」层级，
-   又分别有 10.4 / 8.4 / 7.8 :1 的对比度余量。 */
+/* WCAG AAA 与视觉层级的平衡：卡片 #573c51 上白字 α 下限 0.81（浮层 0.87），
+   因此 0.95 / 0.90 / 0.88 三档既保留「正文—次级—元信息」层级，
+   又分别有 8.7 / 8.2 / 7.9 :1 的对比度余量（浮层上仍有 7.6 / 7.3 / 7.1）。 */
 .text-100,
 .text-90 {
   color: color-mix(in oklch, currentColor 95%, transparent);
@@ -331,13 +331,13 @@
 .text-75,
 .text-70,
 .text-60 {
-  color: color-mix(in oklch, currentColor 86%, transparent);
+  color: color-mix(in oklch, currentColor 90%, transparent);
 }
 
 .text-50,
 .text-30,
 .text-25 {
-  color: color-mix(in oklch, currentColor 82%, transparent);
+  color: color-mix(in oklch, currentColor 88%, transparent);
 }
 
 .post-card-item + .post-card-item {
