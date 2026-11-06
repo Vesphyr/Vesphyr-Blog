@@ -62,6 +62,11 @@ const skipToContentLabel = isChineseSite
     <title>{pageTitle}</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {/* 移动端地址栏/状态栏取色。站点是单一固定配色（theme-variables.css 的
+        --page-bg-top），与页面顶部渐变起点一致即可。 */}
+    <meta name="theme-color" content="#6e536f" />
+    {/* MusicPlayer.svelte 用 @iconify/svelte 在运行时从 api.iconify.design 取
+        图标，这条 preconnect 是活的，删掉会让播放器图标多一次冷启动握手。 */}
     <link rel="preconnect" href="https://api.iconify.design" crossorigin />
     {/* 拉丁字母/数字字体：正文字重 450 按 CSS 字重匹配规则会落到 500（Medium），
         因此预加载 Medium 而不是 Regular，避免首屏先下 Regular 再补 Medium。 */}

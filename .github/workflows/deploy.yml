@@ -36,6 +36,9 @@ jobs:
       - name: Verify
         run: pnpm run verify
 
+      - name: Install font subsetting tools
+        run: pip install fonttools brotli
+
       - name: Build
         run: pnpm run build
 
