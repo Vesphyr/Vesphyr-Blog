@@ -175,9 +175,13 @@
   --navbar-overlay-foreground: #ffffff;
 }
 
-/* 支持 oklch / color-mix 的现代浏览器使用精确的感知均匀配色 */
+/* 支持 oklch / color-mix 的现代浏览器使用精确的感知均匀配色。
+   选择器带 .site-backdrop：自定义属性在声明它的元素上就完成 var() 替换，
+   因此 :root 上算出的 --page-bg 不会随子元素覆写的 --hue 变化。
+   让色条元素自己也声明一遍，它才能按自己的 --hue 生成同一套背景色。 */
 @supports (color: oklch(0% 0 0)) {
-  :root {
+  :root,
+  .site-backdrop {
     --primary: oklch(0.79 0.12 var(--hue));
     --page-bg: oklch(0.375 0.042 var(--hue));
     --page-bg-top: oklch(0.385 0.046 var(--hue));

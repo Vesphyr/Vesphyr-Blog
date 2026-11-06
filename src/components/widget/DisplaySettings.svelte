@@ -4,44 +4,16 @@
   import { getDefaultHue, getHueUI, setHueUI } from "@utils/setting-utils";
   import { onMount } from "svelte";
 
-  // 演示色条必须与真实页面底色同构：同明度/彩度、同纵向渐变方向，
-  // 点开面板看到的色条就是"换成该色相后的网站背景"，而不是一个抽象色块。
-  // 明度取自 theme-variables 的 --page-bg-top / --page-bg / --page-bg-bottom
-  // （0.385 / 0.375 / 0.335，彩度 0.046 / 0.042 / 0.038）。
+  // 色条背景不是另画的色卡，而是直接复用站点背景本身（.site-backdrop 与
+  // body::before 共用同一份 background 声明），只在元素上覆写 --hue。
+  // 因此色条与网站背景逐层一致：底色渐变、顶光、染斑、缎面、宋锦纹、珍珠点、
+  // 暗角全部是同一套值，不会出现"演示色偏亮/偏暗"。
   // 色相与颜料体系一致：朱砂 32、群青 272、绛紫（骨螺紫）335——
   // 第三档必须与 config.themeColor.hue 相等，否则选中态永远不亮。
-  const SURFACE_L = { top: 0.385, mid: 0.375, bottom: 0.335 };
-  const SURFACE_C = { top: 0.046, mid: 0.042, bottom: 0.038 };
-
-  /** 与 body::before 的纵向渐变同构，只替换色相 */
-  function surfaceGradient(hue: number): string {
-    const l = SURFACE_L;
-    const c = SURFACE_C;
-    return (
-      `linear-gradient(180deg, oklch(${l.top} ${c.top} ${hue}), ` +
-      `oklch(${l.mid} ${c.mid} ${hue}) 52%, oklch(${l.bottom} ${c.bottom} ${hue}))`
-    );
-  }
-
   const colorOptions = [
-    {
-      hue: 32,
-      name: "朱砂",
-      color: surfaceGradient(32),
-      fallback: "linear-gradient(180deg, #5a3b34, #553933 52%, #482f2a)",
-    },
-    {
-      hue: 272,
-      name: "群青",
-      color: surfaceGradient(272),
-      fallback: "linear-gradient(180deg, #3b425d, #394058 52%, #30364b)",
-    },
-    {
-      hue: 335,
-      name: "绛紫",
-      color: surfaceGradient(335),
-      fallback: "linear-gradient(180deg, #533a4d, #4f394a 52%, #432f3e)",
-    },
+    { hue: 32, name: "朱砂" },
+    { hue: 272, name: "群青" },
+    { hue: 335, name: "绛紫" },
   ];
 
   let hueUI = 0;
@@ -95,9 +67,9 @@
       <div class="color-bar">
         {#each colorOptions as option}
           <button
-            class="color-segment"
+            class="color-segment site-backdrop"
             class:selected={hueUI === option.hue}
-            style={`background: ${option.fallback}; background: ${option.color};`}
+            style={`--hue: ${option.hue};`}
             on:click={() => applyHue(option.hue)}
             aria-label={option.name}
             title={option.name}
@@ -144,14 +116,8 @@
     justify-content center
     box-sizing border-box
 
-    // 色条 = 背景缩略图：底色渐变 + 均匀提亮（对应缎面/珍珠的平均抬升）
-    // + 顶光渐隐 + 118° 斜向光泽。三层叠加后与真实页面的观感一致。
-    &::before
-      content ''
-      position absolute
-      inset 0
-      pointer-events none
-      background linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.05)), linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 70%), linear-gradient(118deg, transparent 0%, rgba(255, 255, 255, 0.06) 14%, transparent 30%, rgba(255, 255, 255, 0.04) 48%, transparent 64%, rgba(255, 255, 255, 0.05) 82%, transparent 100%)
+    // 背景由 .site-backdrop 提供（与 body::before 同一份声明），此处不再叠任何
+    // 额外光效——否则色条就不是网站背景本身了。
 
     &::after
       content ''
@@ -163,7 +129,7 @@
       height 0
       border-left 0.4rem solid transparent
       border-right 0.4rem solid transparent
-      border-bottom 0.5rem solid var(--primary-text)
+      border-bottom 0.5rem solid #ffffff
       opacity 0
       transition opacity 0.2s ease
 

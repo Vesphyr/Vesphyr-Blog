@@ -29,12 +29,12 @@ body {
   transition: color 0.15s ease;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
+/* 站点背景的唯一来源：整页（body::before）与「主题色」演示色条共用这一份
+   声明，任何纹理/光位/明暗调整都会同时作用于两处，不存在"看起来像"的问题。
+   色条只需在元素上覆写 --hue，即可得到该色相对应的同一个背景
+   （色相相关的 token 在 .site-backdrop 上重新声明，见 theme-variables.css）。 */
+body::before,
+.site-backdrop {
   background:
     /* 1. 顶光：让页面有明确光源方向 */
     var(--page-bg-toplight),
@@ -64,6 +64,14 @@ body::before {
   background-blend-mode:
     normal, normal, normal, normal, soft-light, soft-light, soft-light,
     soft-light, soft-light, normal, normal;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
 }
 
 body
