@@ -105,14 +105,27 @@ body
 }
 
 /* 中文（朱雀仿宋）仅提供 400 单字重：禁用浏览器伪造加粗（faux bold），
-   标题层级改由字号、字距与主色承担，避免中文标题字形被拉伸变形。 */
+   标题层级改由字号、字距与主色承担，避免中文标题字形被拉伸变形。
+   strong/b 同理：西文由 Crimson Pro Bold（真实 700 字形）承担加粗，
+   中文不伪造加粗，强调改由颜色承担（见 markdown.css 的 .custom-md strong）。 */
 h1,
 h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+strong,
+b {
   font-synthesis-weight: none;
+}
+
+/* 西文斜体由 Crimson Pro Italic（真实斜体字形）承担；中文不伪造倾斜
+   （仿宋斜置会破坏字形结构，中文排版本就不用倾斜表强调）。 */
+em,
+i,
+cite,
+dfn {
+  font-synthesis-style: none;
 }
 
 html::-webkit-scrollbar,

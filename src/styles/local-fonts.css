@@ -2,11 +2,14 @@
 @import "./generated-zhuque-font.css";
 
 
+/* 说明：全站正文 font-weight 为 450，按 CSS 字重匹配规则命中 Medium(500)；
+   400 无任何使用场景，故不声明 Regular（字体文件已从仓库移除）。
+   斜体为可变字体（wght 200-900），单文件覆盖全部字重。 */
 @font-face {
   font-family: "Crimson Pro";
-  src: url("/assets/fonts/CrimsonPro-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
+  src: url("/assets/fonts/CrimsonPro-Italic.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: italic;
   font-display: swap;
   unicode-range:
     U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,

@@ -158,6 +158,15 @@
     }
   }
 
+  /* strong 的中文不伪造加粗（font-synthesis-weight: none，见 page-base.css），
+     强调改由浅色主色承担；西文仍走 Crimson Pro Bold 的真实加粗字形。
+     颜色取 primary 提亮版（卡片底对比度 5.4:1，过 AA；原 primary 仅 3.3:1 不达标）。 */
+  strong,
+  b {
+    color: #f0c8f2;
+    color: color-mix(in oklch, var(--primary) 45%, white);
+  }
+
   
   .table-wrapper {
     @apply w-full overflow-x-auto m-0 rounded-(--radius-large);
