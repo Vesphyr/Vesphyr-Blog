@@ -76,6 +76,11 @@ const headingsJson = JSON.stringify(headings);
 	}
 
 	:global(.card-toc-item) {
+		/* AAA 2.5.5：TOC 条目命中高度 ≥44px */
+		min-height: 2.75rem;
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
 		display: flex;
 		align-items: flex-start;
 		padding: 0.6rem 0.8rem;
@@ -89,12 +94,12 @@ const headingsJson = JSON.stringify(headings);
 	}
 
 	:global(.card-toc-item:hover) {
-		color: var(--primary);
+		color: var(--primary-text);
 		background: color-mix(in oklch, var(--primary) 5%, transparent);
 	}
 
 	:global(.card-toc-item.active) {
-		color: var(--primary);
+		color: var(--primary-text);
 		font-weight: 600;
 		box-shadow: none;
 	}
@@ -106,7 +111,7 @@ const headingsJson = JSON.stringify(headings);
 		width: 1.25rem;
 		height: 1.25rem;
 		background: transparent;
-		color: var(--primary);
+		color: var(--primary-text);
 		border-radius: 0.25rem;
 		font-size: 1rem;
 		font-weight: bold;
@@ -116,7 +121,7 @@ const headingsJson = JSON.stringify(headings);
 
 	:global(.card-toc-item.active .card-toc-badge) {
 		background: transparent;
-		color: var(--primary);
+		color: var(--primary-text);
 	}
 
 	:global(.card-toc-dot) {

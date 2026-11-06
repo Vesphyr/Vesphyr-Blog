@@ -132,7 +132,7 @@
 
 #navbar .navbar-actions .btn-plain:hover {
   background-color: color-mix(in oklch, var(--primary) 6%, transparent);
-  color: var(--primary);
+  color: var(--primary-text);
 }
 
 #navbar .navbar-arrow {

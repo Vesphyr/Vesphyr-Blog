@@ -219,13 +219,13 @@
 
   .btn-plain:active {
     background-color: color-mix(in oklch, var(--primary) 12%, transparent);
-    color: var(--primary);
+    color: var(--primary-text);
   }
 
   @media (hover: hover) and (pointer: fine) {
     .btn-plain:hover {
       background-color: color-mix(in oklch, var(--primary) 6%, transparent);
-      color: var(--primary);
+      color: var(--primary-text);
     }
   }
 
@@ -283,7 +283,7 @@
   }
 
   .dropdown-item {
-    @apply flex items-center justify-between px-4 py-2.5 hover:text-(--primary) hover:bg-(--btn-plain-bg-hover) transition-colors duration-150 font-medium;
+    @apply flex items-center justify-between px-4 py-2.5 hover:text-(--primary-text) hover:bg-(--btn-plain-bg-hover) transition-colors duration-150 font-medium;
     color: var(--text-main);
   }
 
@@ -301,7 +301,8 @@
     }
   }
 
-  .dropdown-item:focus {
+  /* 仅抑制鼠标点击的焦点框；键盘 :focus-visible 由全局焦点环兜底 */
+  .dropdown-item:focus:not(:focus-visible) {
     @apply outline-none;
   }
 
@@ -319,21 +320,26 @@
   }
 }
 
+/* WCAG AAA：深底上文字要达 7:1，透明度只能微降（白字 α 下限约 0.95），
+   层级改由字号与字重承担。所有 text-XX 类保持 ≥0.96。
+   注：0.96 档仅用于不透明卡片/页面深区上的辅助文字；页面顶部缎面高光
+   与珍珠点重叠的极亮纹理点上不排布任何半透明文字（该区域仅导航栏与
+   卡片覆盖，实测文字均位于不透明度足够的底面上）。 */
 .text-100,
 .text-90 {
-  color: color-mix(in oklch, currentColor 90%, transparent);
+  color: color-mix(in oklch, currentColor 97%, transparent);
 }
 
 .text-75,
 .text-70,
 .text-60 {
-  color: color-mix(in oklch, currentColor 85%, transparent);
+  color: color-mix(in oklch, currentColor 96.5%, transparent);
 }
 
 .text-50,
 .text-30,
 .text-25 {
-  color: color-mix(in oklch, currentColor 68%, transparent);
+  color: color-mix(in oklch, currentColor 96%, transparent);
 }
 
 .post-card-item + .post-card-item {
@@ -387,4 +393,19 @@
   backdrop-filter: none !important;
   box-shadow: none !important;
   color: var(--navbar-foreground) !important;
+}
+
+/* WCAG AAA 2.5.5 目标尺寸 ≥44×44px：图标按钮视觉保持小巧，
+   ::before 隐形扩展命中区域。伪元素属于元素自身，扩展区可点击。 */
+.btn-plain,
+.expressive-code .copy-btn {
+  position: relative;
+}
+
+.btn-plain::before,
+.expressive-code .copy-btn::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: inherit;
 }

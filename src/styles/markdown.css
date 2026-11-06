@@ -1,6 +1,10 @@
 @reference "tailwindcss";
 
 .custom-md {
+  /* Tailwind typography 的 prose 变量改指本站文字色（默认 zinc-300 仅 5.7:1） */
+  --tw-prose-body: var(--text-main);
+  --tw-prose-headings: var(--text-main);
+  --tw-prose-bold: var(--text-main);
   font-family: var(--font-content);
   font-size: 0.98rem;
   line-height: 1.86;
@@ -92,7 +96,7 @@
   }
 
   a:not(.no-styling) {
-    @apply relative bg-none font-medium text-(--primary)
+    @apply relative bg-none font-medium text-(--primary-text)
         underline decoration-(--link-underline) decoration-1 decoration-dashed underline-offset-4;
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
@@ -107,6 +111,9 @@
   }
 
   code {
+    /* 行内代码底色略深于卡片，白字对比度 8.4:1（AAA） */
+    --inline-code-bg: rgba(0, 0, 0, 0.18);
+    --inline-code-color: #ffffff;
     @apply bg-(--inline-code-bg) text-(--inline-code-color) px-1 py-0.5 rounded-md overflow-hidden;
 
     font-family: var(--font-content);
@@ -142,7 +149,7 @@
     @apply not-italic border-transparent relative;
     font-weight: inherit;
     padding-left: 1.2rem;
-    color: color-mix(in oklch, currentColor 92%, transparent);
+    color: color-mix(in oklch, currentColor 96%, transparent);
 
     &:before {
       @apply content-[''] absolute left-0 block transition bg-(--btn-regular-bg) h-full w-1 rounded-full;
@@ -159,8 +166,8 @@
      颜色取 primary 提亮版（卡片底对比度 5.4:1，过 AA；原 primary 仅 3.3:1 不达标）。 */
   strong,
   b {
-    color: #f0c8f2;
-    color: color-mix(in oklch, var(--primary) 45%, white);
+    color: #fff4ff;
+    color: var(--primary-text);
   }
 
   .table-wrapper {

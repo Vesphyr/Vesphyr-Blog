@@ -275,6 +275,14 @@ canvas {
   }
 }
 
+/* WCAG 2.4.7 / 2.4.13（AAA 焦点外观）：全局键盘焦点环。
+   3px 宽、与背景对比 >7:1、偏移 2px，面积与对比度均超 AAA 门槛。 */
+:focus-visible {
+  outline: 3px solid var(--primary-text);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 @media print {
   .no-print,
   #navbar-wrapper,

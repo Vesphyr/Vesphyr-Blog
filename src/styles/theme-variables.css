@@ -25,34 +25,34 @@
   --hue: 325;
   --primary: #da8dde;
   --page-bg: #5c455d;
-  --page-bg-top: #675168;
+  --page-bg-top: #614c61;
   --page-bg-bottom: #533f54;
-  --page-bg-paper-grain: #7f6480;
+  --page-bg-paper-grain: #584a68;
   --page-bg-vignette: rgba(0, 0, 0, 0.07);
-  --page-bg-glow: rgba(129, 94, 130, 0.3);
+  --page-bg-glow: rgba(129, 94, 130, 0.12);
   --page-bg-satin: linear-gradient(
     135deg,
     transparent 0%,
-    rgba(127, 100, 128, 0.55) 15%,
+    rgba(88, 74, 104, 0.4) 15%,
     transparent 30%,
-    rgba(127, 100, 128, 0.36) 50%,
+    rgba(88, 74, 104, 0.27) 50%,
     transparent 65%,
-    rgba(127, 100, 128, 0.49) 85%,
+    rgba(88, 74, 104, 0.37) 85%,
     transparent 100%
   );
   --page-bg-satin-secondary: linear-gradient(
     -45deg,
     transparent 0%,
-    rgba(127, 100, 128, 0.28) 15%,
+    rgba(88, 74, 104, 0.2) 15%,
     transparent 30%,
-    rgba(127, 100, 128, 0.18) 50%,
+    rgba(88, 74, 104, 0.13) 50%,
     transparent 65%,
-    rgba(127, 100, 128, 0.25) 85%,
+    rgba(88, 74, 104, 0.18) 85%,
     transparent 100%
   );
   --page-bg-pearl: radial-gradient(
       circle at 2px 2px,
-      rgba(255, 255, 255, 0.06) 0 1px,
+      rgba(255, 255, 255, 0.04) 0 1px,
       transparent 1.5px
     )
     0 0 / 6px 6px;
@@ -63,26 +63,30 @@
     0 0 / 48px 27.71px;
   --card-bg: #604a61;
   --card-bg-transparent: rgba(96, 74, 97, 0.88);
-  --btn-content: #fceefd;
-  --btn-regular-bg: #745d75;
-  --btn-regular-bg-hover: #7e637f;
-  --btn-plain-bg-hover: #6e586f;
-  --btn-plain-bg-active: #675367;
-  --deep-text: #f9f2fa;
+  --btn-content: #ffffff;
+  --btn-regular-bg: #5c475d;
+  --btn-regular-bg-active: #524052;
+  --btn-regular-bg-hover: #655066;
+  --btn-plain-bg-hover: #665069;
+  --btn-plain-bg-active: #5c475d;
+  --deep-text: #ffffff;
   /* 文字层全面提亮：正文在卡片底（L≈0.44）上达 7.3:1（WCAG AAA），次级文字约 6.3:1。 */
-  --text-main: #faf5f2;
-  --text-secondary: rgba(250, 245, 242, 0.9);
-  --text-tertiary: rgba(250, 245, 242, 0.75);
+  --text-main: #ffffff;
+  /* WCAG AAA：装饰/图标用 --primary（3.3:1，过 3:1 图形件要求），
+     文字级强调一律用 --primary-text（卡片底 7.4:1）。 */
+  --text-secondary: rgba(255, 255, 255, 0.97);
+  --primary-text: #fff4ff;
+  --text-tertiary: rgba(255, 255, 255, 0.96);
   --text-disabled: rgba(250, 245, 242, 0.5);
   --line-divider: rgba(255, 255, 255, 0.07);
   --line-color: rgba(255, 255, 255, 0.09);
-  --content-meta: rgba(255, 255, 255, 0.86);
-  --selection-bg: #89618b;
-  --codeblock-bg: #483a49;
-  --codeblock-topbar-bg: #3c313d;
-  --link-underline: #966d98;
-  --link-hover: #ab7cae;
-  --link-active: #7e607f;
+  --content-meta: rgba(255, 255, 255, 0.96);
+  --selection-bg: #6c3270;
+  --codeblock-bg: #281e2a;
+  --codeblock-topbar-bg: #1e1820;
+  --link-underline: #cfa8d2;
+  --link-hover: #d9a8dc;
+  --link-active: #cf9ecc;
   --float-panel-bg: #615761;
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
   --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.18);
@@ -97,7 +101,7 @@
   --display-panel-border: rgba(255, 255, 255, 0.1);
   --display-panel-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
   --navbar-foreground: var(--deep-text);
-  --navbar-overlay-foreground: #e1dce2;
+  --navbar-overlay-foreground: #ffffff;
 }
 
 /* 支持 oklch / color-mix 的现代浏览器使用精确的感知均匀配色 */
@@ -105,38 +109,34 @@
   :root {
     --primary: oklch(0.75 0.14 var(--hue));
     --page-bg: oklch(0.423 0.048 var(--hue));
-    --page-bg-top: oklch(0.453 0.053 var(--hue));
+    --page-bg-top: oklch(0.43 0.048 var(--hue));
     --page-bg-bottom: oklch(0.383 0.043 var(--hue));
-    --page-bg-paper-grain: color-mix(
-      in oklch,
-      oklch(0.55 0.055 var(--hue)) 80%,
-      oklch(0.49 0.05 var(--hue)) 20%
-    );
+    --page-bg-paper-grain: oklch(0.42 0.055 var(--hue));
     --page-bg-vignette: color-mix(in oklch, black 7%, transparent);
-    --page-bg-glow: oklch(0.53 0.07 var(--hue) / 0.3);
+    --page-bg-glow: oklch(0.53 0.07 var(--hue) / 0.12);
     --page-bg-satin: linear-gradient(
       135deg,
       transparent 0%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 55%, transparent) 15%,
+      color-mix(in oklch, var(--page-bg-paper-grain) 40%, transparent) 15%,
       transparent 30%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 36%, transparent) 50%,
+      color-mix(in oklch, var(--page-bg-paper-grain) 27%, transparent) 50%,
       transparent 65%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 49%, transparent) 85%,
+      color-mix(in oklch, var(--page-bg-paper-grain) 37%, transparent) 85%,
       transparent 100%
     );
     --page-bg-satin-secondary: linear-gradient(
       -45deg,
       transparent 0%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 28%, transparent) 15%,
+      color-mix(in oklch, var(--page-bg-paper-grain) 20%, transparent) 15%,
       transparent 30%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 18%, transparent) 50%,
+      color-mix(in oklch, var(--page-bg-paper-grain) 13%, transparent) 50%,
       transparent 65%,
-      color-mix(in oklch, var(--page-bg-paper-grain) 25%, transparent) 85%,
+      color-mix(in oklch, var(--page-bg-paper-grain) 18%, transparent) 85%,
       transparent 100%
     );
     --page-bg-pearl: radial-gradient(
         circle at 2px 2px,
-        color-mix(in oklch, white 6%, transparent) 0 1px,
+        color-mix(in oklch, white 4%, transparent) 0 1px,
         transparent 1.5px
       )
       0 0 / 6px 6px;
@@ -147,20 +147,22 @@
       0 0 / 48px 27.71px;
     --card-bg: oklch(0.44 0.05 var(--hue));
     --card-bg-transparent: oklch(0.44 0.05 var(--hue) / 0.88);
-    --btn-content: oklch(0.955 0.02 var(--hue));
-    --btn-regular-bg: oklch(0.51 0.045 var(--hue));
-    --btn-regular-bg-hover: oklch(0.535 0.05 var(--hue));
-    --btn-plain-bg-hover: oklch(0.49 0.045 var(--hue));
-    --btn-plain-bg-active: oklch(0.47 0.04 var(--hue));
-    --deep-text: oklch(0.97 0.012 var(--hue));
-    --selection-bg: oklch(0.55 0.08 var(--hue));
-    --codeblock-bg: oklch(0.37 0.03 var(--hue));
-    --codeblock-topbar-bg: oklch(0.33 0.025 var(--hue));
-    --link-underline: oklch(0.59 0.08 var(--hue));
-    --link-hover: oklch(0.65 0.09 var(--hue));
-    --link-active: oklch(0.53 0.06 var(--hue));
+    --btn-content: #ffffff;
+    --btn-regular-bg: oklch(0.42 0.045 var(--hue));
+    --btn-regular-bg-active: oklch(0.385 0.04 var(--hue));
+    --btn-regular-bg-hover: oklch(0.465 0.05 var(--hue));
+    --btn-plain-bg-hover: oklch(0.45 0.045 var(--hue));
+    --btn-plain-bg-active: oklch(0.42 0.04 var(--hue));
+    --deep-text: #ffffff;
+    --primary-text: oklch(0.98 0.02 var(--hue));
+    --selection-bg: oklch(0.42 0.12 var(--hue));
+    --codeblock-bg: oklch(0.255 0.026 var(--hue));
+    --codeblock-topbar-bg: oklch(0.215 0.022 var(--hue));
+    --link-underline: oklch(0.75 0.08 var(--hue));
+    --link-hover: oklch(0.76 0.085 var(--hue));
+    --link-active: oklch(0.76 0.075 var(--hue));
     --float-panel-bg: oklch(0.47 0.02 var(--hue));
     --display-panel-bg: oklch(0.47 0.025 var(--hue) / 0.82);
-    --navbar-overlay-foreground: oklch(0.9 0.01 var(--hue));
+    --navbar-overlay-foreground: #ffffff;
   }
 }

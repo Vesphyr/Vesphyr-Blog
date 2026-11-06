@@ -41,7 +41,7 @@ export default defineConfig({
     integrations: [
         icon(),
         expressiveCode({
-            themes: ["github-dark"],
+            themes: ["github-dark-high-contrast"],
             plugins: [
                 pluginCollapsibleSections(),
                 pluginLineNumbers(),
