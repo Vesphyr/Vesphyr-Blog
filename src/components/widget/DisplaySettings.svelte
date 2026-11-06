@@ -4,10 +4,44 @@
   import { getDefaultHue, getHueUI, setHueUI } from "@utils/setting-utils";
   import { onMount } from "svelte";
 
+  // 演示色条必须与真实页面底色同构：同明度/彩度、同纵向渐变方向，
+  // 点开面板看到的色条就是"换成该色相后的网站背景"，而不是一个抽象色块。
+  // 明度取自 theme-variables 的 --page-bg-top / --page-bg / --page-bg-bottom
+  // （0.385 / 0.375 / 0.335，彩度 0.046 / 0.042 / 0.038）。
+  // 色相与颜料体系一致：朱砂 32、群青 272、绛紫（骨螺紫）335——
+  // 第三档必须与 config.themeColor.hue 相等，否则选中态永远不亮。
+  const SURFACE_L = { top: 0.385, mid: 0.375, bottom: 0.335 };
+  const SURFACE_C = { top: 0.046, mid: 0.042, bottom: 0.038 };
+
+  /** 与 body::before 的纵向渐变同构，只替换色相 */
+  function surfaceGradient(hue: number): string {
+    const l = SURFACE_L;
+    const c = SURFACE_C;
+    return (
+      `linear-gradient(180deg, oklch(${l.top} ${c.top} ${hue}), ` +
+      `oklch(${l.mid} ${c.mid} ${hue}) 52%, oklch(${l.bottom} ${c.bottom} ${hue}))`
+    );
+  }
+
   const colorOptions = [
-    { hue: 0, name: "朱砂", color: "oklch(0.42 0.05 0)" },
-    { hue: 265, name: "群青", color: "oklch(0.42 0.05 265)" },
-    { hue: 325, name: "绛紫", color: "oklch(0.42 0.05 325)" },
+    {
+      hue: 32,
+      name: "朱砂",
+      color: surfaceGradient(32),
+      fallback: "linear-gradient(180deg, #5a3b34, #553933 52%, #482f2a)",
+    },
+    {
+      hue: 272,
+      name: "群青",
+      color: surfaceGradient(272),
+      fallback: "linear-gradient(180deg, #3b425d, #394058 52%, #30364b)",
+    },
+    {
+      hue: 335,
+      name: "绛紫",
+      color: surfaceGradient(335),
+      fallback: "linear-gradient(180deg, #533a4d, #4f394a 52%, #432f3e)",
+    },
   ];
 
   let hueUI = 0;
@@ -63,7 +97,7 @@
           <button
             class="color-segment"
             class:selected={hueUI === option.hue}
-            style={`background: ${option.color};`}
+            style={`background: ${option.fallback}; background: ${option.color};`}
             on:click={() => applyHue(option.hue)}
             aria-label={option.name}
             title={option.name}
