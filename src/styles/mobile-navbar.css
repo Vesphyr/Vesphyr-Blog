@@ -88,7 +88,9 @@
   }
 
   .mobile-nav-label {
-    font-size: 0.82rem !important;
+    /* 可读文字的下限取 14px（0.875rem）——WCAG 虽未规定最小字号，
+       但主流无障碍实践建议任何需要阅读的文字不低于 14px。 */
+    font-size: 0.875rem !important;
     line-height: 1 !important;
     font-weight: 650 !important;
   }

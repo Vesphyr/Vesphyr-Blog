@@ -1,14 +1,11 @@
 @reference "tailwindcss";
 
-:root {
-  --site-scale: 0.88;
-  --site-root-font-mobile: 16px;
-  --site-root-font-desktop: 16px;
-}
-
 html {
   @apply scroll-smooth;
-  font-size: var(--site-root-font-mobile);
+  /* 用 100%（= 用户浏览器默认字号，通常 16px）而非写死 px：
+     尊重用户在浏览器设置里调大的默认字号，rem 全站随之缩放——
+     这是 WAI 对根字号的推荐做法（WCAG 1.4.4 的稳健实现）。 */
+  font-size: 100%;
   scrollbar-width: none;
   -ms-overflow-style: none;
   background-color: var(--page-bg);
@@ -18,12 +15,6 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: var(--site-root-font-desktop);
-  }
 }
 
 body {
