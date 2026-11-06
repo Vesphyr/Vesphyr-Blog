@@ -162,8 +162,34 @@
     padding-left: 1.2rem;
     color: color-mix(in oklch, currentColor 90%, transparent);
 
+    /* 引用 = 转述他人之声，用群青色条标记（装饰档 3.7:1） */
     &:before {
-      @apply content-[''] absolute left-0 block transition bg-(--btn-regular-bg) h-full w-1 rounded-full;
+      @apply content-[''] absolute left-0 block transition bg-(--pigment-ultramarine) h-full w-1 rounded-full;
+    }
+
+    /* 提示框：14% 颜料 wash 作底（白字 11.5:1），色相只作提示、不压正文 */
+    &.admonition {
+      --adm-wash: var(--pigment-ultramarine-wash);
+      overflow: hidden;
+      padding: 0.85rem 1rem 0.85rem 1.5rem;
+      border-radius: 0.75rem;
+      background: var(--adm-wash);
+
+      &.bdm-tip {
+        --adm-wash: var(--pigment-ultramarine-wash);
+      }
+      &.bdm-note {
+        --adm-wash: var(--pigment-ultramarine-wash);
+      }
+      &.bdm-important {
+        --adm-wash: var(--pigment-tyrian-wash);
+      }
+      &.bdm-warning {
+        --adm-wash: var(--pigment-cinnabar-wash);
+      }
+      &.bdm-caution {
+        --adm-wash: var(--pigment-cinnabar-wash);
+      }
     }
 
     p:before,

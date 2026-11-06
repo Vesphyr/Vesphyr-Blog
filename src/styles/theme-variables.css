@@ -83,25 +83,31 @@
   --text-secondary: rgba(255, 255, 255, 0.82);
   --primary-text: #ffdff9;
 
-  /* ---- 传统颜料三档色阶 ----------------------------------------------
-     每色四值：装饰（3:1，线/图标/边框）/ 大字（4.5:1，≥24px 或粗体标题）/
-     正文（7:1，AAA）/ 色块（作背景，白字 8.3~9.9:1，颜色最接近真实颜料）。
-     彩度刻意压在 0.055~0.15：满彩度在 L 0.75 会变成霓虹色。 */
+  /* ---- 传统颜料色阶 ---------------------------------------------------
+     每色五值：装饰（3:1，线/图标/边框）/ 大字（4.5:1，≥24px 或粗体标题）/
+     正文（7:1，AAA）/ 色块（背景，L 0.42，白字 8.7~9.2:1）/ wash（14% 叠底）。
+     背景明度窗口 0.40–0.44：更低会与页面底糊在一起（ΔE<0.12），
+     更高白字跌破 7:1（L 0.50 时仅 6.2–6.5）。彩度压在 0.055~0.15 ——
+     满彩度在 L 0.75 会变霓虹；骨螺紫需 0.15+，因与页面同色相无跳变可借力。 */
   /* 朱砂 h32 —— 警示、强调、高亮 */
   --pigment-cinnabar: #dc6c57;
   --pigment-cinnabar-strong: #ea9685;
   --pigment-cinnabar-text: #f6c5bb;
-  --pigment-cinnabar-block: #7f2213;
+  --pigment-cinnabar-block: #892312;
+  --pigment-cinnabar-wash: rgba(137, 35, 18, 0.14);
   /* 群青 h272 —— 信息、链接、引用 */
   --pigment-ultramarine: #748ae3;
   --pigment-ultramarine-strong: #98aaee;
   --pigment-ultramarine-text: #c4d0f6;
-  --pigment-ultramarine-block: #324087;
+  --pigment-ultramarine-block: #364493;
+  --pigment-ultramarine-wash: rgba(54, 68, 147, 0.14);
+  --pigment-ultramarine-border: rgba(116, 138, 227, 0.45);
   /* 骨螺紫 h335 —— 品牌主色（与 --hue 同族） */
   --pigment-tyrian: #cc6eb9;
   --pigment-tyrian-strong: #db98cc;
   --pigment-tyrian-text: #ecc4e2;
-  --pigment-tyrian-block: #6f2563;
+  --pigment-tyrian-block: #7b226d;
+  --pigment-tyrian-wash: rgba(123, 34, 109, 0.14);
 
   /* 提示框（admonition）按颜料语义分配：信息类走群青、强调走骨螺紫、
      风险类走朱砂。标题为 1.1rem 粗体，未达"大字"门槛，故一律用正文档（≥7:1）；
@@ -111,12 +117,18 @@
   --admonitions-color-important: var(--pigment-tyrian-text);
   --admonitions-color-warning: var(--pigment-cinnabar-text);
   --admonitions-color-caution: var(--pigment-cinnabar-text);
+  /* 图标与左侧色条用装饰档（3.5:1 于自身 wash 底，属图形件门槛 3:1） */
+  --admonitions-bar-tip: var(--pigment-ultramarine);
+  --admonitions-bar-note: var(--pigment-ultramarine);
+  --admonitions-bar-important: var(--pigment-tyrian);
+  --admonitions-bar-warning: var(--pigment-cinnabar);
+  --admonitions-bar-caution: var(--pigment-cinnabar);
   --text-tertiary: rgba(255, 255, 255, 0.78);
   --text-disabled: rgba(255, 255, 255, 0.45);
   --line-divider: rgba(255, 255, 255, 0.06);
   --line-color: rgba(255, 255, 255, 0.08);
   --content-meta: rgba(255, 255, 255, 0.8);
-  --selection-bg: #6f2563;
+  --selection-bg: #7b226d;
   --codeblock-bg: #281e2a;
   --codeblock-topbar-bg: #1e1820;
   --license-block-bg: #432b3d;
@@ -194,7 +206,7 @@
     --license-block-bg: oklch(0.325 0.045 var(--hue));
     --deep-text: #ffffff;
     --primary-text: oklch(0.94 0.05 var(--hue));
-    --selection-bg: oklch(0.4 0.13 335);
+    --selection-bg: oklch(0.42 0.15 335);
     --codeblock-bg: oklch(0.255 0.026 var(--hue));
     --codeblock-topbar-bg: oklch(0.215 0.022 var(--hue));
     --link-underline: oklch(0.655 0.135 272);
