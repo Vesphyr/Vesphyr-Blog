@@ -34,11 +34,28 @@ SCAN_SUFFIXES = {".md", ".astro", ".ts", ".svelte", ".js", ".mjs", ".css", ".jso
 
 ESCAPE_RE = re.compile(r"\\u([0-9a-fA-F]{4})")
 
+# 渲染层可能出现、但源码里不一定以字面量存在的常用标点（弯引号、破折号、
+# 省略号、版权符号等）。零宽字符（U+200B/U+2063）无字形，刻意排除。
+BASE_PUNCTUATION = (
+    "2018-201D"  # ‘ ’ “ ”
+    " 2013-2015"  # – — ―
+    " 2025-2026"  # ‥ …
+    " 00A9 00AE 2122"  # © ® ™
+    " 00B0 2103"  # ° ℃
+)
+
 
 def collect_text() -> set[str]:
     chars: set[str] = set()
     # ASCII 可打印区始终保留：数字、字母、标点是 UI 的兜底。
     chars.update(chr(c) for c in range(0x20, 0x7F))
+    # 常用标点兜底（见 BASE_PUNCTUATION 注释）。
+    for part in BASE_PUNCTUATION.split():
+        if "-" in part:
+            a, b = (int(x, 16) for x in part.split("-"))
+            chars.update(chr(c) for c in range(a, b + 1))
+        else:
+            chars.add(chr(int(part, 16)))
     files = [
         p
         for scan_dir in SCAN_DIRS
