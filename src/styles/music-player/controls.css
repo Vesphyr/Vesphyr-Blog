@@ -27,7 +27,8 @@
 }
 
 .music-player button {
-  border-radius: 0.75rem;
+  /* 控件统一 8px（三档：卡片 16 / 媒体 12 / 控件 8） */
+  border-radius: 0.5rem;
 }
 
 @media (hover: hover) and (pointer: fine) {

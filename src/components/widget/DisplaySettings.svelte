@@ -98,7 +98,7 @@
   .color-bar
     display flex
     height 2.5rem
-    border-radius 0.375rem
+    border-radius 0.5rem
     overflow hidden
 
   .color-segment

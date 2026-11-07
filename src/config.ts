@@ -61,7 +61,9 @@ export const navBarConfig: NavBarConfig = {
     {
       name: "\u5173\u4E8E",
       url: "/about/",
-      icon: "material-symbols:person-outline",
+      // 与首页/归档/相册保持同一套实心图标（此前是 person-outline，
+      // 四个并排时只有它是描边，笔画重量差一半）
+      icon: "material-symbols:person",
     },
   ],
 };

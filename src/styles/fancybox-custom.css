@@ -2,7 +2,7 @@
   --fancybox-bg: rgba(0, 0, 0, 0.9);
   --fancybox-thumbs-width: 64px;
   --fancybox-thumbs-ratio: 1;
-  --fancybox-thumbs-border-radius: 4px;
+  --fancybox-thumbs-border-radius: 8px;
 }
 
 .fancybox__toolbar {
@@ -35,7 +35,7 @@
 }
 
 .fancybox__thumb {
-  border-radius: 4px;
+  border-radius: 8px;
   overflow: hidden;
   border: 2px solid transparent;
   transition: all 0.2s ease;

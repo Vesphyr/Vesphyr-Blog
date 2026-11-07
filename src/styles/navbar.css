@@ -181,26 +181,13 @@
   background-clip: text;
   color: transparent;
   text-transform: none;
-  text-shadow:
-    0 1px 0 rgba(255, 236, 178, 0.22),
-    0 2px 8px rgba(83, 17, 33, 0.35),
-    0 0 18px rgba(166, 41, 45, 0.2);
+  /* 不再叠 text-shadow：文字填充是 background-clip 出来的渐变，任何阴影都会
+     沿字形轮廓在边缘糊出一圈光晕，把笔画糊粗、渐变发灰。去掉后边缘才干净。 */
+  text-shadow: none;
 }
 
-#navbar.group.scrolled .navbar-brand-text {
-  background: linear-gradient(
-    135deg,
-    #5e1a45 0%,
-    #92202c 24%,
-    #b8911f 48%,
-    #c9a227 63%,
-    #b58c24 78%,
-    #8e2429 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
+/* 滚动后导航变实底，此前会把品牌名换成更暗的一套渐变，字头几乎沉进底里。
+   现在两种状态共用同一套红金，观感恒定。 */
 
 @media (max-width: 1279px) {
   #navbar .navbar-shell {
