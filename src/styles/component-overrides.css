@@ -279,9 +279,15 @@
 
   .dropdown-content {
     @apply rounded-(--radius-large) border-none py-2 min-w-48;
-    background: transparent !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
+    /* 下拉是浮层，必须有一块看得见的面：此前设为 transparent，
+       而下拉悬在正文之上，没有底就等于文字直接压在内容/图片上。
+       用与设置面板同一档的浮层底色（--float-panel-bg = oklch 0.42）。
+       注：分层 CSS 中"分层 !important"优先于"未分层 !important"，
+       所以这里能盖过下面对 .float-panel 组规则的设定。 */
+    background: var(--float-panel-bg) !important;
+    box-shadow: var(--shadow-lg) !important;
+    backdrop-filter: var(--panel-blur) !important;
+    -webkit-backdrop-filter: var(--panel-blur) !important;
   }
 
   .dropdown-item {
