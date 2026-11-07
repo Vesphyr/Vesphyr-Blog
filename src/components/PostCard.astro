@@ -75,7 +75,7 @@ const { remarkPluginFrontmatter } = await render(entry);
 
 			<div
 				class:list={[
-					"post-card-excerpt transition text-100 font-bold text-lg leading-8 mb-1 pr-0 md:pr-8",
+					"post-card-excerpt transition text-100 font-bold text-lg leading-8 mb-1 pr-0 md:pr-8 max-w-(--reading-measure)",
 					{ "line-clamp-3 md:line-clamp-2": !description },
 				]}
 			>

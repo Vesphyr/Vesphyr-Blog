@@ -24,6 +24,13 @@
 /* 默认回退：sRGB 十六进制近似（hue=335），供不支持 oklch/color-mix 的旧浏览器使用 */
 :root {
   --radius-large: 1rem;
+  /* WCAG AAA 1.4.8「视觉呈现」：中文文本块每行 ≤40 字。
+     正文 1.1rem(17.6px) × 40 = 704px = 44rem。用 rem 而非 px，用户放大
+     浏览器默认字号时字数上限依然成立。所有页面的长文本块都用这个度量。 */
+  --reading-measure: 44rem;
+  /* 文章卡片 = 正文宽 44rem + 两侧 md:px-12(6rem) = 50rem。
+     与 --reading-measure 同源，卡片和正文永远同轴。 */
+  --reading-column: 50rem;
   /* JS（setting-utils.ts）运行前的默认值；正常情况会被内联脚本覆盖 */
   --hue: 335;
   --primary: #ea9dd9;

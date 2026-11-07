@@ -12,18 +12,18 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
 		<div class="card-base z-10 px-9 py-6 relative w-full">
 
 			
-			<section class="about-section">
+			<section class="about-section reading-measure">
 				<h3 class="about-section-title">关于本站</h3>
 				<div class="about-content">
 					<p>这里是 Dionys 的自留地。没有推荐算法，也不赶什么热点，只把愿意认真写下的东西慢慢攒起来——一部分是拆解，一部分是路上的见闻，还有一部分纯粹因为喜欢。</p>
 					<p>内容大致分三路：投资与估值的拆解、旅途中的记录，以及动画角色的笔记。都不算长，但每一篇都尽量写到自己也愿意重读第二遍。</p>
-					<p>视觉上以宋锦为底：背景织着回纹提花与龟背纹，像一匹古帛缓缓铺开，随四季明暗流转。主题色备了三款——<strong>朱砂</strong>（丹砂之正）、<strong>群青</strong>（青金之贵）、<strong>绛紫</strong>（绛染之深），各有各的气象，随当天心情换。</p>
+					<p>视觉上以宋锦为底：背景织着回纹提花与龟背纹，像一匹古帛缓缓铺开，随四季明暗流转。主题色备了三款——<strong>玄朱</strong>（丹砂入夜）、<strong>靛青</strong>（青金沉潭）、<strong>绛紫</strong>（绛染之深），各有各的气象，随当天心情换。</p>
 					<p>右下角常驻一台音乐播放器，收了十余首中式古典雅乐，写字或发呆时随手就能放；相册里是路上拍下的光影。文章、曲子、照片，就这样一并织成这方不大的锦绣。</p>
 				</div>
 			</section>
 
 			
-			<section class="about-section">
+			<section class="about-section reading-measure">
 				<h3 class="about-section-title">头像角色</h3>
 				<div class="about-content">
 					<p>站点的头像是<strong>成田真理</strong>（なりた しんり）——《淑女同萌！》的主人公，也是学园里被称作"皇冠"的六人之一。</p>
@@ -93,8 +93,10 @@ import MainGridLayout from "../layouts/MainGridLayout.astro";
 		}
 	}
 
+	/* 与文章页 .custom-md 的段落节奏一致（1.15rem），
+	   避免关于页读起来比正文更挤。 */
 	.about-content p {
-		margin-bottom: 0.75rem;
+		margin-bottom: 1.15rem;
 	}
 
 	.about-content p:last-child {

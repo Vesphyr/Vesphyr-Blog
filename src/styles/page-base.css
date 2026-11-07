@@ -17,6 +17,13 @@ html {
   text-rendering: optimizeLegibility;
 }
 
+/* 全站长文本块共用的行宽上限：与文章页正文同为每行 40 个汉字。
+   只设 max-width，窄屏下不生效；margin-inline:auto 让文字栏与文章页同轴。 */
+.reading-measure {
+  max-width: var(--reading-measure);
+  margin-inline: auto;
+}
+
 body {
   font-family: var(--font-content);
   scrollbar-width: none;
