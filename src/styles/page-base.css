@@ -61,6 +61,9 @@ body::before,
         var(--page-bg) 52%,
         var(--page-bg-bottom) 100%
       );
+  /* 固定到视口：任何使用这份背景的元素（如主题色色条）都按 1:1 裁剪同一块
+     背景，而不是被压缩成元素尺寸。body::before 本身铺满视口，效果不变。 */
+  background-attachment: fixed;
   background-blend-mode:
     normal, normal, normal, normal, soft-light, soft-light, soft-light,
     soft-light, soft-light, normal, normal;

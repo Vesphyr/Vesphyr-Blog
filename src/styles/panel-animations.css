@@ -20,6 +20,12 @@
   transform-origin: top right;
 }
 
+/* 展开态不能带 transform：它会成为固定背景的包含块，让面板里的主题色色条
+   从"同一块页面背景"退化成"压缩版背景"。关闭态仍保留缩小动画。 */
+#display-setting:not(.float-panel-closed) {
+  transform: none;
+}
+
 #display-setting.float-panel-closed {
   transform: scaleY(0) scaleX(0.6);
 }

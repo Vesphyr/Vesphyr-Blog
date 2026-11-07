@@ -373,12 +373,29 @@
     box-shadow 0.3s ease !important;
 }
 
+/* 主题色色条用 background-attachment: fixed 把整页背景按 1:1 裁进来，
+   而 transform / will-change: transform / backdrop-filter 都会把固定背景的
+   参照系换成面板自身（色条就变回"缩小版背景"）。因此展开态不带 transform、
+   去掉 will-change，磨砂与底色移到 ::before（伪元素不产生该包含块）。 */
 #display-setting {
-  background: var(--display-panel-bg) !important;
-  backdrop-filter: blur(20px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  will-change: auto !important;
   border: 1px solid var(--display-panel-border) !important;
   box-shadow: var(--display-panel-shadow) !important;
+}
+
+#display-setting::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--display-panel-bg);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  pointer-events: none;
 }
 
 #navbar > div {
