@@ -111,10 +111,9 @@
 
   .card-base {
     @apply rounded-(--radius-large) overflow-hidden;
-    /* 卡片给一层极轻的面：此前完全透明，全站只剩「平铺内容」与「磨砂浮层」
-       两种材质，中间没有过渡，浮层显得像贴上去的。55% 的卡片底色叠在页面
-       底上只高约 0.01 L，够形成面、又不会变成另一块色板。 */
-    background: color-mix(in oklch, var(--card-bg) 55%, transparent) !important;
+    /* 卡片刻意不画底：全站只有「页面」这一层材质，内容直接落在缣帛纹理上，
+       卡片只靠间距与圆角分隔，不做浮起。 */
+    background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     contain: layout style;
