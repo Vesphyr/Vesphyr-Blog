@@ -151,6 +151,8 @@
   --line-divider: rgba(255, 255, 255, 0.07);
   --line-color: rgba(255, 255, 255, 0.09);
   --content-meta: rgba(255, 255, 255, 0.89);
+  /* sRGB 兜底固定为 h335：本分支不支持 oklch，页面底色同样固定在该色相，
+     选区保持一致。现代浏览器走下面 @supports 里的 --hue 动态版本。 */
   --selection-bg: #7b226d;
   --codeblock-bg: #281e2a;
   --codeblock-topbar-bg: #1e1820;
@@ -234,7 +236,10 @@
     --license-block-bg: oklch(0.375 0.045 var(--hue));
     --deep-text: #ffffff;
     --primary-text: oklch(0.96 0.045 var(--hue));
-    --selection-bg: oklch(0.42 0.15 335);
+    /* 选区强调色跟随主题色相：三个主题各得一色，且色相任意取值时白字仍 ≥7:1。
+       L 0.42 / C 0.15 下白字对选区为 8.8–9.2:1（WCAG 1.4.6 AAA 门槛 7:1），
+       全色相扫描最低 7.03:1。 */
+    --selection-bg: oklch(0.42 0.15 var(--hue));
     --codeblock-bg: oklch(0.255 0.026 var(--hue));
     --codeblock-topbar-bg: oklch(0.215 0.022 var(--hue));
     --link-underline: oklch(0.678 0.12 272);
