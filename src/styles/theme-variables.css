@@ -244,9 +244,6 @@
     --btn-regular-bg: oklch(0.375 0.045 var(--hue));
     --btn-regular-bg-active: oklch(0.345 0.04 var(--hue));
     --btn-regular-bg-hover: oklch(0.405 0.05 var(--hue));
-    --social-btn-bg: oklch(0.47 0.055 var(--hue));
-    --social-btn-bg-hover: oklch(0.51 0.06 var(--hue));
-    --social-btn-bg-active: oklch(0.43 0.05 var(--hue));
     --btn-plain-bg-hover: oklch(0.4 0.045 var(--hue));
     --btn-plain-bg-active: oklch(0.375 0.04 var(--hue));
     --btn-card-bg-hover: oklch(0.415 0.05 var(--hue));
