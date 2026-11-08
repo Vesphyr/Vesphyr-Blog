@@ -236,41 +236,31 @@
     color: var(--text-main);
   }
 
-  /* 侧栏社交图标：四枚并列的「纽扣」。底色比卡片亮一档（见 --social-btn-bg 注释），
-     叠 1px 内描边收边、顶部一丝高光做厚度 + 外投影做浮起。
+  /* 侧栏社交图标：与「回到顶部」按钮共用同一套控件面色（--control-surface-*，
+     见 theme-variables.css），只差尺寸——那边 4rem 悬浮于页底最暗处，
+     这边 2.5rem 嵌在侧栏。改面就改 token，两处不会再各自漂移。
      不复用 .btn-regular：那套 hover/active 是 @apply 生成的工具类，
      与这里的自定义底色会互相覆盖，不如各管一段。 */
   .profile-social-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--social-btn-bg);
+    background: var(--control-surface-bg);
+    border: 1px solid var(--control-surface-border);
+    box-shadow: var(--control-surface-shadow);
+    opacity: var(--control-surface-opacity);
     color: var(--btn-content);
-    box-shadow:
-      inset 0 0 0 1px var(--social-btn-ring),
-      inset 0 1px 0 rgba(255, 255, 255, 0.14),
-      0 1px 3px rgba(0, 0, 0, 0.22);
     transition:
-      background-color 150ms ease,
-      transform 150ms ease,
-      box-shadow 150ms ease;
+      background-color 0.3s ease,
+      opacity 0.3s ease,
+      transform 0.3s ease;
   }
 
   @media (hover: hover) and (pointer: fine) {
     .profile-social-btn:hover {
-      background: var(--social-btn-bg-hover);
-      box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2),
-        0 2px 6px rgba(0, 0, 0, 0.28);
+      background: var(--control-surface-bg-hover);
+      opacity: 1;
     }
-  }
-
-  .profile-social-btn:active {
-    background: var(--social-btn-bg-active);
-    box-shadow:
-      inset 0 0 0 1px var(--social-btn-ring),
-      0 1px 2px rgba(0, 0, 0, 0.24);
   }
 
   .link-underline {

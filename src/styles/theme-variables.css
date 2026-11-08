@@ -99,14 +99,14 @@
   --btn-regular-bg: #50384b;
   --btn-regular-bg-active: #463142;
   --btn-regular-bg-hover: #5a3f54;
-  /* 侧栏社交图标底：卡片底 #573c51（oklch 0.395），原按钮底 #50384b 比卡片
-     还深 2 个 L*，在深底上几乎不可辨。上提到 0.47（比卡片亮 7.5 L*）才算
-     "看得见的一块面"：白图标 7.0:1（AAA 正文门槛），悬停 5.9:1（图形件 3:1
-     之上仍有富余），整体仍是深紫，不与页面争亮度。 */
-  --social-btn-bg: #6e4f67;
-  --social-btn-bg-hover: #7c5974;
-  --social-btn-bg-active: #61455b;
-  --social-btn-ring: rgba(255, 255, 255, 0.14);
+  /* 控件面色（回到顶部按钮 + 侧栏社交图标共用）：一块比页面略亮的实色面、
+     1px 发丝描边、轻投影，常态 85% 透明度让它"退后"，悬停回 1 并提亮。
+     两处只差尺寸，面本身不许各改各的——要改就改这四个值。 */
+  --control-surface-bg: var(--card-bg);
+  --control-surface-bg-hover: var(--btn-plain-bg-hover);
+  --control-surface-border: var(--line-divider);
+  --control-surface-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --control-surface-opacity: 0.85;
   --btn-plain-bg-hover: #573f51;
   --btn-plain-bg-active: #4f394a;
   --btn-card-bg-hover: #5f4159;

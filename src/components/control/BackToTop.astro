@@ -23,10 +23,11 @@ import { Icon } from "astro-icon/components";
 		align-items: center;
 		justify-content: center;
 		color: var(--primary);
-		background: var(--card-bg);
-		border: 1px solid var(--line-divider);
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-		opacity: 0.85;
+		/* 控件面色与侧栏社交图标共用一套 token，两处只差尺寸 */
+		background: var(--control-surface-bg);
+		border: 1px solid var(--control-surface-border);
+		box-shadow: var(--control-surface-shadow);
+		opacity: var(--control-surface-opacity);
 		cursor: pointer;
 		transition:
 			opacity 0.3s ease,
@@ -34,7 +35,7 @@ import { Icon } from "astro-icon/components";
 	}
 
 	.back-to-top-btn:hover {
-		background: var(--btn-plain-bg-hover);
+		background: var(--control-surface-bg-hover);
 		opacity: 1;
 		transform: translateY(-2px);
 	}
