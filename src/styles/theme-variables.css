@@ -99,6 +99,14 @@
   --btn-regular-bg: #50384b;
   --btn-regular-bg-active: #463142;
   --btn-regular-bg-hover: #5a3f54;
+  /* 侧栏社交图标底：卡片底 #573c51（oklch 0.395），原按钮底 #50384b 比卡片
+     还深 2 个 L*，在深底上几乎不可辨。上提到 0.47（比卡片亮 7.5 L*）才算
+     "看得见的一块面"：白图标 7.0:1（AAA 正文门槛），悬停 5.9:1（图形件 3:1
+     之上仍有富余），整体仍是深紫，不与页面争亮度。 */
+  --social-btn-bg: #6e4f67;
+  --social-btn-bg-hover: #7c5974;
+  --social-btn-bg-active: #61455b;
+  --social-btn-ring: rgba(255, 255, 255, 0.14);
   --btn-plain-bg-hover: #573f51;
   --btn-plain-bg-active: #4f394a;
   --btn-card-bg-hover: #5f4159;
@@ -236,6 +244,9 @@
     --btn-regular-bg: oklch(0.375 0.045 var(--hue));
     --btn-regular-bg-active: oklch(0.345 0.04 var(--hue));
     --btn-regular-bg-hover: oklch(0.405 0.05 var(--hue));
+    --social-btn-bg: oklch(0.47 0.055 var(--hue));
+    --social-btn-bg-hover: oklch(0.51 0.06 var(--hue));
+    --social-btn-bg-active: oklch(0.43 0.05 var(--hue));
     --btn-plain-bg-hover: oklch(0.4 0.045 var(--hue));
     --btn-plain-bg-active: oklch(0.375 0.04 var(--hue));
     --btn-card-bg-hover: oklch(0.415 0.05 var(--hue));

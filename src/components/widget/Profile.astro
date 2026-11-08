@@ -47,7 +47,7 @@ import ImageWrapper from "../misc/ImageWrapper.astro";
       <span class="block">{profileConfig.bio}</span>
     </div>
 
-    <div class="flex flex-wrap gap-2 justify-center mb-1">
+    <div class="flex flex-wrap gap-x-5 gap-y-3 justify-center mb-1">
       {
         profileConfig.links.length > 1 &&
           profileConfig.links.map((item) => (
@@ -57,7 +57,7 @@ import ImageWrapper from "../misc/ImageWrapper.astro";
               href={item.url}
               target={item.mobileUrl ? "_self" : "_blank"}
               data-mobile-url={item.mobileUrl}
-              class="btn-regular rounded-lg h-10 w-10 active:scale-90"
+              class="profile-social-btn h-10 w-10 rounded-lg active:scale-90"
             >
               <Icon name={item.icon} class="text-[1.5rem]" />
             </a>

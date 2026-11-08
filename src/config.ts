@@ -84,23 +84,15 @@ export const profileConfig: ProfileConfig = {
       url: "https://www.zhihu.com/people/80-57-6-25",
     },
     {
-      name: "QQ",
+      name: "QQ空间",
       icon: "fa7-brands:qq",
-      // 桌面端：唤起 QQ 客户端并直接进入「添加好友」资料卡
-      url: "tencent://AddContact/?fromId=45&fromSubId=1&subd=all&uin=1986659730&website=qq",
-      // 移动端：直接打开该 QQ 号的资料名片
-      mobileUrl:
-        "mqqapi://card/show_pslcard?src_type=internal&version=1&uin=1986659730&card_type=person&source=sharecard",
+      // 指向该 QQ 号（1986659730）的 QQ 空间主页
+      url: "https://user.qzone.qq.com/1986659730",
     },
     {
       name: "Steam",
       icon: "simple-icons:steam",
-      url: "https://steamcommunity.com/id/Vesphyr/",
-    },
-    {
-      name: "Discord",
-      icon: "fa7-brands:discord",
-      url: "https://discord.com/users/1248814878656041003",
+      url: "https://steamcommunity.com/id/dionysnet/",
     },
   ],
 };
