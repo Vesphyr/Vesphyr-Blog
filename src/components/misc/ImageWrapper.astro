@@ -100,8 +100,8 @@ const referrerPolicy = !isLocal && isBilibiliImage ? "no-referrer" : undefined;
 				class={imageClass}
 				style={imageStyle}
 				loading={loading}
-				width={width}
-				height={height}
+				width={width ?? img.width}
+				height={height ?? img.height}
 				widths={
 					widths ||
 					(img.width > 800

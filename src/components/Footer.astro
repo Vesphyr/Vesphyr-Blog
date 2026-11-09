@@ -15,7 +15,7 @@ const currentYear = new Date().getFullYear();
 >
 	<div class="transition text-50 text-[13px] leading-6 text-center">
 		<div class="mb-2">
-			&copy; <span id="copyright-year">{currentYear}</span>
+			&copy; <span>{currentYear}</span>
 			{profileConfig.name}. All Rights Reserved. /
 			<a
 				class="transition link text-(--primary-text) font-medium"
@@ -29,7 +29,6 @@ const currentYear = new Date().getFullYear();
 			> /
 			<a
 				class="transition link text-(--primary-text) font-medium"
-				target="_blank"
 				href={url("sitemap-index.xml")}>Sitemap</a
 			>
 		</div>

@@ -89,7 +89,7 @@ const { entry, headings = [], jsonLd, canonicalUrl, remarkPluginFrontmatter, } =
 			</div>
 
 			<div class="relative onload-animation">
-				<div
+				<h1
 					class="content-panel-title post-article-title transition w-full block font-bold mb-4 md:mb-5
                     text-3xl md:text-[2.25rem]/[2.75rem]
                     text-90
@@ -97,7 +97,7 @@ const { entry, headings = [], jsonLd, canonicalUrl, remarkPluginFrontmatter, } =
                     before:absolute before:top-4 before:-left-5"
 				>
 					{entry.data.title}
-				</div>
+				</h1>
 			</div>
 
 			<div class="onload-animation">
@@ -123,6 +123,7 @@ const { entry, headings = [], jsonLd, canonicalUrl, remarkPluginFrontmatter, } =
 						<ImageWrapper
 							id="post-cover"
 							src={entry.data.image}
+							alt={entry.data.title}
 							basePath={getFileDirFromPath(entry.filePath || "")}
 							class="mb-8 rounded-xl banner-container onload-animation"
 							sizes="(max-width: 1023px) 92vw, 704px"

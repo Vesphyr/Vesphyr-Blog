@@ -14,14 +14,15 @@ const SITE_TIMEZONE = 8;
 export const siteConfig: SiteConfig = {
   title: "Dionys",
   subtitle:
-    "Dionys 的自留地：技术拆解、路上见闻，还有纯粹因为喜欢而写下的东西。",
+    "Dionys 的自留地：资产拆解、路上见闻，还有纯粹因为喜欢而写下的东西。",
   siteURL: "https://dionys.net/",
   siteStartDate: "2026-07-01",
   keywords: [
     "\u535A\u5BA2",
-    "\u6280\u672F",
-    "\u7F16\u7A0B",
-    "\u524D\u7AEF",
+    "\u6295\u8D44",
+    "\u623F\u4EA7",
+    "\u6E38\u8BB0",
+    "\u52A8\u753B",
     "Astro",
   ],
   timeZone: SITE_TIMEZONE,

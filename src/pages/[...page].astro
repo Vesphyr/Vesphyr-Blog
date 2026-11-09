@@ -5,15 +5,21 @@ import PostPage from "../components/PostPage.astro";
 import { PAGE_SIZE } from "../constants/constants";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
 import { getSortedPosts } from "../utils/content-utils";
+import { siteConfig } from "../config";
 export const getStaticPaths = (async ({ paginate }) => {
     const allBlogPosts = await getSortedPosts();
     return paginate(allBlogPosts, { pageSize: PAGE_SIZE });
 }) satisfies GetStaticPaths;
 const { page } = Astro.props;
+const pageHeading =
+    page.currentPage > 1
+        ? `${siteConfig.title} · 第 ${page.currentPage} 页`
+        : siteConfig.title;
 const len = page.data.length;
 ---
 
 <MainGridLayout>
+	<h1 class="sr-only">{pageHeading}</h1>
 	<PostPage page={page}></PostPage>
 	<Pagination
 		class="mx-auto onload-animation"

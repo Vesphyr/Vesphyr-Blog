@@ -71,7 +71,7 @@
 }
 
 .expressive-code.collapsible .frame:hover {
-  background-color: rgba(var(--primary-rgb, 59, 130, 246), 0.03);
+  background-color: color-mix(in oklch, var(--primary) 3%, transparent);
 }
 
 .expressive-code.collapsible .collapse-toggle-btn {

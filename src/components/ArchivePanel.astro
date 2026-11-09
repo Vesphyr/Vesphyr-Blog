@@ -68,9 +68,9 @@ function normalizeCategory(category: string | null | undefined) {
     groups.map((group) => (
       <section data-archive-group data-year={String(group.year)}>
         <div class="flex flex-row w-full items-center h-15">
-          <div class="w-[15%] md:w-[10%] transition text-2xl font-bold text-right text-75">
+          <h2 class="w-[15%] md:w-[10%] transition text-2xl font-bold text-right text-75 m-0">
             {group.year}
-          </div>
+          </h2>
           <div class="w-[15%] md:w-[10%]">
             <div
               class="h-3 w-3 bg-none rounded-full outline outline-(--primary) mx-auto -outline-offset-2 z-50 outline-3"
@@ -110,11 +110,11 @@ function normalizeCategory(category: string | null | undefined) {
                     ></div>
                   </div>
 
-                  <div
-                    class="w-[70%] md:w-[80%] text-left font-bold group-hover:translate-x-1 transition-all group-hover:text-(--primary-text) text-75 pr-8 line-clamp-2 md:line-clamp-1"
+                  <h3
+                    class="w-[70%] md:w-[80%] text-left font-bold group-hover:translate-x-1 transition-all group-hover:text-(--primary-text) text-75 pr-8 line-clamp-2 md:line-clamp-1 m-0"
                   >
                     {post.data.title}
-                  </div>
+                  </h3>
                 </div>
               </a>
             );

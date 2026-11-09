@@ -851,7 +851,7 @@
                 )}
                 class:cursor-pointer={!brokenSongs.has(song.id)}
                 class:opacity-40={brokenSongs.has(song.id)}
-                class:bg-[var(--btn-plain-bg)]={index === currentIndex}
+                class:bg-(--btn-plain-bg-hover)={index === currentIndex}
                 class:text-[var(--primary)]={index === currentIndex}
                 on:click={() => !brokenSongs.has(song.id) && playSong(index)}
                 on:keydown={(e) => {

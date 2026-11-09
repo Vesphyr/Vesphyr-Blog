@@ -52,7 +52,7 @@ import ImageWrapper from "../misc/ImageWrapper.astro";
         profileConfig.links.length > 1 &&
           profileConfig.links.map((item) => (
             <a
-              rel="me"
+              rel="me noopener noreferrer"
               aria-label={item.name}
               href={item.url}
               target={item.mobileUrl ? "_self" : "_blank"}
@@ -66,7 +66,7 @@ import ImageWrapper from "../misc/ImageWrapper.astro";
       {
         profileConfig.links.length == 1 && (
           <a
-            rel="me"
+            rel="me noopener noreferrer"
             aria-label={profileConfig.links[0].name}
             href={profileConfig.links[0].url}
             target={profileConfig.links[0].mobileUrl ? "_self" : "_blank"}

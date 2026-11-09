@@ -15,5 +15,6 @@ const posts = await getSortedPostsList();
 		import("../scripts/archive-panel.ts");
 	</script>
 
+	<h1 class="sr-only">{i18n(I18nKey.archive)}</h1>
 	<ArchivePanel sortedPosts={posts} />
 </MainGridLayout>

@@ -165,6 +165,15 @@
   --text-disabled: rgba(255, 255, 255, 0.45);
   --line-divider: rgba(255, 255, 255, 0.07);
   --line-color: rgba(255, 255, 255, 0.09);
+  /* 代码块横向滚动条。此前这三档变量只在 markdown.css 里被引用、从未定义，
+     声明整条失效，滚动条退回浏览器默认灰。 */
+  --scrollbar-bg: rgba(255, 255, 255, 0.16);
+  --scrollbar-bg-hover: rgba(255, 255, 255, 0.28);
+  --scrollbar-bg-active: rgba(255, 255, 255, 0.36);
+  /* 中阶投影（跳过链接等浮起元素用） */
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.3);
+  /* 列表入场动画的公共延时基准；--interval 由 PostPage 按条目下发 */
+  --content-delay: 0ms;
   --content-meta: rgba(255, 255, 255, 0.89);
   /* sRGB 兜底固定为 h335：本分支不支持 oklch，页面底色同样固定在该色相，
      选区保持一致。现代浏览器走下面 @supports 里的 --hue 动态版本。 */
