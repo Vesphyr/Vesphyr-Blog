@@ -43,10 +43,7 @@ export function rehypeImageWidth() {
           figureChildren.push({
             type: "element",
             tagName: "figcaption",
-            properties: {
-              style:
-                "text-align: center; margin-top: 0.5em; font-size: 0.9em; color: #666;",
-            },
+            properties: { className: ["md-figcaption"] },
             children: [{ type: "text", value: node.properties.title }],
           });
         }
@@ -54,7 +51,7 @@ export function rehypeImageWidth() {
           parent.children[index] = {
             type: "element",
             tagName: "figure",
-            properties: { style: "margin: 1em 0;" },
+            properties: { className: ["md-figure"] },
             children: figureChildren,
           };
         }

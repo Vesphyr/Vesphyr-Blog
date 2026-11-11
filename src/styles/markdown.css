@@ -314,6 +314,23 @@
   }
 }
 
+/* 带图注的插图：markdown 图片的 title 会被 rehype 转成 figcaption */
+.md-figure {
+  margin: 1.75rem 0;
+}
+
+.md-figure img {
+  margin: 0;
+}
+
+.md-figcaption {
+  margin-top: 0.6rem;
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.78);
+}
+
 .custom-md .expressive-code :is(ul, ol) li::marker {
   @apply text-inherit;
 }
