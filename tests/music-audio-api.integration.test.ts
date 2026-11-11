@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { onRequestGet, onRequestHead } from "../functions/api/music/audio.ts";
 
-// The audio endpoint is a thin resolver: it verifies that /music/<id>.mp3 exists
+// The audio endpoint is a thin resolver: it verifies that /music/<id>.m4a exists
 // in the site's own static storage (env.ASSETS) and then redirects the browser
 // there. It deliberately does NOT stream the bytes itself — ASSETS.fetch does not
 // honour Range, so proxying the body would hand <audio> a 200 with the whole file
@@ -47,7 +47,7 @@ test("returns 404 when the track is not self-hosted", async () => {
   assert.equal(payload.code, "NOT_FOUND");
 });
 
-test("redirects to the self-hosted mp3 when present", async () => {
+test("redirects to the self-hosted m4a when present", async () => {
   let probedPath = "";
   const response = await onRequestGet(
     makeContext(
@@ -60,8 +60,8 @@ test("redirects to the self-hosted mp3 when present", async () => {
   );
 
   assert.equal(response.status, 302);
-  assert.equal(probedPath, "/music/1690698.mp3");
-  assert.equal(response.headers.get("location"), "/music/1690698.mp3");
+  assert.equal(probedPath, "/music/1690698.m4a");
+  assert.equal(response.headers.get("location"), "/music/1690698.m4a");
 });
 
 test("range requests are answered by redirect, not by proxying bytes", async () => {
@@ -75,7 +75,7 @@ test("range requests are answered by redirect, not by proxying bytes", async () 
   );
 
   assert.equal(response.status, 302);
-  assert.equal(response.headers.get("location"), "/music/1690698.mp3");
+  assert.equal(response.headers.get("location"), "/music/1690698.m4a");
 });
 
 test("HEAD request redirects without a body", async () => {

@@ -4,7 +4,7 @@
     "name": "听禅",
     "artist": "贵族精选",
     "pic": "/music/cover/505404927.jpg",
-    "url": "/music/505404927.mp3",
+    "url": "/music/505404927.m4a",
     "duration": 486622
   },
   {
@@ -12,7 +12,7 @@
     "name": "故梦(琵琶版)",
     "artist": "千年破晓",
     "pic": "/music/cover/953222394.jpg",
-    "url": "/music/953222394.mp3",
+    "url": "/music/953222394.m4a",
     "duration": 224000
   },
   {
@@ -20,7 +20,7 @@
     "name": "青石巷",
     "artist": "箜篌",
     "pic": "/music/cover/315267373.jpg",
-    "url": "/music/315267373.mp3",
+    "url": "/music/315267373.m4a",
     "duration": 214720
   },
   {
@@ -28,7 +28,7 @@
     "name": "细雨松涛",
     "artist": "巫娜",
     "pic": "/music/cover/732450981.jpg",
-    "url": "/music/732450981.mp3",
+    "url": "/music/732450981.m4a",
     "duration": 292376
   },
   {
@@ -36,7 +36,7 @@
     "name": "落叶",
     "artist": "JINBAO",
     "pic": "/music/cover/245763035.jpg",
-    "url": "/music/245763035.mp3",
+    "url": "/music/245763035.m4a",
     "duration": 177450
   },
   {
@@ -44,7 +44,7 @@
     "name": "濯海令",
     "artist": "关大洲",
     "pic": "/music/cover/609113223.jpg",
-    "url": "/music/609113223.mp3",
+    "url": "/music/609113223.m4a",
     "duration": 214289
   },
   {
@@ -52,7 +52,7 @@
     "name": "大乘天",
     "artist": "程池",
     "pic": "/music/cover/854761840.jpg",
-    "url": "/music/854761840.mp3",
+    "url": "/music/854761840.m4a",
     "duration": 309281
   },
   {
@@ -60,7 +60,7 @@
     "name": "阿里郎（纯音乐）",
     "artist": "SaxyBar",
     "pic": "/music/cover/443775509.jpg",
-    "url": "/music/443775509.mp3",
+    "url": "/music/443775509.m4a",
     "duration": 127125
   },
   {
@@ -68,7 +68,7 @@
     "name": "Oogway's Legacy",
     "artist": "Hans Zimmer·郎朗·Gan Gou·Jian Wang",
     "pic": "/music/cover/744594594.jpg",
-    "url": "/music/744594594.mp3",
+    "url": "/music/744594594.m4a",
     "duration": 120790
   },
   {
@@ -76,7 +76,7 @@
     "name": "China (The Atomic Era)",
     "artist": "Geoff Knorr",
     "pic": "/music/cover/516107590.jpg",
-    "url": "/music/516107590.mp3",
+    "url": "/music/516107590.m4a",
     "duration": 199301
   },
   {
@@ -84,7 +84,7 @@
     "name": "Palace Memories - Sunset",
     "artist": "S.E.N.S",
     "pic": "/music/cover/291724590.jpg",
-    "url": "/music/291724590.mp3",
+    "url": "/music/291724590.m4a",
     "duration": 210837
   },
   {
@@ -92,7 +92,7 @@
     "name": "秋田",
     "artist": "Ben Mooter",
     "pic": "/music/cover/475465399.jpg",
-    "url": "/music/475465399.mp3",
+    "url": "/music/475465399.m4a",
     "duration": 143615
   }
 ]

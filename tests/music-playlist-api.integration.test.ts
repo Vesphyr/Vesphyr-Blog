@@ -18,12 +18,12 @@ test("music playlist api returns local tracks without contacting upstream", asyn
     assert.equal(typeof song.artist, "string");
     assert.equal(typeof song.url, "string");
     // Audio is served straight from the self-hosted static file, so the browser
-    // gets real Range support (206) instead of a proxied 200 with the whole mp3.
+    // gets real Range support (206) instead of a proxied 200 with the whole audio file.
     // The playlist stamps a ?v=<etag> param onto every URL to bust stale caches.
     assert.match(
       String(song.url),
-      /^\/music\/\d+\.mp3\?v=[0-9a-f]{8}$/,
-      `url ${song.url} should point at the local static mp3 with a version param`,
+      /^\/music\/\d+\.m4a\?v=[0-9a-f]{8}$/,
+      `url ${song.url} should point at the local static m4a with a version param`,
     );
   }
 

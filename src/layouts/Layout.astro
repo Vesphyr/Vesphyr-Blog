@@ -22,8 +22,9 @@ interface Props {
     setOGTypeArticle?: boolean;
     postSlug?: string;
     canonicalUrl?: string;
+    noindex?: boolean;
 }
-let { title, description, lang, setOGTypeArticle, postSlug } = Astro.props;
+let { title, description, lang, setOGTypeArticle, postSlug, noindex } = Astro.props;
 const canonicalUrl = Astro.props.canonicalUrl || Astro.url.toString();
 const isHomePage = pathsEqual(Astro.url.pathname, url("/"));
 const configHue = siteConfig.themeColor.hue;
@@ -77,14 +78,15 @@ const skipToContentLabel = isChineseSite
       fetchpriority="high"
       href="/assets/fonts/CrimsonPro-Medium.woff2"
     />
-    {/* 中文首屏字体：约 2000 常用字（403KB），字形与分片一致，预加载后中文
-        立刻从系统兜底字体切换，不必等待 /css/font-faces.css 解析 + 分片下载。 */}
+    {/* 中文首屏字体：全站用字子集（约 500KB），字形与分片一致。仍旧预加载，
+        但优先级压到 low —— 字体是 font-display: swap 的渐进增强，先让 CSS
+        与首屏图片走关键路径，字体晚一步到不影响可读性。 */}
     <link
       rel="preload"
       as="font"
       type="font/woff2"
       crossorigin
-      fetchpriority="high"
+      fetchpriority="low"
       href="/assets/fonts/ZhuqueFangsong-Regular-UI.woff2"
     />
     {/* 186 条 @font-face 以非阻塞方式挂载：media=print 让浏览器低优先级下载，
@@ -97,7 +99,11 @@ const skipToContentLabel = isChineseSite
       href="/css/font-faces.css"
     />
     <noscript><link rel="stylesheet" href="/css/font-faces.css" /></noscript>
-    <link rel="canonical" href={canonicalUrl} />
+    {noindex ? (
+        <meta name="robots" content="noindex, follow" />
+    ) : (
+        <link rel="canonical" href={canonicalUrl} />
+    )}
     <ClientRouter />
     <meta name="description" content={pageDescription} />
     <meta name="google" content="notranslate" />

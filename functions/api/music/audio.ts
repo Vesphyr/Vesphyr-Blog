@@ -61,7 +61,7 @@ async function handleAudioRequest(context: RequestContext): Promise<Response> {
     return errorResponse(400, "BAD_REQUEST", "Missing or invalid song id.");
   }
 
-  const staticUrl = new URL(`/music/${songId}.mp3`, request.url);
+  const staticUrl = new URL(`/music/${songId}.m4a`, request.url);
 
   try {
     const probe = await context.env.ASSETS.fetch(

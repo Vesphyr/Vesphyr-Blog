@@ -127,6 +127,8 @@ const { entry, headings = [], jsonLd, canonicalUrl, remarkPluginFrontmatter, } =
 							basePath={getFileDirFromPath(entry.filePath || "")}
 							class="mb-8 rounded-xl banner-container onload-animation"
 							sizes="(max-width: 1023px) 92vw, 704px"
+							loading="eager"
+							fetchpriority="high"
 							blur={true}
 						/>
 					</>

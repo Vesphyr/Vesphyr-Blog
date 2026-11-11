@@ -13,6 +13,20 @@ export function rehypeWrapTable() {
     });
   };
 }
+export function rehypeTableHeaderScope() {
+  return (tree) => {
+    visit(tree, "element", (node) => {
+      if (node.tagName !== "thead") return;
+      const setScope = (child) => {
+        if (child.tagName === "th") {
+          child.properties = { ...(child.properties || {}), scope: "col" };
+        }
+        (child.children || []).forEach(setScope);
+      };
+      setScope(node);
+    });
+  };
+}
 export function rehypeImageWidth() {
   const regex = / w-([0-9]+)%/;
   return (tree) => {

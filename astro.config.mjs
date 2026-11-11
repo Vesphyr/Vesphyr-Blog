@@ -17,7 +17,7 @@ import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-cop
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
 import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition.mjs";
 import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.mjs";
-import { rehypeWrapTable, rehypeImageWidth } from "./src/plugins/rehype-enhancements.mjs";
+import { rehypeWrapTable, rehypeTableHeaderScope, rehypeImageWidth } from "./src/plugins/rehype-enhancements.mjs";
 import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
 import { remarkContent } from "./src/plugins/remark-content.mjs";
 import rehypeExternalLinks from "rehype-external-links";
@@ -122,6 +122,7 @@ export default defineConfig({
             ],
             rehypeSlug,
             rehypeWrapTable,
+            rehypeTableHeaderScope,
             rehypeImageWidth,
             [
                 rehypeComponents,

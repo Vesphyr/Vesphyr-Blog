@@ -28,6 +28,7 @@ interface Props {
   canonicalUrl?: string;
   headings?: MarkdownHeading[];
   isPostPage?: boolean;
+  noindex?: boolean;
 }
 const {
   title,
@@ -38,6 +39,7 @@ const {
   canonicalUrl,
   headings = [],
   isPostPage = false,
+  noindex = false,
 } = Astro.props;
 const hasLeftSidebarComponents = hasVisibleComponents(
   widgetManager.getComponentsByPosition("top", "left", "desktop"),
@@ -91,6 +93,7 @@ const mainContentClass = `
   setOGTypeArticle={setOGTypeArticle}
   postSlug={postSlug}
   canonicalUrl={canonicalUrl}
+  noindex={noindex}
 >
   <slot slot="head" name="head" />
 

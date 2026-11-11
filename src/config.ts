@@ -16,7 +16,7 @@ export const siteConfig: SiteConfig = {
   subtitle:
     "Dionys 的自留地：资产拆解、路上见闻，还有纯粹因为喜欢而写下的东西。",
   siteURL: "https://dionys.net/",
-  siteStartDate: "2026-07-01",
+  siteStartDate: "2026-03-04",
   keywords: [
     "\u535A\u5BA2",
     "\u6295\u8D44",
